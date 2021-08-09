@@ -5,7 +5,7 @@ import java.util.Arrays;
 import javax.servlet.http.HttpSession;
 
 import com.techelevator.model.User;
-import com.techelevator.model.UserDao;
+import com.techelevator.model.UserDAO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -22,10 +22,10 @@ public class SessionAuthProvider implements AuthProvider {
     public static final String USER_KEY = "appCurrentUser";
 
     private HttpSession session;
-    private UserDao dao;
+    private UserDAO dao;
 
     @Autowired
-    public SessionAuthProvider(HttpSession session, UserDao dao) {
+    public SessionAuthProvider(HttpSession session, UserDAO dao) {
         this.session = session;
         this.dao = dao;
     }

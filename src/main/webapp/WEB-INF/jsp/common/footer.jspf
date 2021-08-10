@@ -1,11 +1,83 @@
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Home</p>
-        </footer>
-    </div>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Footer</title>
+</head>
+<body>
 
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+<style>
+    img {
+        width: 150px;
+        min-height: 80px;
+    }
+</style>
+<hr/>
+
+<footer class="text-center text-lg-start bg-success text-white">
+    <!-- Section: Useful Links -->
+    <section
+            class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    </section>
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3"></i>The Best Byte
+                    </h6>
+                    <img class = "rounded" src = https://seeklogo.com/images/G/good-food-logo-36B7F2C85D-seeklogo.com.png alt = "The Best Byte logo">
+                </div>
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Useful Links
+                    </h6>
+                    <p>
+                        <a href="index" class="text-reset">Home</a>
+                    </p>
+                    <p>
+                        <a href="about" class="text-reset">About Us</a>
+                    </p>
+                    <p>
+                        <a href="recipes" class="text-reset">Recipes</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Contact
+                    </h6>
+                    <p><i class="fas fa-home me-3"></i> ChiTexas 346312, US</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        thebestbyte@bestbyte.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 01 714 781 4636</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2021 Copyright:
+        <p>The Best Byte</p>
+    </div>
+    <!-- Copyright -->
+</footer>
+
+<!-- Footer -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
 
 </body>
-</html>

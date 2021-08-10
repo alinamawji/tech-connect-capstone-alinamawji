@@ -5,6 +5,8 @@
   Time: 7:19 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ include file = "common/header.jspf" %>
+
 <style>
     .text-italic {
         font-style: italic;
@@ -13,7 +15,7 @@
         color: darkgreen;
     }
 </style>
-<%@ include file = "common/header.jspf" %>
+
 <%--make sure you replace these features with the expression language call for the recipe models--%>
 <div class = "container">
     <div class = "row">

@@ -2,14 +2,34 @@ package com.techelevator.model;
 
 import javax.validation.constraints.AssertTrue;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * User
  */
 public class User {
+    @NotBlank(message = "First name is required")
+    private String firstName;
+
+    @NotBlank(message = "Last name is required")
+    private String lastName;
+
     @NotBlank(message = "Username is required")
     private String username;
+
+    @Email(message = "Invalid email")
+    @NotBlank(message = "Email is required")
+    private String email;
+    private String confirmEmail;
+
+    @AssertTrue(message = "Passwords must match")
+    public boolean isEmailMatching() {
+        if (email != null) {
+            return email.equals(confirmEmail);
+        }
+        return true;
+    }
 
     @NotBlank(message = "Role is required")
     private String role;
@@ -27,6 +47,30 @@ public class User {
             return password.equals(confirmPassword);
         }
         return true;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getConfirmEmail() {
+        return confirmEmail;
+    }
+    public void setConfirmEmail(String confirmEmail) {
+        this.confirmEmail = confirmEmail;
     }
 
     public String getPassword() {

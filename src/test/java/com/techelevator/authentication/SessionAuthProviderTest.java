@@ -3,7 +3,7 @@ package com.techelevator.authentication;
 import javax.servlet.http.HttpSession;
 
 import com.techelevator.model.User;
-import com.techelevator.model.UserDao;
+import com.techelevator.model.UserDAO;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +20,12 @@ import static org.junit.Assert.*;
 public class SessionAuthProviderTest {
     private SessionAuthProvider sut;
     private HttpSession mockedSession;
-    private UserDao mockedDao;
+    private UserDAO mockedDao;
 
     @Before
     public void before() {
         mockedSession = mock(HttpSession.class);
-        mockedDao = mock(UserDao.class);
+        mockedDao = mock(UserDAO.class);
         sut = new SessionAuthProvider(mockedSession, mockedDao);
     }
 

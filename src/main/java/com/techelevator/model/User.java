@@ -35,7 +35,6 @@ public class User {
     }
 
     @NotBlank(message = "Role is required")
-
     private long user_id;
     private String role;
 

@@ -1,10 +1,14 @@
 package com.techelevator.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Category {
     private long category_id;
+
+    @NotBlank(message = "Name is required")
     private String name;
 
-    public long getCategory_id() {
+    public long getCategoryId() {
         return category_id;
     }
 
@@ -12,7 +16,7 @@ public class Category {
         return name;
     }
 
-    public void setCategory_id(long category_id) {
+    public void setCategoryId(long category_id) {
         this.category_id = category_id;
     }
 

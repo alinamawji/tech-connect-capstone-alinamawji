@@ -29,13 +29,13 @@ public class JDBCRecipeDAO implements RecipeDAO {
         // insert recipe categories into recipe_category associative table
         for (Category c : categories) {
             String sqlRecipeIngredients = "INSERT INTO recipe_category(recipe_id, category_id) values(?, ?)";
-            jdbcTemplate.update(sqlRecipeIngredients, new categoryRowMapper(), recipe_id, c.getCategory_id());
+            jdbcTemplate.update(sqlRecipeIngredients, new categoryRowMapper(), recipe_id, c.getCategoryId());
         }
 
         // insert recipe ingredients into recipe_ingredient associative table
         for (Ingredient i : ingredients) {
             String sqlRecipeIngredients = "INSERT INTO recipe_ingredient(recipe_id, ingredient_id) values(?, ?)";
-            jdbcTemplate.update(sqlRecipeIngredients, new ingredientRowMapper(), recipe_id, i.getIngredient_id());
+            jdbcTemplate.update(sqlRecipeIngredients, new ingredientRowMapper(), recipe_id, i.getIngredientId());
         }
     }
 
@@ -64,15 +64,22 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
+    public Recipe getRecipeByID(long recipe_id) {
+        String sqlGetRecipeByID = "SELECT * FROM recipe WHERE recipe_id = ?";
+        Recipe recipe = (Recipe) jdbcTemplate.queryForObject(sqlGetRecipeByID, new recipeRowMapper(), recipe_id);
+        return recipe;
+    }
+
+    @Override
     public void addIngredientToList(long recipe_id, Ingredient ingredient) {
         String sqlNewIngredient = "INSERT INTO recipe_ingredient(recipe_id) values(?, ?)";
-        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), recipe_id, ingredient.getIngredient_id());
+        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), recipe_id, ingredient.getIngredientId());
     }
 
     @Override
     public void removeIngredientFromList(long recipe_id, Ingredient ingredient) {
         String sqlNewIngredient = "DELETE FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = ?";
-        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), recipe_id, ingredient.getIngredient_id());
+        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), recipe_id, ingredient.getIngredientId());
     }
 
     @Override
@@ -86,7 +93,7 @@ class recipeRowMapper implements RowMapper {
     @Override
     public Recipe mapRow(ResultSet results, int i) throws SQLException {
         Recipe recipe = new Recipe();
-        recipe.setRecipe_id(results.getLong("recipe_id"));
+        recipe.setRecipeId(results.getLong("recipe_id"));
         recipe.setTitle(results.getString("name"));
 //        recipe.setIngredients(results.getString("ingredients"));
         recipe.setOverview(results.getString("description"));

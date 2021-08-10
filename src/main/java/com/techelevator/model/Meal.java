@@ -16,11 +16,11 @@ public class Meal {
     @NotEmpty(message = "Recipe list cannot be empty")
     private List<Recipe> recipesInMeal;
 
-    public long getMeal_id() {
+    public long getMealId() {
         return meal_id;
     }
 
-    public long getUser_id() {
+    public long getUserId() {
         return user_id;
     }
 
@@ -32,12 +32,8 @@ public class Meal {
         return recipesInMeal;
     }
 
-    public void setMeal_id(long meal_id) {
+    public void setMealId(long meal_id) {
         this.meal_id = meal_id;
-    }
-
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
     }
 
     public void setTitle(String title) {

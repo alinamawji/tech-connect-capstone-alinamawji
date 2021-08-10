@@ -44,6 +44,7 @@ CREATE TABLE meal
     CONSTRAINT FK_meal_user FOREIGN KEY (user_id) REFERENCES app_user (user_id)
 );
 
+<<<<<<< HEAD
 CREATE TABLE recipe
 (
     recipe_id     SERIAL,
@@ -131,3 +132,6 @@ CREATE TABLE app_user_meal_plan
 
 
 COMMIT;
+=======
+COMMIT;
+>>>>>>> 591e4ec7d88014569c8c55f9af5a215ba05e1cf7

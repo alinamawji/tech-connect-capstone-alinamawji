@@ -52,9 +52,8 @@ public class JDBCUserDAO implements UserDAO {
                 userName, hashedPassword, saltString, role);
 
         User newUser = new User();
-        newUser.setId(newId);
+        newUser.setUser_id(newId);
         newUser.setUsername(userName);
-        newUser.setRole(role);
 
         return newUser;
     }
@@ -65,7 +64,7 @@ public class JDBCUserDAO implements UserDAO {
         String hashedPassword = passwordHasher.computeHash(newPassword, salt);
         String saltString = new String(Base64.encode(salt));
 
-        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE id=?", hashedPassword, saltString, user.getId());
+        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE id=?", hashedPassword, saltString, user.getUser_id());
     }
 
     /**
@@ -116,9 +115,8 @@ public class JDBCUserDAO implements UserDAO {
 
     private User mapResultToUser(SqlRowSet results) {
         User user = new User();
-        user.setId(results.getLong("id"));
+        user.setUser_id(results.getLong("id"));
         user.setUsername(results.getString("user_name"));
-        user.setRole(results.getString("role"));
         return user;
     }
 

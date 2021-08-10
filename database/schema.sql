@@ -44,17 +44,14 @@ CREATE TABLE meal
     CONSTRAINT FK_meal_user FOREIGN KEY (user_id) REFERENCES app_user (user_id)
 );
 
-<<<<<<< HEAD
 CREATE TABLE recipe
 (
     recipe_id     SERIAL,
-    ingredient_id int           NOT NULL,
-    category_id   int           NOT NULL,
     title         varchar(50)   NOT NULL,
     overview      varchar(300)  NULL,                          -- optional
     difficulty    int           NULL,                          -- optional
     date_created  date          NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
-    instructions  varchar(1000) NOT NULL,
+    instructions  varchar(2000) NOT NULL,
     CONSTRAINT PK_recipe PRIMARY KEY (recipe_id)
 );
 
@@ -91,7 +88,7 @@ CREATE TABLE meal_recipe
     recipe_id int NOT NULL,
     CONSTRAINT PK_meal_recipe PRIMARY KEY (meal_id, recipe_id),
     CONSTRAINT FK_meal_recipe_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id),
-    CONSTRAINT FK_meal_recipe_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),
+    CONSTRAINT FK_meal_recipe_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id)
 );
 
 CREATE TABLE recipe_ingredient
@@ -107,9 +104,9 @@ CREATE TABLE recipe_category
 (
     recipe_id   int NOT NULL,
     category_id int NOT NULL,
-    CONSTRAINT PK_recipe_ingredient PRIMARY KEY (recipe_id, category_id),
-    CONSTRAINT FK_recipe_ingredient_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),
-    CONSTRAINT FK_recipe_ingredient_ingredient FOREIGN KEY (category_id) REFERENCES category (category_id)
+    CONSTRAINT PK_recipe_category PRIMARY KEY (recipe_id, category_id),
+    CONSTRAINT FK_recipe_category_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),
+    CONSTRAINT FK_recipe_category_category FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
 
 CREATE TABLE app_user_recipe
@@ -132,6 +129,3 @@ CREATE TABLE app_user_meal_plan
 
 
 COMMIT;
-=======
-COMMIT;
->>>>>>> 591e4ec7d88014569c8c55f9af5a215ba05e1cf7

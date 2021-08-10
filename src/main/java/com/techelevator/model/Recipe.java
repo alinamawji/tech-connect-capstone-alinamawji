@@ -59,7 +59,7 @@ public class Recipe {
         return difficulty;
     }
 
-    public List<Category> getCategory() {
+    public List<Category> getCategories() {
         long recipe_id = getRecipe_id();
         return recipeDAO.getRecipeCategories(recipe_id);
     }

@@ -4,14 +4,14 @@
 <c:url var="registerUrl" value="/register"/>
 <form:form action="${registerUrl}" method="POST" modelAttribute="user">
     <div class="form-group">
-        <label for="firstName">First Name</label>
-        <form:input class="form-control" path="firstName" placeholder="enter first name"/>
-        <form:errors path="firstName" cssClass="bg-danger"/>
+        <label for="first_name">First Name</label>
+        <form:input class="form-control" path="first_name" placeholder="enter first name"/>
+        <form:errors path="first_name" cssClass="bg-danger"/>
     </div>
     <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <form:input class="form-control" path="lastName" placeholder="enter last name"/>
-        <form:errors path="lastName" cssClass="bg-danger"/>
+        <label for="last_name">Last Name</label>
+        <form:input class="form-control" path="last_name" placeholder="enter last name"/>
+        <form:errors path="last_name" cssClass="bg-danger"/>
     </div>
     <div class="form-group">
         <label for="username">Username</label>
@@ -38,28 +38,28 @@
         <form:password class="form-control" path="confirmPassword" placeholder="confirm password"/>
         <form:errors path="passwordMatching" cssClass="bg-danger"/>
     </div>
-    <fieldset>
-        <legend>Role</legend>
-        <form:errors path="role" cssClass="bg-danger"/>
-        <div class="radio">
-            <label>
-                <form:radiobutton path="role" value="user" checked="checked"/>
-                User
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <form:radiobutton path="role" value="admin"/>
-                Administrator
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <form:radiobutton path="role" value="editor"/>
-                Editor
-            </label>
-        </div>
-    </fieldset>
+<%--    <fieldset>--%>
+<%--        <legend>Role</legend>--%>
+<%--        <form:errors path="role" cssClass="bg-danger"/>--%>
+<%--        <div class="radio">--%>
+<%--            <label>--%>
+<%--                <form:radiobutton path="role" value="user" checked="checked"/>--%>
+<%--                User--%>
+<%--            </label>--%>
+<%--        </div>--%>
+<%--        <div class="radio">--%>
+<%--            <label>--%>
+<%--                <form:radiobutton path="role" value="admin"/>--%>
+<%--                Administrator--%>
+<%--            </label>--%>
+<%--        </div>--%>
+<%--        <div class="radio">--%>
+<%--            <label>--%>
+<%--                <form:radiobutton path="role" value="editor"/>--%>
+<%--                Editor--%>
+<%--            </label>--%>
+<%--        </div>--%>
+<%--    </fieldset>--%>
     <button type="submit" class="btn btn-default">Register</button>
 </form:form>
 

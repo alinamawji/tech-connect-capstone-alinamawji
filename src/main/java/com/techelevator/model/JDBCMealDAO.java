@@ -27,8 +27,8 @@ class mealRowMapper implements RowMapper {
     @Override
     public Meal mapRow(ResultSet results, int i) throws SQLException {
         Meal meal = new Meal();
-        meal.setMeal_id(results.getLong("meal_id"));
-        meal.setUser_id(results.getLong("user_id"));
+        meal.setMealId(results.getLong("meal_id"));
+        meal.setMealId(results.getLong("user_id"));
         meal.setTitle(results.getString("title"));
 //        meal.setRecipesInMeal(results.getString("recipes"));
         return meal;

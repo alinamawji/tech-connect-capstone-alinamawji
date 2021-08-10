@@ -13,7 +13,7 @@ public class Ingredient {
     //
     // GET METHODS
     //
-    public long getIngredient_id() {
+    public long getIngredientId() {
         return ingredient_id;
     }
 
@@ -24,7 +24,7 @@ public class Ingredient {
     //
     // SET METHODS
     //
-    public void setIngredient_id(long ingredient_id) {
+    public void setIngredientId(long ingredient_id) {
         this.ingredient_id = ingredient_id;
     }
 

@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Recipe {
@@ -32,13 +33,15 @@ public class Recipe {
     @NotBlank(message = "Overview is required")
     private String overview;
 
+    private LocalDateTime date_created;
+
     @NotBlank(message = "Image is required")
 //    private String image;
 
     //
     // GET METHODS
     //
-    public long getRecipe_id() {
+    public long getRecipeId() {
         return recipe_id;
     }
 
@@ -47,7 +50,7 @@ public class Recipe {
     }
 
     public List<Ingredient> getIngredients() {
-        long recipe_id = getRecipe_id();
+        long recipe_id = getRecipeId();
         return recipeDAO.getRecipeIngredients(recipe_id);
     }
 
@@ -60,7 +63,7 @@ public class Recipe {
     }
 
     public List<Category> getCategories() {
-        long recipe_id = getRecipe_id();
+        long recipe_id = getRecipeId();
         return recipeDAO.getRecipeCategories(recipe_id);
     }
 
@@ -68,14 +71,18 @@ public class Recipe {
         return overview;
     }
 
-//    public String getImage() {
+    public LocalDateTime getDateCreated() {
+        return date_created;
+    }
+
+    //    public String getImage() {
 //        return image;
 //    }
 
     //
     // SET METHODS
     //
-    public void setRecipe_id(long recipe_id) {
+    public void setRecipeId(long recipe_id) {
         this.recipe_id = recipe_id;
     }
 
@@ -103,7 +110,11 @@ public class Recipe {
         this.overview = overview;
     }
 
-//    public void setImage(String image) {
+    public void setDateCreated(LocalDateTime date_created) {
+        this.date_created = date_created;
+    }
+
+    //    public void setImage(String image) {
 //        this.image = image;
 //    }
 

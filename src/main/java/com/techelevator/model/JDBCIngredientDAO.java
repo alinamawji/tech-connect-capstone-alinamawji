@@ -20,7 +20,7 @@ public class JDBCIngredientDAO {
 
     public void addIngredientToDB(Ingredient ingredient) {
         String sqlAddIngredientToDB = "INSERT INTO ingredient(ingredient_id, ingredient_name) values(?, ?)";
-        jdbcTemplate.update(sqlAddIngredientToDB, new ingredientRowMapper(), ingredient.getIngredient_id(), ingredient.getName());
+        jdbcTemplate.update(sqlAddIngredientToDB, new ingredientRowMapper(), ingredient.getIngredientId(), ingredient.getName());
     }
 
 }
@@ -29,7 +29,7 @@ class ingredientRowMapper implements RowMapper {
     @Override
     public Ingredient mapRow(ResultSet results, int i) throws SQLException {
         Ingredient ingredient = new Ingredient();
-        ingredient.setIngredient_id(results.getLong("ingredient_id"));
+        ingredient.setIngredientId(results.getLong("ingredient_id"));
         ingredient.setName(results.getString("name"));
         return ingredient;
     }

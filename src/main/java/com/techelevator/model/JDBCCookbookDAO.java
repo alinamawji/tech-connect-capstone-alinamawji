@@ -43,7 +43,7 @@ class cookbookRowMapper implements RowMapper {
     @Override
     public Cookbook mapRow(ResultSet results, int i) throws SQLException {
         Cookbook cookbook = new Cookbook();
-        cookbook.setUser_id(results.getLong("user_id"));
+        cookbook.setUserId(results.getLong("user_id"));
 //        cookbook.setRecipes(results.getString("recipes"));
         return cookbook;
     }

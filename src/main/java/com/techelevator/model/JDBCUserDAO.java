@@ -14,7 +14,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JdbcUserDao implements UserDao {
+public class JDBCUserDAO implements UserDAO {
 
     private JdbcTemplate jdbcTemplate;
     private PasswordHasher passwordHasher;
@@ -27,7 +27,7 @@ public class JdbcUserDao implements UserDao {
      * @param passwordHasher an object to salt and hash passwords
      */
     @Autowired
-    public JdbcUserDao(DataSource dataSource, PasswordHasher passwordHasher) {
+    public JDBCUserDAO(DataSource dataSource, PasswordHasher passwordHasher) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.passwordHasher = passwordHasher;
     }
@@ -52,9 +52,8 @@ public class JdbcUserDao implements UserDao {
                 userName, hashedPassword, saltString, role);
 
         User newUser = new User();
-        newUser.setId(newId);
+        newUser.setUser_id(newId);
         newUser.setUsername(userName);
-        newUser.setRole(role);
 
         return newUser;
     }
@@ -65,7 +64,7 @@ public class JdbcUserDao implements UserDao {
         String hashedPassword = passwordHasher.computeHash(newPassword, salt);
         String saltString = new String(Base64.encode(salt));
 
-        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE id=?", hashedPassword, saltString, user.getId());
+        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE id=?", hashedPassword, saltString, user.getUser_id());
     }
 
     /**
@@ -116,9 +115,8 @@ public class JdbcUserDao implements UserDao {
 
     private User mapResultToUser(SqlRowSet results) {
         User user = new User();
-        user.setId(results.getLong("id"));
+        user.setUser_id(results.getLong("id"));
         user.setUsername(results.getString("user_name"));
-        user.setRole(results.getString("role"));
         return user;
     }
 

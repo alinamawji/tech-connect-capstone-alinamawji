@@ -2,10 +2,10 @@
 -- This script creates all of the database objects (tables, sequences, etc) for the database
 -- *************************************************************************************************
 
-BEGIN TRANSACTION;
+BEGIN;
 
 DROP TABLE IF EXISTS app_user,meal_plan,meal,recipe,ingredient,category,meal_plan_meal,
-    meal_recipe,recipe_ingredient,recipe_category,app_user_recipe CASCADE;
+    meal_recipe,recipe_ingredient,recipe_category,app_user_recipe,app_user_meal_plan CASCADE;
 
 -- *************************************************************************************************
 -- CREATE statements for the Main Tables listed below
@@ -54,9 +54,7 @@ CREATE TABLE recipe
     difficulty    int           NULL,                          -- optional
     date_created  date          NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
     instructions  varchar(1000) NOT NULL,
-    CONSTRAINT PK_recipe PRIMARY KEY (recipe_id),
-    CONSTRAINT FK_recipe_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id),
-    CONSTRAINT FK_recipe_category FOREIGN KEY (category_id) REFERENCES category (category_id)
+    CONSTRAINT PK_recipe PRIMARY KEY (recipe_id)
 );
 
 CREATE TABLE ingredient

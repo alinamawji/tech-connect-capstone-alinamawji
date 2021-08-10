@@ -14,7 +14,7 @@ public interface UserDAO {
      * @param role the user's role
      * @return the new user
      */
-    public User saveUser(String userName, String password, String role);
+    public User saveUser(String firstName, String lastName, String userName, String email, String password, String role);
 
     public void changePassword(User user, String newPassword);
 

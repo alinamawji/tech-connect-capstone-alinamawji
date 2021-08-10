@@ -13,10 +13,10 @@ import org.hibernate.validator.constraints.NotBlank;
 public class User {
 
     @NotBlank(message = "First name is required")
-    private String first_name;
+    private String firstName;
 
     @NotBlank(message = "Last name is required")
-    private String last_name;
+    private String lastName;
 
     @NotBlank(message = "Username is required")
     private String username;
@@ -24,32 +24,32 @@ public class User {
     @Email(message = "Invalid email")
     @NotBlank(message = "Email is required")
     private String email;
-    private String confirm_email;
+    private String confirmEmail;
 
     @AssertTrue(message = "Emails must match")
     public boolean isEmailMatching() {
         if (email != null) {
-            return email.equals(confirm_email);
+            return email.equals(confirmEmail);
         }
         return true;
     }
 
-    @NotBlank(message = "Role is required")
 
-    private long user_id;
+
+    private Long userId;
     private String role;
 
     @Size(min = 6, message = "Password must be at least 6 characters")
     @NotBlank(message = "Password is required")
     private String password;
-    private String confirm_password;
+    private String confirmPassword;
 
     private boolean passwordMatching;
 
     @AssertTrue(message = "Passwords must match")
     public boolean isPasswordMatching() {
         if (password != null) {
-            return password.equals(confirm_password);
+            return password.equals(confirmPassword);
         }
         return true;
     }
@@ -57,11 +57,11 @@ public class User {
     //
     // GET METHODS
     //
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
     public String getUsername() {
         return username;
@@ -70,17 +70,15 @@ public class User {
         return email;
     }
     public String getConfirmEmail() {
-        return confirm_email;
+        return confirmEmail;
     }
     public String getPassword() {
         return password;
     }
     public String getConfirmPassword() {
-        return confirm_password;
+        return confirmPassword;
     }
-    public long getId() {
-        return user_id;
-    }
+    public long getId() {return userId;}
     public String getRole() {
         return role;
     }
@@ -88,11 +86,11 @@ public class User {
     //
     // SET METHODS
     //
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
     public void setUsername(String username) {
         this.username = username;
@@ -100,18 +98,16 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setConfirm_email(String confirm_email) {
-        this.confirm_email = confirm_email;
+    public void setConfirmEmail(String confirmEmail) {
+        this.confirmEmail = confirmEmail;
     }
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setConfirm_password(String confirm_password) {
-        this.confirm_password = confirm_password;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
-    public void setId(long user_id) {
-        this.user_id = user_id;
-    }
+    public void setId(Long userId) {this.userId = userId;}
     public void setRole(String role) {
         this.role = role;
     }

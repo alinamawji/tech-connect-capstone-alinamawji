@@ -43,13 +43,13 @@ public class JDBCUserDAO implements UserDAO {
      * @return the new user
      */
     @Override
-    public User saveUser(String userName, String password, String role) {
+    public User saveUser(String firstName, String lastName, String userName, String email, String password, String role) {
         byte[] salt = passwordHasher.generateRandomSalt();
         String hashedPassword = passwordHasher.computeHash(password, salt);
         String saltString = new String(Base64.encode(salt));
         long newId = jdbcTemplate.queryForObject(
-                "INSERT INTO app_user(user_name, password, salt, role) VALUES (?, ?, ?, ?) RETURNING id", Long.class,
-                userName, hashedPassword, saltString, role);
+                "INSERT INTO app_user(first_name, last_name, username, email, password, salt, role) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING user_id", Long.class,
+                firstName, lastName, userName, email, hashedPassword, saltString, role);
 
         User newUser = new User();
         newUser.setId(newId);
@@ -64,7 +64,7 @@ public class JDBCUserDAO implements UserDAO {
         String hashedPassword = passwordHasher.computeHash(newPassword, salt);
         String saltString = new String(Base64.encode(salt));
 
-        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE id=?", hashedPassword, saltString, user.getId());
+        jdbcTemplate.update("UPDATE app_user SET password=?, salt=? WHERE user_id=?", hashedPassword, saltString, user.getId());
     }
 
     /**
@@ -78,7 +78,7 @@ public class JDBCUserDAO implements UserDAO {
      */
     @Override
     public User getValidUserWithPassword(String userName, String password) {
-        String sqlSearchForUser = "SELECT * FROM app_user WHERE UPPER(user_name) = ?";
+        String sqlSearchForUser = "SELECT * FROM app_user WHERE UPPER(username) = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchForUser, userName.toUpperCase());
         if (results.next()) {
@@ -102,7 +102,7 @@ public class JDBCUserDAO implements UserDAO {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
-        String sqlSelectAllUsers = "SELECT id, user_name, role FROM app_user";
+        String sqlSelectAllUsers = "SELECT user_id, username, role FROM app_user";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllUsers);
 
         while (results.next()) {
@@ -115,8 +115,12 @@ public class JDBCUserDAO implements UserDAO {
 
     private User mapResultToUser(SqlRowSet results) {
         User user = new User();
-        user.setId(results.getLong("id"));
-        user.setUsername(results.getString("user_name"));
+        user.setId(results.getLong("user_id"));
+        user.setUsername(results.getString("username"));
+        user.setPassword(results.getString("password"));
+        user.setEmail(results.getString("email"));
+        user.setRole(results.getString("role"));
+
         return user;
     }
 

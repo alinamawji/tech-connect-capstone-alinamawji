@@ -38,11 +38,11 @@ public interface AuthProvider {
 
     /**
      * Register a new user to the system
-     * @param username the new user's username
+     * @param userName the new user's username
      * @param password the new user's password
      * @param role the new user's role
      */
-    void register(String username, String password, String role);
+    void register(String firstName, String lastName, String email, String userName, String password, String role);
 
     /**
      * Checks to see if the current user has one of the given roles

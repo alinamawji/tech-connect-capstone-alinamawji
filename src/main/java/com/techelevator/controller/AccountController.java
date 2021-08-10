@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.model.User;
+import com.techelevator.model.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 
 /**
@@ -22,6 +24,9 @@ import javax.validation.Valid;
 public class AccountController {
     @Autowired
     private AuthProvider auth;
+
+    @Autowired
+    UserDAO userDAO;
 
     @RequestMapping(method = RequestMethod.GET, path = {"/", "/index"})
     public String index(ModelMap modelHolder) {
@@ -67,7 +72,7 @@ public class AccountController {
             flash.addFlashAttribute("message", "Please fix the following errors:");
             return "redirect:/register";
         }
-        auth.register(user.getUsername(), user.getPassword(), user.getRole());
+        auth.register(user.getFirstName(), user.getLastName(),user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
         return "redirect:/";
     }
 }

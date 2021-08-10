@@ -54,7 +54,7 @@ public class SessionAuthProviderTest {
     @Test
     public void getCurrentUserWithUserTest() {
         User mockedUser = new User();
-        mockedUser.setId(0);
+        mockedUser.setId(0L);
         mockedUser.setUsername("TEST");
 
         when(mockedSession.getAttribute(SessionAuthProvider.USER_KEY)).thenReturn(mockedUser);
@@ -76,15 +76,15 @@ public class SessionAuthProviderTest {
 
     @Test
     public void registerTest() {
-        sut.register("TEST", "TESTPASS", "TESTROLE");
+        sut.register("TEST", "TESTPASS", "TESTROLE", "TEST", "TEST", "TEST");
 
-        verify(mockedDao).saveUser("TEST", "TESTPASS", "TESTROLE");
+        verify(mockedDao).saveUser("TEST", "TESTPASS", "TESTROLE", "TEST", "TEST", "TEST");
     }
 
     @Test
     public void signInSuccessTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         when(mockedDao.getValidUserWithPassword("TEST", "TEST")).thenReturn(testUser);
 
@@ -102,7 +102,7 @@ public class SessionAuthProviderTest {
     @Test
     public void changePasswordSuccessTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
 
         when(mockedSession.getAttribute(SessionAuthProvider.USER_KEY)).thenReturn(testUser);
@@ -115,7 +115,7 @@ public class SessionAuthProviderTest {
     @Test
     public void changePasswordBadPasswordTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
 
         when(mockedSession.getAttribute(SessionAuthProvider.USER_KEY)).thenReturn(testUser);
@@ -128,7 +128,7 @@ public class SessionAuthProviderTest {
     @Test
     public void changePasswordNoOneLoggedInTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
 
         when(mockedSession.getAttribute(SessionAuthProvider.USER_KEY)).thenReturn(null);
@@ -141,7 +141,7 @@ public class SessionAuthProviderTest {
     @Test
     public void hasRoleSuccessTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         testUser.setRole("user");
 
@@ -153,7 +153,7 @@ public class SessionAuthProviderTest {
     @Test
     public void hasRoleFailTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         testUser.setRole("user");
 
@@ -165,7 +165,7 @@ public class SessionAuthProviderTest {
     @Test
     public void hasRoleMultipleSuccessTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         testUser.setRole("user");
 
@@ -177,7 +177,7 @@ public class SessionAuthProviderTest {
     @Test
     public void hasRoleMultipleFailTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         testUser.setRole("user");
 
@@ -189,7 +189,7 @@ public class SessionAuthProviderTest {
     @Test
     public void hasRoleNullTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         testUser.setRole("user");
 
@@ -201,7 +201,7 @@ public class SessionAuthProviderTest {
     @Test
     public void hasRoleEmptyTest() {
         User testUser = new User();
-        testUser.setId(0);
+        testUser.setId(0L);
         testUser.setUsername("TEST");
         testUser.setRole("user");
 

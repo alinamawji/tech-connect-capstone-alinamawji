@@ -4,14 +4,14 @@
 <c:url var="registerUrl" value="/register"/>
 <form:form action="${registerUrl}" method="POST" modelAttribute="user">
     <div class="form-group">
-        <label for="first_name">First Name</label>
-        <form:input class="form-control" path="first_name" placeholder="enter first name"/>
-        <form:errors path="first_name" cssClass="bg-danger"/>
+        <label for="firstName">First Name</label>
+        <form:input class="form-control" path="firstName" placeholder="enter first name"/>
+        <form:errors path="firstName" cssClass="bg-danger"/>
     </div>
     <div class="form-group">
-        <label for="last_name">Last Name</label>
-        <form:input class="form-control" path="last_name" placeholder="enter last name"/>
-        <form:errors path="last_name" cssClass="bg-danger"/>
+        <label for="lastName">Last Name</label>
+        <form:input class="form-control" path="lastName" placeholder="enter last name"/>
+        <form:errors path="lastName" cssClass="bg-danger"/>
     </div>
     <div class="form-group">
         <label for="username">Username</label>
@@ -26,7 +26,7 @@
     <div class="form-group">
         <label for="confirmEmail">Confirm Email</label>
         <form:input class="form-control" path="confirmEmail" placeholder="confirm email"/>
-        <form:errors path="confirmEmail" cssClass="bg-danger"/>
+        <form:errors path="emailMatching" cssClass="bg-danger"/>
     </div>
     <div class="form-group">
         <label for="password">Password</label>

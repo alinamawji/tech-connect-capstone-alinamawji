@@ -46,22 +46,20 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public void deleteRecipeFromCookbook(long recipe_id) {
-        String sqlDeleteRecipeFromCookbook = "DELETE FROM app_user_recipe WHERE recipe_id = ?";
-        jdbcTemplate.update(sqlDeleteRecipeFromCookbook, new recipeRowMapper(), recipe_id);
-    }
-
-    @Override
     public List<Ingredient> getRecipeIngredients(long recipe_id) {
-        String sql = "SELECT ingredient_id FROM recipe_ingredient WHERE recipe_id = ?";
-        List<Ingredient> ingredientList = jdbcTemplate.query(sql, new recipeRowMapper(), recipe_id);
+        String sql = "SELECT * FROM ingredient i" +
+                "JOIN recipe_ingredient ri ON ri.ingredient_id = i.ingredient_id" +
+                "WHERE recipe_id = ?";
+        List<Ingredient> ingredientList = jdbcTemplate.query(sql, new ingredientRowMapper(), recipe_id);
         return ingredientList;
     }
 
     @Override
     public List<Category> getRecipeCategories(long recipe_id) {
-        String sql = "SELECT category_id FROM recipe_category WHERE recipe_id = ?";
-        List<Category> categoryList = jdbcTemplate.query(sql, new recipeRowMapper(), recipe_id);
+        String sql = "SELECT * FROM category c" +
+                "JOIN recipe_category rc ON rc.category_id = c.category_id" +
+                "WHERE recipe_id = ?";
+        List<Category> categoryList = jdbcTemplate.query(sql, new categoryRowMapper(), recipe_id);
         return categoryList;
     }
 
@@ -93,7 +91,7 @@ class recipeRowMapper implements RowMapper {
 //        recipe.setIngredients(results.getString("ingredients"));
         recipe.setOverview(results.getString("description"));
         recipe.setDifficulty(results.getInt("difficulty"));
-//        recipe.setCategories(results.getString("category"));
+//        recipe.setCategories(results.getString("categories"));
         recipe.setInstructions(results.getString("instructions"));
         return recipe;
     }

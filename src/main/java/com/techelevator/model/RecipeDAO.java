@@ -11,8 +11,6 @@ public interface RecipeDAO {
 
     public void deleteRecipeFromDB(long recipe_id);
 
-    public void deleteRecipeFromCookbook(long recipe_id);
-
     public List<Ingredient> getRecipeIngredients(long recipe_id);
 
     public List<Category> getRecipeCategories(long recipe_id);

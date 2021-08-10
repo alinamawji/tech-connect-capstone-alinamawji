@@ -5,7 +5,7 @@
         margin-left: 20px;
     }
     .card {
-        background: seagreen;
+        background-color: seagreen !important;
         color: white;
         margin-left: 10px;
     }

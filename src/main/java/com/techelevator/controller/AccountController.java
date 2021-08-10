@@ -70,5 +70,4 @@ public class AccountController {
         auth.register(user.getUsername(), user.getPassword(), user.getRole());
         return "redirect:/";
     }
-
 }

@@ -1,7 +1,99 @@
 <%@ include file = "common/header.jspf" %>
+<style>
+    h1 {
+        color: darkgreen;
+        margin-left: 20px;
+    }
+    .card {
+        background: seagreen;
+        color: white;
+        margin-left: 10px;
+    }
+    .card-title, h2 {
+        font-style: italic;
+    }
+    .card-text {
+        text-align: left;
+    }
 
-<h1>About this application</h1>
+    .font-italic {
+        font-style: italic;
+    }
 
-<p>This application is a demonstration of an authentication program that you can use to base your projects off of. Take a look at the AccountController to see how to restrict access to pages using a logged in user and a user's role.</p>
+    img {
+        width: 250px;
+        min-height: 250px;
+        float: left;
+        margin: 10px;
+    }
 
+    h2 {
+        margin-left: 30px;
+    }
+
+</style>
+<h1 class = "display-4">About Us</h1>
+<hr>
+<h2 class = "display-6">Frequently Asked Questions </h2>
+<div class = "container">
+    <div class = "row">
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title">What is the Best Byte?</h5>
+                <p class="card-text">Best Byte is a meal planner website, where you're able to create personalized meal plans based off of recipes you and other users created.</p>
+            </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title">What is the difference between an anonymous user and a registered user?</h5>
+                <p class="card-text">Registered users: upload and edit recipes, save them to your cookbook, create meals and meal plans. Anonymous users can only access recipes.</p>
+            </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title">What's the "My Cookbook" feature?</h5>
+                <p class="card-text">The "My Cookbook" feature allows registered users to see recipes they've uploaded or saved from the website.</p>
+            </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+            <div class="card-body">
+                <h5 class="card-title">What's the difference between "Remove From Cookbook" and "Delete Recipe"?</h5>
+                <p class="card-text">"Remove From Cookbook" removes the saved recipe from your cookbook. "Delete Recipe" removes a recipe you've created off of the entire website.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h2 class = "display-6">Meet The Team</h2>
+<div class = "container">
+    <div class = "row">
+        <div class = "col-md-3">
+            <img src="https://image.shutterstock.com/image-vector/stick-figure-celebration-jump-260nw-331595438.jpg" alt="Aidan Fox headshot" class="img-fluid rounded-circle">
+            <p class = "text-center">Aidan Fox</p>
+            <p class = "text-center font-italic">Backend Engineer</p>
+        </div>
+
+        <div class = "col-md-3">
+            <img src="https://us.123rf.com/450wm/zdeneksasek/zdeneksasek1803/zdeneksasek180300001/96877917-cartoon-stick-man-drawing-conceptual-illustration-of-businessman-pointing-right-.jpg?ver=6" alt="Alina Mawji headshot" class="img-fluid rounded-circle">
+            <p class = "text-center">Alina Mawji</p>
+            <p class = "text-center font-italic">Backend Engineer</p>
+        </div>
+
+        <div class = "col-md-3">
+            <img src="https://toppng.com/uploads/preview/stick-figure-raising-hand-11549007130dp0lmhc9cx.png" alt="Erin Xu headshot" class="img-fluid rounded-circle">
+            <p class = "text-center">Erin Xu</p>
+            <p class = "text-center font-italic">Frontend Engineer</p>
+        </div>
+
+        <div class = "col-md-3">
+            <img src="https://toppng.com/uploads/preview/stick-figure-raising-hands-happy-11549007131bfyrfg2jgy.png" alt="Diana Dang headshot" class="img-fluid rounded-circle">
+            <p class = "text-center">Diana Dang</p>
+            <p class = "text-center font-italic">Frontend Engineer</p>
+        </div>
+    </div>
+</div>
 <%@ include file = "common/footer.jspf" %>

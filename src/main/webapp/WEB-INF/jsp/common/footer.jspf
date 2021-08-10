@@ -26,7 +26,7 @@
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
-                    <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase display-6 mb-4" style = "font-size: 1rem;">
                         <i class="fas fa-gem me-3"></i>The Best Byte
                     </h6>
                     <img class = "rounded" src = https://seeklogo.com/images/G/good-food-logo-36B7F2C85D-seeklogo.com.png alt = "The Best Byte logo">
@@ -35,7 +35,7 @@
                 <!-- Grid column -->
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase display-6 mb-4" style = "font-size: 1rem;">
                         Useful Links
                     </h6>
                     <p>
@@ -53,7 +53,7 @@
                 <!-- Grid column -->
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase display-6 mb-4" style = "font-size: 1rem;">
                         Contact
                     </h6>
                     <p><i class="fas fa-home me-3"></i> ChiTexas 346312, US</p>
@@ -68,11 +68,6 @@
             <!-- Grid row -->
         </div>
     </section>
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <p>The Best Byte</p>
-    </div>
     <!-- Copyright -->
 </footer>
 

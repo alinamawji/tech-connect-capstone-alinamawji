@@ -19,7 +19,7 @@ CREATE TABLE app_user
     username   varchar(32)  NOT NULL,
     password   varchar(32)  NOT NULL,
     email      varchar(50)  NOT NULL,
-    role       varchar(32) DEFAULT 'registered', -- default from format
+    role       varchar(32) NOT NULL DEFAULT 'registered', -- default from format
     salt       varchar(255) NOT NULL,            -- default from format
     CONSTRAINT PK_user PRIMARY KEY (user_id),
     CONSTRAINT UQ_user_username UNIQUE (username),

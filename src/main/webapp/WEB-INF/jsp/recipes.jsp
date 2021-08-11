@@ -22,6 +22,9 @@
 <div class = "container" id = "grid">
         <div class = "col-md-4">
             <for:forEach items="${recipes}" var="recipe" >
+                <c:url var="detailUrl" value="/recipeDetails">
+                    <c:param name="recipe_id" value="${recipe.recipeId}"/>
+                </c:url>
                 <div class = "card">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
@@ -29,7 +32,7 @@
                         </div>
                         <h5 class="card-title"><c:out value="${recipe.title}"/></h5>
                         <p class="card-text">${recipe.overview}</p>
-                        <a href="recipeDetails" class="btn btn-success">View More</a>
+                        <a href="${detailUrl}" class="btn btn-success">View More</a>
                     </div>
                 </div>
             </for:forEach>

@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.techelevator.model.Ingredient;
 import com.techelevator.model.JDBCRecipeDAO;
 import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,8 @@ public class RecipeController {
     public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder) {
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
         modelHolder.put("recipe", recipe);
+        List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+        modelHolder.put("ingredients", ingredients);
 
         return "recipeDetails";
     }

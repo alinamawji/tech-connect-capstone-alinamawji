@@ -48,8 +48,8 @@ public class JDBCRecipeDAO implements RecipeDAO {
     @Override
     public List<Ingredient> getRecipeIngredients(long recipe_id) {
         String sql = "SELECT * FROM ingredient i" +
-                "JOIN recipe_ingredient ri ON ri.ingredient_id = i.ingredient_id" +
-                "WHERE recipe_id = ?";
+                " JOIN recipe_ingredient ri ON ri.ingredient_id = i.ingredient_id" +
+                " WHERE recipe_id = ?";
         List<Ingredient> ingredientList = jdbcTemplate.query(sql, new ingredientRowMapper(), recipe_id);
         return ingredientList;
     }
@@ -57,8 +57,8 @@ public class JDBCRecipeDAO implements RecipeDAO {
     @Override
     public List<Category> getRecipeCategories(long recipe_id) {
         String sql = "SELECT * FROM category c" +
-                "JOIN recipe_category rc ON rc.category_id = c.category_id" +
-                "WHERE recipe_id = ?";
+                " JOIN recipe_category rc ON rc.category_id = c.category_id" +
+                " WHERE recipe_id = ?";
         List<Category> categoryList = jdbcTemplate.query(sql, new categoryRowMapper(), recipe_id);
         return categoryList;
     }

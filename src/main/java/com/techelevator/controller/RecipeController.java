@@ -36,9 +36,9 @@ public class RecipeController {
 
         if(result.hasErrors()){
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "recipe", result);
-            return "redirect:/addNewRecipe"
+            return "redirect:/addNewRecipe";
         }
-        recipeDAO.addRecipeToDB(recipe.getRecipe_id(),recipe.getTitle(),recipe.getOverview(),recipe.getDifficulty(),
+        recipeDAO.addRecipeToDB(recipe.getRecipeId(),recipe.getTitle(),recipe.getOverview(),recipe.getDifficulty(),
                 recipe.getDateCreated(),recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories());
         return "redirect:/recipes"; //Change this to redirect to the cookbook when jsp pages/controller exists
 

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class = "container">
-    <h1 class = "display-4" style = "margin-left: 20px;" >Hi, (insert user name here).</h1>
+    <h1 class = "display-4" style = "margin-left: 20px;" >Hi, ${user.firstName}.</h1>
     <hr>
     <p class = "fw-normal fst-italic">You've logged in successfully. Continue to using Best Byte with the buttons below!</p>
 

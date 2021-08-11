@@ -115,6 +115,8 @@ public class JDBCUserDAO implements UserDAO {
 
     private User mapResultToUser(SqlRowSet results) {
         User user = new User();
+        user.setFirstName(results.getString("first_name"));
+        user.setLastName(results.getString("last_name"));
         user.setId(results.getLong("user_id"));
         user.setUsername(results.getString("username"));
         user.setPassword(results.getString("password"));

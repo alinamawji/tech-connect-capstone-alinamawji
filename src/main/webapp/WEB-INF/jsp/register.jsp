@@ -3,6 +3,7 @@
 
 <c:url var="registerUrl" value="/register"/>
 <form:form action="${registerUrl}" method="POST" modelAttribute="user">
+    <h1 class = "display-6" style = "margin-top: 10px; margin-bottom: 10px;">Registration</h1>
     <div class="form-group">
         <label for="firstName">First Name</label>
         <form:input class="form-control" path="firstName" placeholder="enter first name"/>
@@ -60,7 +61,7 @@
 <%--            </label>--%>
 <%--        </div>--%>
 <%--    </fieldset>--%>
-    <button type="submit" class="btn btn-default">Register</button>
+    <button type="submit" class="btn btn-outline-dark" style = "margin-top: 10px;">Register</button>
 </form:form>
 
 <%@ include file = "common/footer.jspf" %>

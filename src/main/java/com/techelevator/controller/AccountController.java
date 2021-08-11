@@ -62,11 +62,11 @@ public class AccountController {
         return "loginConfirmation";
     }
 
-
-    @RequestMapping(path = "/logoff", method = RequestMethod.POST)
-    public String logOff() {
+    @RequestMapping(path = "/logoff", method = RequestMethod.GET)
+    public String displayLogOff(HttpSession session) {
+        User user = (User) session.getAttribute("user");
         auth.logOff();
-        return "redirect:/";
+        return "logoutConfirmation";
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.GET)

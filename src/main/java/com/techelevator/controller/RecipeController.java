@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class RecipeController {
@@ -20,7 +21,9 @@ public class RecipeController {
    private JDBCRecipeDAO recipeDAO;
 
     @RequestMapping(path = "/recipes", method = RequestMethod.GET)
-    public String showUniversalRecipes() {
+    public String showUniversalRecipes(ModelMap modelHolder) {
+        List<Recipe> recipes = recipeDAO.getAllRecipes();
+        modelHolder.put("recipes",recipes);
         return "recipes";
     }
 

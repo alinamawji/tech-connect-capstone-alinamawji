@@ -23,4 +23,6 @@ public interface RecipeDAO {
 
     public void modifyInstructions(long recipe_id, String instructions);
 
+    public List<Recipe> getAllRecipes();
+
 }

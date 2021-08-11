@@ -86,7 +86,14 @@ public class JDBCRecipeDAO implements RecipeDAO {
     public void modifyInstructions(long recipe_id, String instructions) {
         String sqlNewIngredient = "UPDATE recipe SET instructions = ? WHERE recipe_id = ?";
         jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), instructions, recipe_id);
-    };
+    }
+
+    @Override
+    public List<Recipe> getAllRecipes(){
+        String sqlAllRecipes = "SELECT * FROM recipe";
+        List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sqlAllRecipes, new recipeRowMapper());
+        return recipes;
+    }
 }
 
 class recipeRowMapper implements RowMapper {
@@ -94,9 +101,9 @@ class recipeRowMapper implements RowMapper {
     public Recipe mapRow(ResultSet results, int i) throws SQLException {
         Recipe recipe = new Recipe();
         recipe.setRecipeId(results.getLong("recipe_id"));
-        recipe.setTitle(results.getString("name"));
+        recipe.setTitle(results.getString("title"));
 //        recipe.setIngredients(results.getString("ingredients"));
-        recipe.setOverview(results.getString("description"));
+        recipe.setOverview(results.getString("overview"));
         recipe.setDifficulty(results.getInt("difficulty"));
 //        recipe.setCategories(results.getString("categories"));
         recipe.setInstructions(results.getString("instructions"));

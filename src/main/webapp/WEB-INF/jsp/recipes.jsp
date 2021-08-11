@@ -21,14 +21,14 @@
 <h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 20px;">Recipes</h1>
 <div class = "container" id = "grid">
         <div class = "col-md-4">
-            <for:forEach var = "i" begin = "1" end  = "10">
+            <for:forEach items="${recipes}" var="recipe" >
                 <div class = "card">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
                             <button type="button" class = "btn btn-sm btn-success">Save</button>
                         </div>
-                        <h5 class="card-title">Recipe ${i}</h5>
-                        <p class="card-text">Recipe Overview # ${i}</p>
+                        <h5 class="card-title"><c:out value="${recipe.title}"/></h5>
+                        <p class="card-text">${recipe.overview}</p>
                         <a href="recipeDetails" class="btn btn-success">View More</a>
                     </div>
                 </div>

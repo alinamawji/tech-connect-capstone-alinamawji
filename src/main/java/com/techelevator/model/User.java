@@ -85,7 +85,7 @@ public class User {
 
     //
     // SET METHODS
-    //
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

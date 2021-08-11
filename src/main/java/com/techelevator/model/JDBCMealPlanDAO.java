@@ -9,9 +9,9 @@ public class JDBCMealPlanDAO {
 
 }
 
-class mealPlanRowMapper implements RowMapper {
-    @Override
-    public MealPlan mapRow(ResultSet results, int i) throws SQLException {
-
-    }
-}
+//class mealPlanRowMapper implements RowMapper {
+//    @Override
+//    public MealPlan mapRow(ResultSet results, int i) throws SQLException {
+//
+//    }
+//}

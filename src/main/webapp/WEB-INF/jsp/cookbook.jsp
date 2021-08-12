@@ -16,42 +16,34 @@
         grid-auto-rows: minmax(150px, 1fr);
         grid-auto-flow: row dense;
     }
-    .text-right {
-        text-align: right !important;
-    }
 </style>
 
-<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Recipes</h1>
+<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 20px;">My Cookbook</h1>
+
+<%--maybe try ${user.firstName}'s Cookbook?--%>
+
 <hr>
-<div class = "text-right" style = "margin-bottom: 10px; margin-top: 10px;">
-
-<%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
-<%--    <div class = "tile ${product.remainingStock == 0 ? 'sold-out' : ''}">--%>
-    <a href="addNewRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Upload New Recipe</a>
-</div>
-
 <div class = "container" id = "grid">
     <div class = "row">
-            <for:forEach items="${recipes}" var="recipe" >
-                <c:url var="detailUrl" value="/recipeDetails">
-                    <c:param name="recipe_id" value="${recipe.recipeId}"/>
-                </c:url>
-                <div class = "col-md-4">
+        <for:forEach items="${savedRecipes}" var="recipe" >
+            <c:url var="detailUrl" value="/recipeDetails">
+                <c:param name="recipe_id" value="${recipe.recipeId}"/>
+            </c:url>
+            <div class = "col-md-4">
                 <div class = "card">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
-                                <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
-                            <button type="button" style = "margin-bottom: 5px;" class = "btn btn-sm btn-success">Save</button>
+<%--                            find a way to disable this button when the recipe does not belong to the user (possibly a another ternary operator)!--%>
+                            <a href="modifyRecipe" class="btn btn-success">Edit</a>
                         </div>
 
-<%--                            <div style = "text-align: right !important;">--%>
-<%--                                <button type="button" class="btn btn-success">--%>
-<%--                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-save" viewBox="0 0 14 14">--%>
-<%--                                        <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>--%>
-<%--                                    </svg>--%>
-<%--                                </button>--%>
-<%--                            </div>--%>
-
+                            <%--                            <div style = "text-align: right !important;">--%>
+                            <%--                                <button type="button" class="btn btn-success">--%>
+                            <%--                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-save" viewBox="0 0 14 14">--%>
+                            <%--                                        <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>--%>
+                            <%--                                    </svg>--%>
+                            <%--                                </button>--%>
+                            <%--                            </div>--%>
                         <h5 class="card-title"><c:out value="${recipe.title}"/></h5>
 
                         <c:forEach var = "i" begin = "1" end = "3">
@@ -73,8 +65,8 @@
                         <a href="${detailUrl}" class="btn btn-success">View More</a>
                     </div>
                 </div>
-                </div>
-            </for:forEach>
+            </div>
+        </for:forEach>
     </div>
 </div>
 </body>

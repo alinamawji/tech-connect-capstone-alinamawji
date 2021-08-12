@@ -30,7 +30,7 @@ class ingredientRowMapper implements RowMapper {
     public Ingredient mapRow(ResultSet results, int i) throws SQLException {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientId(results.getLong("ingredient_id"));
-        ingredient.setName(results.getString("name"));
+        ingredient.setName(results.getString("ingredient_name"));
         return ingredient;
     }
 }

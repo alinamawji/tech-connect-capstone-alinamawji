@@ -43,7 +43,7 @@
                         <h5 class="card-title">Fruit Topped Whole Grain Waffles</h5>
                         <p class="card-text">Looking for a fruity breakfast? Then check out these whole grain waffles topped with berries and maple-flavored syrup, a great way to start your day.
                         </p>
-                        <a href="recipeDetails" class="btn btn-success">View More</a>
+                        <a href="recipeDetails?recipe_id=1" class="btn btn-success">View More</a>
                     </div>
                 </div>
         </div>
@@ -54,7 +54,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Healthy Club Sandwich</h5>
                     <p class="card-text">A Club Sandwich is one of the most iconic sandwiches on any menu! Layers of ham, bacon and turkey with juicy tomatoes, crisp lettuce and cheddar cheese create the perfect bite!</p>
-                    <a href="recipeDetails" class="btn btn-success">View More</a>
+                    <a href="recipeDetails?recipe_id=2" class="btn btn-success">View More</a>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Pizza Bagel Bites</h5>
                     <p class="card-text">Throwing it back to the childhood years of begging your parents to let you have pizza for an after school snack.</p>
-                    <a href="recipeDetails" class="btn btn-success">View More</a>
+                    <a href="recipeDetails?recipe_id=3" class="btn btn-success">View More</a>
                 </div>
             </div>
         </div>

@@ -29,6 +29,7 @@
                         More
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="cookbook">My Cookbook</a></li>
                         <li><a class="dropdown-item" href="#">Meal Plans</a></li>
                         <li><a class="dropdown-item" href="#">Meals</a></li>
                         <li><hr class="dropdown-divider"></li>

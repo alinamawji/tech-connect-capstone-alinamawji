@@ -12,9 +12,12 @@ public class MealPlan {
     @NotBlank(message = "Title is required")
     private String title;
 
+    @NotBlank(message = "Description is required")
+    private String description;
+
     private LocalDateTime date_created;
 
-    @NotEmpty(message =  "Meal list cannot be empty")
+    @NotEmpty(message =  "Meal list cannot be empty") // might need to change to Map<MealEvent,MealPlan>
     private List<Meal> mealList;
 
     public long getPlanId() {
@@ -24,6 +27,8 @@ public class MealPlan {
     public String getTitle() {
         return title;
     }
+
+    public String getDescription() { return description; }
 
     public LocalDateTime getDateCreated() {
         return date_created;
@@ -40,6 +45,8 @@ public class MealPlan {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void setDescription(String description) { this.description = description; }
 
     public void setDateCreated(LocalDateTime date_created) {
         this.date_created = date_created;

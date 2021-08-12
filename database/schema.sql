@@ -5,7 +5,7 @@
 BEGIN;
 
 DROP TABLE IF EXISTS app_user,meal_plan,meal,recipe,ingredient,category,meal_plan_meal,
-    meal_recipe,recipe_ingredient,recipe_category,app_user_recipe,app_user_meal_plan CASCADE;
+    meal_recipe,recipe_ingredient,recipe_category,app_user_recipe,meal_event CASCADE;
 
 -- *************************************************************************************************
 -- CREATE statements for the Main Tables listed below
@@ -19,8 +19,8 @@ CREATE TABLE app_user
     username   varchar(32)  NOT NULL,
     password   varchar(32)  NOT NULL,
     email      varchar(50)  NOT NULL,
-    role       varchar(32) NOT NULL DEFAULT 'registered', -- default from format
-    salt       varchar(255) NOT NULL,            -- default from format
+    role       varchar(32)  NOT NULL DEFAULT 'registered', -- default from format
+    salt       varchar(255) NOT NULL,                      -- default from format
     CONSTRAINT PK_user PRIMARY KEY (user_id),
     CONSTRAINT UQ_user_username UNIQUE (username),
     CONSTRAINT UQ_user_email UNIQUE (email)
@@ -29,10 +29,12 @@ CREATE TABLE app_user
 CREATE TABLE meal_plan
 (
     plan_id      SERIAL,
-    user_id      int         NOT NULL,
-    title        varchar(50) NOT NULL,
-    date_created date        NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
-    CONSTRAINT PK_meal_plan PRIMARY KEY (plan_id)
+    user_id      int          NOT NULL,
+    title        varchar(50)  NOT NULL,
+    description  varchar(300) NOT NULL,
+    date_created date         NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
+    CONSTRAINT PK_meal_plan PRIMARY KEY (plan_id),
+    CONSTRAINT FK_meal_plan PRIMARY KEY (user_id)
 );
 
 CREATE TABLE meal
@@ -46,12 +48,13 @@ CREATE TABLE meal
 
 CREATE TABLE recipe
 (
-    recipe_id     SERIAL,
-    title         varchar(50)   NOT NULL,
-    overview      varchar(300)  NULL,                          -- optional
-    difficulty    int           NULL,                          -- optional
-    date_created  date          NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
-    instructions  varchar(2000) NOT NULL,
+    recipe_id        SERIAL,
+    creator_username varchar(32)   NOT NULL,
+    title            varchar(50)   NOT NULL,
+    overview         varchar(300)  NULL,                          -- optional
+    difficulty       int           NULL,                          -- optional
+    date_created     date          NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
+    instructions     varchar(2000) NOT NULL,
     CONSTRAINT PK_recipe PRIMARY KEY (recipe_id)
 );
 
@@ -67,6 +70,18 @@ CREATE TABLE category
     category_id   SERIAL,
     category_name varchar(50) NOT NULL,
     CONSTRAINT PK_category PRIMARY KEY (category_id)
+);
+
+CREATE TABLE meal_event
+(
+    event_id    SERIAL,
+    weekday     int NOT NULL,
+    time_of_day int NOT NULL,
+    plan_id     int NOT NULL,
+    meal_id     int NOT NULL,
+    CONSTRAINT PK_meal_event PRIMARY KEY (event_id),
+    CONSTRAINT FK_meal_event_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id),
+    CONSTRAINT FK_meal_event_plan FOREIGN KEY (plan_id) REFERENCES meal_plan (plan_id)
 );
 
 -- *************************************************************************************************
@@ -118,14 +133,14 @@ CREATE TABLE app_user_recipe
     CONSTRAINT FK_app_user_recipe_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id)
 );
 
-CREATE TABLE app_user_meal_plan
-(
-    user_id int NOT NULL,
-    plan_id int NOT NULL,
-    CONSTRAINT PK_app_user_meal_plan PRIMARY KEY (user_id, plan_id),
-    CONSTRAINT FK_app_user_meal_plan_user FOREIGN KEY (user_id) REFERENCES app_user (user_id),
-    CONSTRAINT FK_app_user_meal_plan_plan FOREIGN KEY (plan_id) REFERENCES meal_plan (plan_id)
-);
+-- CREATE TABLE app_user_meal_plan
+-- (
+--     user_id int NOT NULL,
+--     plan_id int NOT NULL,
+--     CONSTRAINT PK_app_user_meal_plan PRIMARY KEY (user_id, plan_id),
+--     CONSTRAINT FK_app_user_meal_plan_user FOREIGN KEY (user_id) REFERENCES app_user (user_id),
+--     CONSTRAINT FK_app_user_meal_plan_plan FOREIGN KEY (plan_id) REFERENCES meal_plan (plan_id)
+-- );
 
 
 COMMIT;

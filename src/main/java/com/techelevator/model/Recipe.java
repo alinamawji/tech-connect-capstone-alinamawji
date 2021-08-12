@@ -24,7 +24,6 @@ public class Recipe {
     @NotBlank(message = "Instructions are required")
     public String instructions;
 
-    @NotBlank(message = "Difficulty is required")
     @Range(min=1, max=3, message = "Min = 1 (Easy), Max = 3 (Hard)")
     public int difficulty;
 
@@ -36,7 +35,7 @@ public class Recipe {
 
     private DateTimeFormat date_created;
 
-    @NotBlank(message = "Image is required")
+//    @NotBlank(message = "Image is required")
 //    private String image;
 
     //

@@ -26,7 +26,7 @@
                 <div class = "container" style="border: 2px solid; width:300px; height: 100px; overflow-y: scroll;">
                 <for:forEach items = "${categories}" var = "category">
                         <div class = "row text-capitalize">
-                                ${category.name} <input type = "checkbox" name = "categories[]" value="${category.name}"/>
+                                ${category.name} <input type = "checkbox" name = "category[]" value="${category}"/>
                         </div>
                 </for:forEach>
                 </div>
@@ -55,7 +55,7 @@
             <div class = "container" style="border: 2px solid; width:300px; height: 100px; overflow-y: scroll;">
             <for:forEach items = "${ingredients}" var = "ingredient">
                     <div class = "row text-capitalize">
-                    ${ingredient.name} <input type = "checkbox" name = "ingredients[]" value="${ingredient.name}">
+                    ${ingredient.name} <input type = "checkbox" name = "ingredient[]" value="${ingredient}">
                     </div>
             </for:forEach>
             </div>

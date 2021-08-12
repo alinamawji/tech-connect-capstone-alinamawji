@@ -37,8 +37,8 @@ public class JDBCCookbookDAO implements CookbookDAO{
     @Override
     public List<Recipe> getRecipesFromMyCookbook(long user_id) {
         String sqlViewRecipesFromMyCookbook = "SELECT * FROM recipe r" +
-                "JOIN app_user_recipe aur ON aur.recipe_id = r.recipe_id" +
-                "WHERE user_id = ?";
+                " JOIN app_user_recipe aur ON aur.recipe_id = r.recipe_id" +
+                " WHERE user_id = ?";
         List<Recipe> cookbookRecipes = jdbcTemplate.query(sqlViewRecipesFromMyCookbook, new recipeRowMapper(), user_id);
         return cookbookRecipes;
     }

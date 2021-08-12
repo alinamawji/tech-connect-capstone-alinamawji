@@ -19,6 +19,8 @@ public class CookbookController {
 
     @Autowired
     private JDBCRecipeDAO recipeDAO;
+
+    @Autowired
     private JDBCCookbookDAO cookbookDAO;
 
     @RequestMapping(path = "/cookbook", method = RequestMethod.GET)
@@ -30,20 +32,6 @@ public class CookbookController {
             return "cookbook";
         } else { return "private";}
     }
-
-    @RequestMapping(path = "/recipeDetails", method = RequestMethod.GET)
-    public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
-        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-        modelHolder.put("recipe", recipe);
-        List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
-        modelHolder.put("ingredients", ingredients);
-        session.getAttribute("user");
-
-        return "recipeDetails";
-    }
-
-
-
 
 
 //    @RequestMapping (path = "/recipeDetails")

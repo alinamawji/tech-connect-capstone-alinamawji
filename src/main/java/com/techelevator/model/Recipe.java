@@ -25,7 +25,7 @@ public class Recipe {
     public String instructions;
 
     @NotBlank(message = "Difficulty is required")
-    @Range(message = "Min = 1 (Easy), Max = 3 (Hard)")
+    @Range(min=1, max=3, message = "Min = 1 (Easy), Max = 3 (Hard)")
     public int difficulty;
 
     @NotEmpty(message = "Category list cannot be empty")

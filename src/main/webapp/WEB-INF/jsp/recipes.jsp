@@ -23,11 +23,19 @@
 
 <h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Recipes</h1>
 <hr>
+
+
+<%--ternary operator to determine if there is a user logged in--%>
+<c:set var = "activeButton" value = "${user.firstName != null ? '' : 'disabled'}"/>
+
+<c:if test = "${activeButton == 'disabled'}">
+    <c:out value = "Looks like you aren't currently logged in! Please login to access some of our other features like uploading and saving recipes."/>
+</c:if>
+
 <div class = "text-right" style = "margin-bottom: 10px; margin-top: 10px;">
 
-<%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
-<%--    <div class = "tile ${product.remainingStock == 0 ? 'sold-out' : ''}">--%>
-    <a href="addNewRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Upload New Recipe</a>
+            <%--button is not active when the user is not logged in  --%>
+    <a href="addNewRecipe" class="btn btn-success btn-sm ${activeButton}" role="button" aria-disabled="true">Upload New Recipe</a>
 </div>
 
 <div class = "container" id = "grid">
@@ -44,7 +52,7 @@
                             <c:url var="formAction" value="/recipes"/>
                             <form method="POST" action="${ formAction }">
                                 <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">
-                                <input type="submit" role="button" class = "btn btn-sm btn-success" style = "margin-bottom: 5px;" value="Save">
+                                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" value="Save">
                             </form>
 
                         </div>

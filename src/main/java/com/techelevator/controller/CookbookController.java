@@ -1,12 +1,9 @@
 package com.techelevator.controller;
 
 
-<<<<<<< HEAD
 import com.techelevator.model.JDBCCookbookDAO;
 import com.techelevator.model.JDBCRecipeDAO;
-=======
 import com.techelevator.model.*;
->>>>>>> 2656e4133eaecf7834d3633497f85f020167ad78
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

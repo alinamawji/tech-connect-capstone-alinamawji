@@ -78,7 +78,11 @@ public class User {
     public String getConfirmPassword() {
         return confirmPassword;
     }
-    public long getId() {return userId;}
+
+    public long getId() {
+        return userId;
+    }
+
     public String getRole() {
         return role;
     }

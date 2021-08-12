@@ -20,7 +20,7 @@ public class JDBCIngredientDAO {
 
     public void addIngredientToDB(Ingredient ingredient) {
         String sqlAddIngredientToDB = "INSERT INTO ingredient(ingredient_id, ingredient_name) values(?, ?)";
-        jdbcTemplate.update(sqlAddIngredientToDB, new ingredientRowMapper(), ingredient.getIngredientId(), ingredient.getName());
+        jdbcTemplate.update(sqlAddIngredientToDB, ingredient.getIngredientId(), ingredient.getName());
     }
 
 }

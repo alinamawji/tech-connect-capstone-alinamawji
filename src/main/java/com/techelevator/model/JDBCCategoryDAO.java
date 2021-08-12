@@ -1,10 +1,12 @@
 package com.techelevator.model;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class JDBCCategoryDAO {
 
 }

@@ -41,7 +41,12 @@
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
                                 <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
-                            <button type="button" style = "margin-bottom: 5px;" class = "btn btn-sm btn-success">Save</button>
+                            <c:url var="formAction" value="/recipes"/>
+                            <form method="POST" action="${ formAction }">
+                                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">
+                                <input type="submit" role="button" class = "btn btn-sm btn-success" style = "margin-bottom: 5px;" value="Save">
+                            </form>
+
                         </div>
 
 <%--                            <div style = "text-align: right !important;">--%>

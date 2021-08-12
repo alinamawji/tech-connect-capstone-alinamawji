@@ -47,7 +47,6 @@ public class AccountController {
     public String login(@RequestParam String username, @RequestParam String password, RedirectAttributes flash, HttpSession session) {
         if (auth.signIn(username, password)) {
             User user = userDAO.getValidUserWithPassword(username, password);
-            System.out.println(user.getFirstName());
             session.setAttribute("user", user);
             return "redirect:/loginConfirmation";
         } else {
@@ -85,7 +84,6 @@ public class AccountController {
             flash.addFlashAttribute("message", "Please fix the following errors:");
             return "redirect:/register";
         }
-        System.out.println(user.getFirstName());
         auth.register(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
         return "redirect:/registerConfirmation";
     }

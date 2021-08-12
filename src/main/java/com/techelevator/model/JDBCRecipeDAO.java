@@ -24,25 +24,25 @@ public class JDBCRecipeDAO implements RecipeDAO {
     public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, DateTimeFormat date_created, String instructions, List<Ingredient> ingredients, List<Category> categories) {
         // insert recipe into recipe table
         String sqlNewRecipe = "INSERT INTO recipe(recipe_id, title, overview, difficulty, date_created, instructions) values(?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sqlNewRecipe, new recipeRowMapper(), recipe_id, title, overview, difficulty, date_created, instructions);
+        jdbcTemplate.update(sqlNewRecipe, recipe_id, title, overview, difficulty, date_created, instructions);
 
         // insert recipe categories into recipe_category associative table
         for (Category c : categories) {
             String sqlRecipeIngredients = "INSERT INTO recipe_category(recipe_id, category_id) values(?, ?)";
-            jdbcTemplate.update(sqlRecipeIngredients, new categoryRowMapper(), recipe_id, c.getCategoryId());
+            jdbcTemplate.update(sqlRecipeIngredients, recipe_id, c.getCategoryId());
         }
 
         // insert recipe ingredients into recipe_ingredient associative table
         for (Ingredient i : ingredients) {
             String sqlRecipeIngredients = "INSERT INTO recipe_ingredient(recipe_id, ingredient_id) values(?, ?)";
-            jdbcTemplate.update(sqlRecipeIngredients, new ingredientRowMapper(), recipe_id, i.getIngredientId());
+            jdbcTemplate.update(sqlRecipeIngredients, recipe_id, i.getIngredientId());
         }
     }
 
     @Override
     public void deleteRecipeFromDB(long recipe_id) {
         String sqlDeleteRecipeFromDB = "DELETE FROM recipe WHERE recipe_id = ?";
-        jdbcTemplate.update(sqlDeleteRecipeFromDB, new recipeRowMapper(), recipe_id);
+        jdbcTemplate.update(sqlDeleteRecipeFromDB, recipe_id);
     }
 
     @Override
@@ -73,19 +73,19 @@ public class JDBCRecipeDAO implements RecipeDAO {
     @Override
     public void addIngredientToList(long recipe_id, Ingredient ingredient) {
         String sqlNewIngredient = "INSERT INTO recipe_ingredient(recipe_id) values(?, ?)";
-        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), recipe_id, ingredient.getIngredientId());
+        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient.getIngredientId());
     }
 
     @Override
     public void removeIngredientFromList(long recipe_id, Ingredient ingredient) {
         String sqlNewIngredient = "DELETE FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = ?";
-        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), recipe_id, ingredient.getIngredientId());
+        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient.getIngredientId());
     }
 
     @Override
     public void modifyInstructions(long recipe_id, String instructions) {
         String sqlNewIngredient = "UPDATE recipe SET instructions = ? WHERE recipe_id = ?";
-        jdbcTemplate.update(sqlNewIngredient, new recipeRowMapper(), instructions, recipe_id);
+        jdbcTemplate.update(sqlNewIngredient, instructions, recipe_id);
     }
 
     @Override

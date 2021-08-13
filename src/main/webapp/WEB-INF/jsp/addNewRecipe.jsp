@@ -66,11 +66,9 @@
 <%--            path will change depending on whether we list categories as separate model or as part of a recipe (recipe.category)--%>
             <div class = "row">
                 <div class = "container selectList">
-                <for:forEach items = "${categories}" var = "category">
                         <div class = "row text-capitalize" style = "margin-left: 15px;">
-                                ${category.name} <input type = "checkbox" name = "category" value="${category}"/>
+                            <form:checkboxes path = "categories" name="categories" items = "${categories}"/>
                         </div>
-                </for:forEach>
                 </div>
             </div>
 <%--            Healthy <input type = "checkbox" name = "categories[]" value = "Healthy"/>--%>
@@ -83,11 +81,9 @@
         <div class = "form-group">
             <label class = "display-5">Ingredients: </label>
             <div class = "container selectList">
-            <for:forEach items = "${ingredients}" var = "ingredient">
-                    <div class = "row text-capitalize" style = "margin-left: 15px;">
-                    ${ingredient.name} <input type = "checkbox" name = "ingredient[]" value="${ingredient}">
-                    </div>
-            </for:forEach>
+                <div class = "row text-capitalize" style = "margin-left: 15px;">
+                        <form:checkboxes path="ingredients" name = "ingredients" items="${ingredients}"/>
+                </div>
             </div>
         </div>
 

@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface RecipeDAO {
 
-    public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, LocalDate date_created, String instructions, List<Ingredient> ingredients, List<Category> categories);
+    public void addRecipeToDB(String title, String overview, int difficulty, String instructions, List<String> ingredients, List<String> categories, String creatorUsername);
 
     public void deleteRecipeFromDB(long recipe_id);
 
-    public List<Ingredient> getRecipeIngredients(long recipe_id);
+    public List<String> getRecipeIngredients(long recipe_id);
 
-    public List<Category> getRecipeCategories(long recipe_id);
+    public List<String> getRecipeCategories(long recipe_id);
 
     public Recipe getRecipeByID(long recipe_id);
 

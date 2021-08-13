@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -75,16 +78,29 @@ public class RecipeController {
 
     @RequestMapping(path="/addNewRecipe", method = RequestMethod.POST)
     public String processAddNewRecipeInput(@Valid @ModelAttribute Recipe recipe, BindingResult result,
-                                           RedirectAttributes flash) {
-        flash.addFlashAttribute("recipe", recipe);
+                                           RedirectAttributes flash, HttpServletRequest request, HttpSession session) {
 
-        if(result.hasErrors()){
-            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "recipe", result);
-            return "redirect:/addNewRecipe";
+        User user = (User) session.getAttribute("user");
+        
+        try {
+            List<String> categoryList = Arrays.asList(request.getParameterValues("categories"));
+            List<String> ingredientList = Arrays.asList(request.getParameterValues("ingredients"));
+
+            recipe.setCategories(categoryList);
+            recipe.setIngredients(ingredientList);
+
+            flash.addFlashAttribute("recipe", recipe);
+
+            if(result.hasErrors()){
+                flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "recipe", result);
+                return "redirect:/addNewRecipe";
+            }
+        } catch(Exception e) {
+            e.getCause();
         }
 
-        recipeDAO.addRecipeToDB(recipe.getRecipeId(),recipe.getTitle(),recipe.getOverview(),recipe.getDifficulty(),
-                recipe.getDateCreated(),recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories());
+        recipeDAO.addRecipeToDB(recipe.getTitle(), recipe.getOverview(), recipe.getDifficulty(),
+                recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories(), user.getUsername());
 
         return "redirect:/recipes"; //Change this to redirect to the cookbook when jsp pages/controller exists
 
@@ -94,7 +110,7 @@ public class RecipeController {
     public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
         modelHolder.put("recipe", recipe);
-        List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
         User user = (User) session.getAttribute("user");
         System.out.println(user.getUsername());
@@ -115,7 +131,7 @@ public class RecipeController {
 
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
         modelHolder.put("recipe", recipe);
-        List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
 
         return "redirect:/modifyRecipe";

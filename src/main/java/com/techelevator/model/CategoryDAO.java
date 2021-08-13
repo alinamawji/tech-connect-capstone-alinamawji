@@ -6,6 +6,6 @@ import java.util.List;
 
 
 public interface CategoryDAO {
-    public List<Category> getAllCategories();
+    public List<String> getAllCategories();
 
 }

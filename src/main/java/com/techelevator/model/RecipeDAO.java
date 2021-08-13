@@ -25,4 +25,6 @@ public interface RecipeDAO {
 
     public List<Recipe> getAllRecipes();
 
+    public List<Recipe> getRecipesFromUser(String username);
+
 }

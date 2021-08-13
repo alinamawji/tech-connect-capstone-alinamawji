@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @Component
 public class JDBCIngredientDAO {
@@ -21,6 +22,13 @@ public class JDBCIngredientDAO {
     public void addIngredientToDB(Ingredient ingredient) {
         String sqlAddIngredientToDB = "INSERT INTO ingredient(ingredient_id, ingredient_name) values(?, ?)";
         jdbcTemplate.update(sqlAddIngredientToDB, ingredient.getIngredientId(), ingredient.getName());
+    }
+
+    public List<Ingredient> getAllIngredients() {
+        String sql = "SELECT * from ingredient ORDER BY ingredient_name;";
+
+                List <Ingredient> ingredients = jdbcTemplate.query(sql, new ingredientRowMapper());
+                return ingredients;
     }
 
 }

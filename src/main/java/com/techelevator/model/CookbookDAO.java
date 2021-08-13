@@ -8,4 +8,5 @@ public interface CookbookDAO {
     public void deleteRecipeFromCookbook(long recipe_id, long user_id);
 
     public List<Recipe> getRecipesFromMyCookbook(long user_id);
+
 }

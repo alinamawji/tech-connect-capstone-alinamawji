@@ -25,6 +25,12 @@ public class RecipeController {
     @Autowired
     private JDBCCookbookDAO cookbookDAO;
 
+    @Autowired
+    private JDBCIngredientDAO ingredientDAO;
+
+    @Autowired
+    private JDBCCategoryDAO categoryDAO;
+
 
     @RequestMapping(path = "/recipes", method = RequestMethod.GET)
     public String showUniversalRecipes(ModelMap modelHolder, HttpSession session) {
@@ -56,7 +62,10 @@ public class RecipeController {
 
 
     @RequestMapping(path = "/addNewRecipe", method = RequestMethod.GET)
-    public String displayAddNewRecipeForm() {
+    public String displayAddNewRecipeForm(ModelMap modelHolder) {
+        modelHolder.put("recipe", new Recipe());
+        modelHolder.put("ingredients", ingredientDAO.getAllIngredients());
+        modelHolder.put("categories", categoryDAO.getAllCategories());
         return "addNewRecipe";
     }
 
@@ -69,6 +78,7 @@ public class RecipeController {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "recipe", result);
             return "redirect:/addNewRecipe";
         }
+
         recipeDAO.addRecipeToDB(recipe.getRecipeId(),recipe.getTitle(),recipe.getOverview(),recipe.getDifficulty(),
                 recipe.getDateCreated(),recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories());
 
@@ -77,22 +87,44 @@ public class RecipeController {
     }
 
     @RequestMapping(path = "/recipeDetails", method = RequestMethod.GET)
-    public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder) {
+    public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
+        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+        modelHolder.put("recipe", recipe);
+        List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+        modelHolder.put("ingredients", ingredients);
+        User user = (User) session.getAttribute("user");
+
+        return "recipeDetails";
+    }
+
+    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
+    public String displayModifyRecipe(ModelMap modelHolder) {
+        Recipe recipe = (Recipe) modelHolder.get("recipe");
+        List<Ingredient> ingredients = (List<Ingredient>) modelHolder.get("ingredients");
+        return "modifyRecipe";
+    }
+
+    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
+    public String displayModifyRecipePage(@RequestParam Long recipe_id, ModelMap modelHolder) {
+        System.out.println(recipe_id);
+
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
         modelHolder.put("recipe", recipe);
         List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
 
-        return "recipeDetails";
+        return "redirect:/modifyRecipe";
+    }
+
+    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.POST)
+    public String returnToRecipeDetailsAfterModifying() {
+        return "redirect:/recipeDetails";
     }
 
     // add methods for modifying a recipe and deleting a recipe, those will have different method calls from the recipe class.
     // These will be implemented on the cookbookController, which handles a user's personal library of recipes. They can only
     // modify/delete the recipes they created.
 
-    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
-    public String displayModifyRecipe() {
-        return "modifyRecipe";
-    }
+
 }
 

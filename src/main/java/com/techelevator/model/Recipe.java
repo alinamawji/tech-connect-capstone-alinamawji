@@ -24,8 +24,7 @@ public class Recipe {
     @NotBlank(message = "Instructions are required")
     public String instructions;
 
-    @NotBlank(message = "Difficulty is required")
-    @Range(message = "Min = 1 (Easy), Max = 3 (Hard)")
+    @Range(min=1, max=3, message = "Min = 1 (Easy), Max = 3 (Hard)")
     public int difficulty;
 
     @NotEmpty(message = "Category list cannot be empty")
@@ -36,7 +35,9 @@ public class Recipe {
 
     private DateTimeFormat date_created;
 
-    @NotBlank(message = "Image is required")
+    private String creator_username;
+
+//    @NotBlank(message = "Image is required")
 //    private String image;
 
     //
@@ -51,8 +52,7 @@ public class Recipe {
     }
 
     public List<Ingredient> getIngredients() {
-        long recipe_id = getRecipeId();
-        return recipeDAO.getRecipeIngredients(recipe_id);
+        return ingredients;
     }
 
     public String getInstructions() {
@@ -64,8 +64,7 @@ public class Recipe {
     }
 
     public List<Category> getCategories() {
-        long recipe_id = getRecipeId();
-        return recipeDAO.getRecipeCategories(recipe_id);
+        return categories;
     }
 
     public String getOverview() {
@@ -74,6 +73,10 @@ public class Recipe {
 
     public DateTimeFormat getDateCreated() {
         return date_created;
+    }
+
+    public String getCreatorUsername() {
+        return creator_username;
     }
 
     //    public String getImage() {
@@ -113,6 +116,10 @@ public class Recipe {
 
     public void setDateCreated(DateTimeFormat date_created) {
         this.date_created = date_created;
+    }
+
+    public void setCreatorUsername(String creator_username) {
+        this.creator_username = creator_username;
     }
 
     //    public void setImage(String image) {

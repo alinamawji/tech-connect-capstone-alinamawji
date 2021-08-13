@@ -20,119 +20,83 @@
 </style>
 
 <%--make sure you replace these features with the expression language call for the recipe models--%>
-<h1 class="display-5 text-italic text-color">Recipe Title</h1>
+<h1 class="display-5 text-italic text-color"><c:out value="${recipe.title}"/> </h1>
 
-
-<p class="h6">Difficulty: </p>
-<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+<%-- for loop to display difficulty rating --%>
+<c:forEach var = "i" begin = "1" end = "3">
+    <c:choose>
+        <c:when test = "${recipe.difficulty <= 3}">
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
 </svg></span>
-
-<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-upside-down" viewBox="0 0 16 16">
-  <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0-1a8 8 0 1 1 0 16A8 8 0 0 1 8 0z"/>
-  <path d="M4.285 6.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 4.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 3.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 9.5C7 8.672 6.552 8 6 8s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5z"/>
+        </c:when>
+        <c:otherwise>
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
 </svg></span>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
 
-<%--for loop to display difficulty rating--%>
-<%--<c:forEach var = "i" begin = "1" end = "3">--%>
-<%--    <c:choose>--%>
-<%--        <c:when test = "${recipe.difficulty <= 3}">--%>
-<%--        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile-upside-down" viewBox="0 0 16 16">--%>
-<%--  <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0-1a8 8 0 1 1 0 16A8 8 0 0 1 8 0z"/>--%>
-<%--  <path d="M4.285 6.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 4.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 3.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zM7 9.5C7 8.672 6.552 8 6 8s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5zm4 0c0-.828-.448-1.5-1-1.5s-1 .672-1 1.5.448 1.5 1 1.5 1-.672 1-1.5z"/>--%>
-<%--</svg></span>--%>
-<%--        </c:when>--%>
-<%--        <c:otherwise>--%>
-<%--            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">--%>
-<%--  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>--%>
-<%--  <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>--%>
-<%--</svg></span>--%>
-<%--        </c:otherwise>--%>
-<%--    </c:choose>--%>
-<%--</c:forEach>--%>
+<hr>
+
 
 <c:url var="recipeDetailsUrl" value="/recipeDetails"/>
 <form method="POST" action="${recipeDetailsUrl}">
 
     <c:url var="modifyUrl" value="/modifyRecipe"/>
-    <form:form method="POST" action="${modifyUrl}" modelAttribute="recipe">
+    <form:form method="POST" action="${modifyUrl}">
 
-        <h1 class = "display-6 text-color">Ingredients: </h1>
+        <hr>
+
+        <h1 class = "display-6 text-color" style = "margin-bottom: 10px;">Ingredients: </h1>
         <div class = "container">
-            <ul class = "list-group">
-                <li class = "list-group-item">
-                    <div class="input-group" style="display: table; width: 100%">
-                        <span style="display: table-cell">Item One</span>
-                        <span style="display: table-cell; text-align: right">
-                            <a href="modifyRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Delete Ingredient</a>
-                        </span>
-                    </div>
-                </li>
-                <li class = "list-group-item">
-                    <div class="input-group" style="display: table; width: 100%">
-                        <span style="display: table-cell">Item Two</span>
-                        <span style="display: table-cell; text-align: right">
-                            <a href="modifyRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Delete Ingredient</a>
-                        </span>
-                    </div>
-                </li>
-                <li class = "list-group-item">
-                    <div class="input-group" style="display: table; width: 100%">
-                        <span style="display: table-cell">Item Three</span>
-                        <span style="display: table-cell; text-align: right">
-                            <a href="modifyRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Delete Ingredient</a>
-                        </span>
-                    </div>
-                </li>
-                <li class = "list-group-item">
-                    <div class="input-group" style="display: table; width: 100%">
-                        <span style="display: table-cell">Item Four</span>
-                        <span style="display: table-cell; text-align: right">
-                            <a href="modifyRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Delete Ingredient</a>
-                        </span>
-                    </div>
-                </li>
-
-                    <%--        for loop to display the ingredients for the recipe--%>
-                    <%--        <c:forEach items = "${ingredients}" var = "ingredient">--%>
-                    <%--            <li class = "list-group-item">
-                    <%--                <div class="input-group" style="display: table; width: 100%">
-                    <%--                    <span style="display: table-cell">
-                    <%--                        <c:out value="${ingredient}"/>
-                    <%--                    </span>
-                    <%--                    <span style="display: table-cell; text-align: right">
-                    <%--                        <input type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Delete Ingredient"/>
-                    <%--                    </span>
-                    <%--                </div>
-                    <%--            </li>
-                    <%--        </c:forEach>--%>
+            <ul class = "list-group" style = "display: inline-block;">
+                    <%--        for loop to display the ingredients for the recipe&ndash;--%>
+                <c:forEach items = "${ingredients}" var = "ingredient">
+                        <li class = "list-group-item">
+                                <div class="input-group" style="display: table; width: 100%">
+                                    <span style="display: table-cell">
+                                            <c:out value="${ingredient.name}"/>
+                                    </span>
+                                    <span style="display: table-cell; text-align: right">
+                                        <input type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Delete Ingredient"/>
+                                    </span>
+                                </div>
+                        </li>
+                    </c:forEach>
             </ul>
-
-            <br>
-
-            <a href="addIngredient" class="btn btn-success btn-sm" role="button" aria-disabled="true">Add Ingredient</a>
-
         </div>
+
+        <hr>
+
+        <br>
+
+        <a href="addIngredient" class="btn btn-success btn-sm" role="button" aria-disabled="true">Add Ingredient</a>
+
 
         <div class = "container">
             <h1 class = "display-6 text-color">Instructions: </h1>
-            <div class = "container">
-                <div class = "row d-flex">
-                    <div class = "col-md-12">
-                        <div>
-                            <input type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Change Instructions"/>
-                        </div>
+
+            <div class = "row d-flex">
+                <div class = "col-md-12">
+                    <div>
+                        <input name="instructions" type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Change Instructions"/>
                     </div>
                 </div>
             </div>
-                <%--        <p>${recipe.instructions}</p>--%>
-            <div>
-                <label for="instructions">Enter new instructions:</label>
-                <form:textarea path="instructions"/>
-            </div>
+
+            <blockquote class="blockquote">
+                <p>${recipe.instructions}</p>
+            </blockquote>
+
+<%--            <div>--%>
+<%--                <label for="instructions">Enter new instructions:</label>--%>
+<%--                <form:textarea path="instructions" rows="5" cols="30"/>--%>
+<%--            </div>--%>
 
         </div>
+
 
     </form:form>
 
@@ -142,4 +106,4 @@
 
 </form>
 
-<%@ include file = "common/footer.jspf" %>
+<%--<%@ include file = "common/footer.jspf" %>--%>

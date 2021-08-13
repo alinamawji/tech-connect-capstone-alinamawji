@@ -33,8 +33,12 @@
                 <div class = "card">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
+                            <c:set var="activeButton" value=""/>
+                                <c:if test = "${recipe.creatorUsername == user.username}">
+                                    <c:set var="activeButton" value="disabled"/>
+                                </c:if>
 <%--                            find a way to disable this button when the recipe does not belong to the user (possibly a another ternary operator)!--%>
-                            <a href="modifyRecipe" class="btn btn-success">Edit</a>
+                            <a href="modifyRecipe" class="btn btn-success ${ activeButton }">Edit</a>
                         </div>
 
                             <%--                            <div style = "text-align: right !important;">--%>

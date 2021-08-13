@@ -23,7 +23,23 @@
 <div class = "container">
     <div class = "row">
         <div class = "text-right" style = "margin-bottom: 5px; margin-top: 10px;">
-            <a href="modifyRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Edit Recipe</a>
+
+            <c:set var="activeButton" value=""/>
+            <c:if test = "${recipe.creatorUsername == user.username || user.firstName != null}">
+                <c:set var="activeButton" value="disabled"/>
+            </c:if>
+
+<%--            <c:set var = "activeButton" value = "${user.firstName != null ? '' : 'disabled'}"/>--%>
+            <c:if test = "${activeButton == 'disabled'}">
+                <c:out value = "Looks like you aren't currently logged in! Please login to access some of our other features like uploading and saving recipes."/>
+            </c:if>
+
+            <c:url var="formAction" value="/recipeDetails"/>
+            <form method="POST" action="${ formAction }">
+                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">
+                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" aria-disabled="true" value="Edit Recipe">
+            </form>
+
         </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 package com.techelevator.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.cglib.core.Local;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
@@ -21,7 +24,7 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, DateTimeFormat date_created, String instructions, List<Ingredient> ingredients, List<Category> categories) {
+    public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, LocalDate date_created, String instructions, List<Ingredient> ingredients, List<Category> categories) {
         // insert recipe into recipe table
         String sqlNewRecipe = "INSERT INTO recipe(recipe_id, title, overview, difficulty, date_created, instructions) values(?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sqlNewRecipe, recipe_id, title, overview, difficulty, date_created, instructions);
@@ -114,9 +117,10 @@ class recipeRowMapper implements RowMapper {
         recipe.setDifficulty(results.getInt("difficulty"));
 //        recipe.setCategories(results.getString("categories"));
         recipe.setInstructions(results.getString("instructions"));
-        recipe.setDateCreated((DateTimeFormat) results.getDate("date_created"));
-//        recipe.setCreatorUsername(results.getString("creator_username"));
+        recipe.setDateCreated(results.getDate("date_created").toLocalDate());
+        recipe.setCreatorUsername(results.getString("creator_username"));
         return recipe;
     }
+
 }
 

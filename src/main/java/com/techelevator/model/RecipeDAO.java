@@ -2,12 +2,14 @@ package com.techelevator.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface RecipeDAO {
 
-    public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, DateTimeFormat date_created, String instructions, List<Ingredient> ingredients, List<Category> categories);
+    public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, LocalDate date_created, String instructions, List<Ingredient> ingredients, List<Category> categories);
 
     public void deleteRecipeFromDB(long recipe_id);
 

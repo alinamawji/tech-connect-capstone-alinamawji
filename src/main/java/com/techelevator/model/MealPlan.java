@@ -2,20 +2,27 @@ package com.techelevator.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public class MealPlan {
     private long plan_id;
 
+    private long user_id;
+
     @NotBlank(message = "Title is required")
     private String title;
 
-    private LocalDateTime date_created;
+    @NotBlank(message = "Description is required")
+    private String description;
 
-    @NotEmpty(message =  "Meal list cannot be empty")
-    private List<Meal> mealList;
+    private DateTimeFormat date_created;
+
+    @NotEmpty(message =  "Meal entry cannot be empty") // might need to change to Map<MealEvent,MealPlan>
+    private Map<MealEvent,Meal> plannedMeals;
 
     public long getPlanId() {
         return plan_id;
@@ -25,12 +32,14 @@ public class MealPlan {
         return title;
     }
 
-    public LocalDateTime getDateCreated() {
+    public String getDescription() { return description; }
+
+    public DateTimeFormat getDateCreated() {
         return date_created;
     }
 
-    public List<Meal> getMealList() {
-        return mealList;
+    public Map<MealEvent, Meal> getPlannedMeals() {
+        return plannedMeals;
     }
 
     public void setPlanId(long plan_id) {
@@ -41,11 +50,21 @@ public class MealPlan {
         this.title = title;
     }
 
-    public void setDateCreated(LocalDateTime date_created) {
+    public void setDescription(String description) { this.description = description; }
+
+    public void setDateCreated(DateTimeFormat date_created) {
         this.date_created = date_created;
     }
 
-    public void setMealList(List<Meal> mealList) {
-        this.mealList = mealList;
+    public void setPlannedMeals(Map<MealEvent, Meal> plannedMeals) {
+        this.plannedMeals = plannedMeals;
+    }
+
+    public long getUserId() {
+        return user_id;
+    }
+
+    public void setUserId(long user_id) {
+        this.user_id = user_id;
     }
 }

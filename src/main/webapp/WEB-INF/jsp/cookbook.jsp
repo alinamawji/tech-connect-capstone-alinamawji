@@ -34,7 +34,7 @@
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
                             <c:set var="activeButton" value=""/>
-                                <c:if test = "${recipe.creatorUsername == user.username}">
+                                <c:if test = "${recipe.creatorUsername != user.username}">
                                     <c:set var="activeButton" value="disabled"/>
                                 </c:if>
 <%--                            find a way to disable this button when the recipe does not belong to the user (possibly a another ternary operator)!--%>

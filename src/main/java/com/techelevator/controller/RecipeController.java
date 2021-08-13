@@ -49,8 +49,12 @@ public class RecipeController {
         // user log in
         User user = (User) session.getAttribute("user");
 
-        // save to cookbook
-        cookbookDAO.addRecipeToCookbook(recipe_id, user.getId());
+        try {
+            // save to cookbook
+            cookbookDAO.addRecipeToCookbook(recipe_id, user.getId());
+        } catch (Exception e) {
+            return "redirect:/private";
+        }
 
         return "redirect:/addNewRecipeConfirmation";
     }
@@ -93,6 +97,7 @@ public class RecipeController {
         List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
         User user = (User) session.getAttribute("user");
+        System.out.println(user.getUsername());
 
         return "recipeDetails";
     }

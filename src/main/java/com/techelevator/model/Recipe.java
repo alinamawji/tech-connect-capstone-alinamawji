@@ -4,9 +4,10 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Recipe {
@@ -33,7 +34,7 @@ public class Recipe {
     @NotBlank(message = "Overview is required")
     private String overview;
 
-    private DateTimeFormat date_created;
+    private LocalDate date_created;
 
     private String creator_username;
 
@@ -71,7 +72,7 @@ public class Recipe {
         return overview;
     }
 
-    public DateTimeFormat getDateCreated() {
+    public LocalDate getDateCreated() {
         return date_created;
     }
 
@@ -114,7 +115,7 @@ public class Recipe {
         this.overview = overview;
     }
 
-    public void setDateCreated(DateTimeFormat date_created) {
+    public void setDateCreated(LocalDate date_created) {
         this.date_created = date_created;
     }
 

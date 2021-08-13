@@ -25,7 +25,7 @@
         <div class = "text-right" style = "margin-bottom: 5px; margin-top: 10px;">
 
             <c:set var="activeButton" value=""/>
-            <c:if test = "${recipe.creatorUsername == user.username || user.firstName != null}">
+            <c:if test = "${recipe.creatorUsername != user.username || user.firstName == null}">
                 <c:set var="activeButton" value="disabled"/>
             </c:if>
 

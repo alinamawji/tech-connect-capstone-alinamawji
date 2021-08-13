@@ -50,8 +50,7 @@ public class Recipe {
     }
 
     public List<Ingredient> getIngredients() {
-        long recipe_id = getRecipeId();
-        return recipeDAO.getRecipeIngredients(recipe_id);
+        return ingredients;
     }
 
     public String getInstructions() {
@@ -63,8 +62,7 @@ public class Recipe {
     }
 
     public List<Category> getCategories() {
-        long recipe_id = getRecipeId();
-        return recipeDAO.getRecipeCategories(recipe_id);
+        return categories;
     }
 
     public String getOverview() {

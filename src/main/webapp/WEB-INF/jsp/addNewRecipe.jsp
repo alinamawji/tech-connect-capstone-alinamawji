@@ -9,24 +9,66 @@
 --%>
 <%@ include file = "common/header.jspf" %>
 
-<h1>Create a New Recipe</h1>
+<style>
+    .selectList {
+        border: 1px solid;
+        width: 515px;
+        height: 150px;
+        border-radius: 3px;
+        overflow-y: scroll;
+    }
+
+    label {
+        margin: 5px;
+        font-size: 1.5rem !important;
+    }
+
+    .form-group {
+        margin: 20px;
+        text-align: left;
+        border-radius: 3px;
+    }
+
+    .textarea {
+        width: 500px;
+        display: block;
+        height: 150px;
+        border: 1px solid black;
+        border-radius: 3px;
+    }
+</style>
+
+<h1 class = "display-5">Create a New Recipe</h1>
+<hr>
 <div class = "container">
     <c:url var = "addNewRecipeUrl" value="/addNewRecipe"/>
     <form:form method = "POST" action = "${addNewRecipeUrl}" modelAttribute = "recipe">
         <div class = "form-group">
-            <label for="title">Title: </label>
+            <label class = "display-5" for="title">Title: </label>
             <form:input path="title"/>
             <form:errors path="title" cssClass="title"/>
         </div>
 
         <div class = "form-group">
-            <label>Category/Categories: </label>
+            <label class = "display-5" for="difficulty">Difficulty (1-3): </label>
+            <form:input path="difficulty" type="number" value="1" min="1" max="3" placeholder = "Insert difficulty rating of recipe here (1-3)."/>
+            <form:errors path="difficulty" cssClass="error"/>
+        </div>
+
+        <div class = "form-group">
+            <label class = "display-5" for="overview">Overview: </label>
+            <form:input type = "textarea" path="overview" placeholder = "Insert description of recipe here."/>
+            <form:errors path="overview" cssClass="error"/>
+        </div>
+
+        <div class = "form-group">
+            <label class = "display-5">Category/Categories: </label>
 <%--            path will change depending on whether we list categories as separate model or as part of a recipe (recipe.category)--%>
             <div class = "row">
-                <div class = "container" style="border: 2px solid; width:300px; height: 100px; overflow-y: scroll;">
+                <div class = "container selectList">
                 <for:forEach items = "${categories}" var = "category">
-                        <div class = "row text-capitalize">
-                                ${category.name} <input type = "checkbox" name = "category[]" value="${category}"/>
+                        <div class = "row text-capitalize" style = "margin-left: 15px;">
+                                ${category.name} <input type = "checkbox" name = "category" value="${category}"/>
                         </div>
                 </for:forEach>
                 </div>
@@ -39,22 +81,10 @@
         </div>
 
         <div class = "form-group">
-            <label for="overview">Overview: </label>
-            <form:input path="overview" placeholder = "Insert description of recipe here."/>
-            <form:errors path="overview" cssClass="error"/>
-        </div>
-
-        <div class = "form-group">
-            <label for="difficulty">Difficulty: (Insert difficulty rating of recipe here (1-3).)</label>
-            <form:input path="difficulty" type="number" value="1" min="1" max="3" placeholder = "Insert difficulty rating of recipe here (1-3)."/>
-            <form:errors path="difficulty" cssClass="error"/>
-        </div>
-
-        <div class = "form-group">
-            <label>Ingredients: </label>
-            <div class = "container" style="border: 2px solid; width:300px; height: 100px; overflow-y: scroll;">
+            <label class = "display-5">Ingredients: </label>
+            <div class = "container selectList">
             <for:forEach items = "${ingredients}" var = "ingredient">
-                    <div class = "row text-capitalize">
+                    <div class = "row text-capitalize" style = "margin-left: 15px;">
                     ${ingredient.name} <input type = "checkbox" name = "ingredient[]" value="${ingredient}">
                     </div>
             </for:forEach>
@@ -62,12 +92,14 @@
         </div>
 
         <div class = "form-group">
-            <label for="instructions">Instructions: </label>
+            <label class = "display-5" for="instructions">Instructions: </label>
+            <div class = "row textarea" style = "margin-left: 5px;">
             <form:input type = "textarea" path="instructions"/>
             <form:errors path="instructions" cssClass="error"/>
+            </div>
         </div>
 
-        <input type = "submit" value = "Submit">
+        <input class = "btn btn-success text-left" type = "submit" value = "Submit">
     </form:form>
 </div>
 

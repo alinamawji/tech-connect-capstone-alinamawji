@@ -34,6 +34,7 @@ public class JDBCCookbookDAO implements CookbookDAO{
         jdbcTemplate.update(sqlDeleteRecipeFromCookbook, recipe_id, user_id);
     }
 
+    // recipes user saved + created
     @Override
     public List<Recipe> getRecipesFromMyCookbook(long user_id) {
         String sqlViewRecipesFromMyCookbook = "SELECT * FROM recipe r" +
@@ -42,6 +43,8 @@ public class JDBCCookbookDAO implements CookbookDAO{
         List<Recipe> cookbookRecipes = jdbcTemplate.query(sqlViewRecipesFromMyCookbook, new recipeRowMapper(), user_id);
         return cookbookRecipes;
     }
+
+
 }
 
 class cookbookRowMapper implements RowMapper {

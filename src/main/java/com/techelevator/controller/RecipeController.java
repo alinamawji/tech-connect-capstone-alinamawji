@@ -87,11 +87,12 @@ public class RecipeController {
     }
 
     @RequestMapping(path = "/recipeDetails", method = RequestMethod.GET)
-    public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder) {
+    public String displayRecipeDetails(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
         modelHolder.put("recipe", recipe);
         List<Ingredient> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
+        User user = (User) session.getAttribute("user");
 
         return "recipeDetails";
     }

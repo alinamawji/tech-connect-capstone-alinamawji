@@ -94,6 +94,13 @@ public class JDBCRecipeDAO implements RecipeDAO {
         List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sqlAllRecipes, new recipeRowMapper());
         return recipes;
     }
+
+    @Override
+    public List<Recipe> getRecipesFromUser(String username) {
+        String sqlRecipesFromUser = "SELECT * FROM recipe WHERE creator_username = ?";
+        List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sqlRecipesFromUser, new recipeRowMapper(), username);
+        return recipes;
+    }
 }
 
 class recipeRowMapper implements RowMapper {
@@ -107,6 +114,8 @@ class recipeRowMapper implements RowMapper {
         recipe.setDifficulty(results.getInt("difficulty"));
 //        recipe.setCategories(results.getString("categories"));
         recipe.setInstructions(results.getString("instructions"));
+        recipe.setDateCreated((DateTimeFormat) results.getDate("date_created"));
+//        recipe.setCreatorUsername(results.getString("creator_username"));
         return recipe;
     }
 }

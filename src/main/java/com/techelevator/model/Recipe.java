@@ -35,6 +35,8 @@ public class Recipe {
 
     private DateTimeFormat date_created;
 
+    private String creator_username;
+
 //    @NotBlank(message = "Image is required")
 //    private String image;
 
@@ -71,6 +73,10 @@ public class Recipe {
 
     public DateTimeFormat getDateCreated() {
         return date_created;
+    }
+
+    public String getCreatorUsername() {
+        return creator_username;
     }
 
     //    public String getImage() {
@@ -110,6 +116,10 @@ public class Recipe {
 
     public void setDateCreated(DateTimeFormat date_created) {
         this.date_created = date_created;
+    }
+
+    public void setCreatorUsername(String creator_username) {
+        this.creator_username = creator_username;
     }
 
     //    public void setImage(String image) {

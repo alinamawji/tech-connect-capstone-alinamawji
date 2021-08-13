@@ -29,6 +29,7 @@ public class CookbookController {
         if(session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
             modelHolder.put("savedRecipes", cookbookDAO.getRecipesFromMyCookbook(user.getId()));
+            modelHolder.put("userCreatedRecipes", recipeDAO.getRecipesFromUser(user.getUsername()));
             return "cookbook";
         } else { return "private";}
     }

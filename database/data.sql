@@ -145,7 +145,7 @@ VALUES ('Snacks');
 
 --INSERT statements for Recipe Table listed below
 
-INSERT INTO recipe(title, overview, instructions)
+INSERT INTO recipe(title, overview, instructions,creator_username)
 VALUES ('Fruit-Topped Whole Grain Waffles',
         'Looking for a fruity breakfast? Then check out these whole grain waffles topped with berries and ' ||
         'maple-flavored syrup – a great way to start your day.',
@@ -155,25 +155,25 @@ VALUES ('Fruit-Topped Whole Grain Waffles',
         ' baking powder (1 tsp) and baking soda (1/2 tsp) ; mix well. ' ||
         'Add buttermilk (1.25 cups), one egg and butter (2 tbsp); beat well with wire whisk.
 3. For each waffle, spoon about 1/2 cup batter into waffle iron, spreading batter to edges. ' ||
-        'Bake about 3 minutes or until waffle is golden brown. Serve immediately with toppings.');
+        'Bake about 3 minutes or until waffle is golden brown. Serve immediately with toppings.','dianaDang');
 
-INSERT INTO recipe(title, overview, instructions)
+INSERT INTO recipe(title, overview, instructions, creator_username)
 VALUES ('Club Sandwich',
         'A Club Sandwich is one of the most iconic sandwiches on any menu! Layers of ham, bacon and turkey with ' ||
         'juicy tomatoes, crisp lettuce and cheddar cheese create the perfect bite!',
         'First Layer: Spread the mayo on one side of lightly toasted bread. Add turkey, tomato and cheese (be sure to put the tomatoes in the middle so the bread doesn’t get soggy). ' ||
         'Second Layer: Layer ham, bacon and lettuce. Top with the final slices of bread, ' ||
-        'secure with cute sandwich picks and cut into quarters.');
+        'secure with cute sandwich picks and cut into quarters.','erinXu');
 
-INSERT INTO recipe(title, overview, instructions)
+INSERT INTO recipe(title, overview, instructions, creator_username)
 VALUES ('Pizza Bagel Bites',
         'Throwing it back to the childhood years of begging your parents to let you have pizza for an after school snack.',
         '1. Preheat oven to 350℉. Cut each mini-bagel in half. Place each side face-up on a lined baking sheet. ' ||
         'Broil the bagels for a few minutes until the tops are lightly toasted. ' ||
         '2. Spread a small amount of pizza sauce on top of each bagel and sprinkle cheese and toppings on top. ' ||
-        '3. Bake for 10-15 minutes, or until the cheese is completely melted.');
+        '3. Bake for 10-15 minutes, or until the cheese is completely melted.', 'alinaMawji');
 
-INSERT INTO recipe(title, overview, instructions)
+INSERT INTO recipe(title, overview, instructions,creator_username)
 VALUES ('Spaghetti & Meatballs',
         'This spaghetti and meatball recipe is easy enough for a busy weeknight — and it’s a family favorite, too!',
         'Preheat the oven to 350°F and set an oven rack in the middle position.
@@ -188,7 +188,7 @@ In the meantime, bring the marinara sauce to a simmer in a large skillet. Taste 
 While the meatballs are simmering, bring a large pot of well-salted water to a boil. ' ||
         'Add the spaghetti and cook until al dente. Drain, then toss with the sauce and meatballs ' ||
         '(you may find it easier to toss everything together in the pasta pot rather than the skillet; ' ||
-        'it depends on the sizes of pans you are using.). Serve topped with fresh basil and more grated cheese.');
+        'it depends on the sizes of pans you are using.). Serve topped with fresh basil and more grated cheese.','aidanFox');
 
 --INSERT statements to link given recipes to users
 

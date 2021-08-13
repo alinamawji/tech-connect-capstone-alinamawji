@@ -31,10 +31,10 @@ CREATE TABLE meal_plan
     plan_id      SERIAL,
     user_id      int          NOT NULL,
     title        varchar(50)  NOT NULL,
-    description  varchar(300) NOT NULL,
+    description  varchar(300) NULL,
     date_created date         NOT NULL DEFAULT CURRENT_DATE, -- defaults to today's date when generated
     CONSTRAINT PK_meal_plan PRIMARY KEY (plan_id),
-    CONSTRAINT FK_meal_plan PRIMARY KEY (user_id)
+    CONSTRAINT FK_meal_plan FOREIGN KEY (user_id) REFERENCES app_user(user_id)
 );
 
 CREATE TABLE meal

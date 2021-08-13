@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface MealPlanDAO {
 
-    public void addMealPlanToDB(long plan_id, long user_id, String title,
+    public void addMealPlanToDB(long plan_id, long user_id, String title, String description,
                                 DateTimeFormat date_created, Map<MealEvent,Meal> meals); //might need to add List<Meal> to store
 
     public void deleteMealPlanFromDB(long plan_id);

@@ -38,7 +38,15 @@
                                     <c:set var="activeButton" value="disabled"/>
                                 </c:if>
 <%--                            find a way to disable this button when the recipe does not belong to the user (possibly a another ternary operator)!--%>
-                            <a href="modifyRecipe" class="btn btn-success ${ activeButton }">Edit</a>
+<%--                            <a href="modifyRecipe" class="btn btn-success ${ activeButton }">Edit</a>--%>
+                        </div>
+
+                        <div style = "text-align: left">
+                            <c:url var="formAction" value="/cookbook"/>
+                            <form method="POST" action="${ formAction }">
+                                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">
+                                <input type="submit" role="button" class = "btn btn-sm btn-success" style = "margin-bottom: 5px;" value="Delete">
+                            </form>
                         </div>
 
                             <%--                            <div style = "text-align: right !important;">--%>

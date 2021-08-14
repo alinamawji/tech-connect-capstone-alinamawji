@@ -85,6 +85,8 @@
                         <form:checkboxes path="ingredients" name = "ingredients" items="${ingredients}"/>
                 </div>
             </div>
+            <p>Don't see an ingredient? Add an ingredient with the button below!</p>
+            <a href="addNewIngredient" class = "btn btn-success">Add New Ingredient</a>
         </div>
 
         <div class = "form-group">

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.naming.Binding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -100,10 +101,35 @@ public class RecipeController {
         }
 
         recipeDAO.addRecipeToDB(recipe.getTitle(), recipe.getOverview(), recipe.getDifficulty(),
-                recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories(), user.getUsername());
+                recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories(), user.getUsername(), user.getId());
 
-        return "redirect:/recipes"; //Change this to redirect to the cookbook when jsp pages/controller exists
+        return "redirect:/cookbook"; //Change this to redirect to the cookbook when jsp pages/controller exists
+    }
 
+    @RequestMapping(path = "/addNewIngredient", method = RequestMethod.GET)
+    public String displayAddNewIngredientForm(ModelMap modelHolder) {
+        modelHolder.put("ingredient", new Ingredient());
+        return "addNewIngredient";
+    }
+
+    @RequestMapping(path = "/addNewIngredient", method = RequestMethod.POST)
+    public String processAddingIngredient(@Valid @ModelAttribute Ingredient ingredient, BindingResult result, @RequestParam String name,
+                                          RedirectAttributes flash, HttpSession session) {
+
+        if (result.hasErrors()) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
+            return "redirect:/addNewIngredient";
+        }
+
+        ingredientDAO.addIngredientToDB(name);
+        session.setAttribute("newIngredient", name);
+        return "redirect:/addIngredientConfirmation";
+    }
+
+    @RequestMapping(path = "/addIngredientConfirmation", method = RequestMethod.GET)
+    public String displayAddedIngredientConfirmation(ModelMap modelMap) {
+        Ingredient ingredient = (Ingredient) modelMap.get("ingredient");
+        return "addIngredientConfirmation";
     }
 
     @RequestMapping(path = "/recipeDetails", method = RequestMethod.GET)
@@ -113,32 +139,33 @@ public class RecipeController {
         List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getUsername());
 
         return "recipeDetails";
     }
 
-    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
-    public String displayModifyRecipe(ModelMap modelHolder) {
-        Recipe recipe = (Recipe) modelHolder.get("recipe");
-        List<Ingredient> ingredients = (List<Ingredient>) modelHolder.get("ingredients");
-        return "modifyRecipe";
-    }
-
     @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
-    public String displayModifyRecipePage(@RequestParam Long recipe_id, ModelMap modelHolder) {
-        System.out.println(recipe_id);
-
+    public String displayModifyRecipePage(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-        modelHolder.put("recipe", recipe);
+//        modelHolder.put("recipe", recipe);
+        session.setAttribute("recipe", recipe);
         List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
-        modelHolder.put("ingredients", ingredients);
+        session.setAttribute("ingredients", ingredients);
+//        modelHolder.put("ingredients", ingredients);
 
         return "redirect:/modifyRecipe";
     }
 
+    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
+    public String displayModifyRecipe(ModelMap modelHolder) {
+        return "modifyRecipe";
+    }
+
     @RequestMapping(path = "/modifyRecipe", method = RequestMethod.POST)
-    public String returnToRecipeDetailsAfterModifying() {
+    public String returnToRecipeDetailsAfterModifying(ModelMap modelHolder) {
+        Recipe recipe = (Recipe) modelHolder.get("recipe");
+        List<String> ingredients = (List<String>) modelHolder.get("ingredients");
+        List <String> ingredientsAvailable = ingredientDAO.getAllIngredients();
+        modelHolder.put("ingredientsAvailable", ingredientsAvailable);
         return "redirect:/recipeDetails";
     }
 

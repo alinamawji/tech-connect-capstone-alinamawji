@@ -44,6 +44,8 @@
     </div>
 </div>
 <h1 class="display-5 text-italic text-color"><c:out value="${recipe.title}"/> </h1>
+<p>Date Created: ${recipe.dateCreated}</p>
+<p class = "text-capitalize">Created by: ${recipe.creatorUsername}</p>
 
 <%-- for loop to display difficulty rating --%>
 <c:forEach var = "i" begin = "1" end = "3">
@@ -74,7 +76,7 @@
     <ul class = "list-group" style = "display: inline-block;">
 <%--        for loop to display the ingredients for the recipe&ndash;--%>
         <c:forEach items = "${ingredients}" var = "ingredient">
-            <li class = "list-group-item text-capitalize"><c:out value="${ingredient.name}"/></li>
+            <li class = "list-group-item text-capitalize"><c:out value="${ingredient}"/></li>
         </c:forEach>
     </ul>
 </div>

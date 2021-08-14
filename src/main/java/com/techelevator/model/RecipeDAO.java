@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface RecipeDAO {
 
-    public void addRecipeToDB(String title, String overview, int difficulty, String instructions, List<String> ingredients, List<String> categories, String creatorUsername);
+    public void addRecipeToDB(String title, String overview, int difficulty, String instructions, List<String> ingredients, List<String> categories, String creatorUsername, long user_id);
 
     public void deleteRecipeFromDB(long recipe_id);
 

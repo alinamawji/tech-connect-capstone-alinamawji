@@ -24,7 +24,7 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public void addRecipeToDB(String title, String overview, int difficulty, String instructions, List<String> ingredients, List<String> categories, String creatorUsername) {
+    public void addRecipeToDB(String title, String overview, int difficulty, String instructions, List<String> ingredients, List<String> categories, String creatorUsername, long user_id) {
         // insert recipe into recipe table
         String sqlNewRecipe = "INSERT INTO recipe(creator_username, title, overview, difficulty, date_created, instructions)  values(?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sqlNewRecipe, creatorUsername, title, overview, difficulty, LocalDate.now(), instructions);
@@ -40,6 +40,10 @@ public class JDBCRecipeDAO implements RecipeDAO {
             String sqlRecipeIngredients = "INSERT INTO recipe_ingredient(recipe_id, ingredient_id) values((SELECT recipe_id FROM recipe WHERE title = ?), (SELECT ingredient_id FROM ingredient WHERE ingredient_name = ?))";
             jdbcTemplate.update(sqlRecipeIngredients, title, ingredientName);
         }
+
+        // we have to insert the recipe_id and user_id into the associative table so it comes back in the cookbookDAO method
+        String updateAppUserTable = "insert into app_user_recipe (user_id, recipe_id) values (?, (Select recipe_id from recipe where title = ?))";
+        jdbcTemplate.update(updateAppUserTable, user_id, title);
     }
 
     @Override

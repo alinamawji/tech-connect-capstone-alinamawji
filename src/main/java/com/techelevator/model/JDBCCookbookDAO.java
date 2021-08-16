@@ -21,8 +21,6 @@ public class JDBCCookbookDAO implements CookbookDAO{
 
     @Override
     public void addRecipeToCookbook(Long recipe_id, Long user_id) {
-        System.out.println(user_id);
-        System.out.println(recipe_id);
 
         String sqlAddRecipeToCookbook = "INSERT INTO app_user_recipe(user_id, recipe_id) values(?, ?)";
         jdbcTemplate.update(sqlAddRecipeToCookbook, user_id, recipe_id);

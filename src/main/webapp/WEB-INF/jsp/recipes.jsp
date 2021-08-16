@@ -45,7 +45,7 @@
                     <c:param name="recipe_id" value="${recipe.recipeId}"/>
                 </c:url>
                 <div class = "col-md-4">
-                <div class = "card">
+                <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
                                 <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>

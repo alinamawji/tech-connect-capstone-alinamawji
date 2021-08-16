@@ -55,11 +55,11 @@ public class MealPlanController {
         User user = (User) session.getAttribute("user");
         modelHolder.put("mealPlan", new MealPlan());
         modelHolder.put("meals", mealDAO.getAllMealsByUserID(user.getId()));
-        return "addNewRecipe";
+        return "addNewMealPlan";
     }
 
     @RequestMapping(path = "/addNewMealPlan", method = RequestMethod.POST)
     public String processAddNewMealPlan() {
-        return null;
+        return
     }
 }

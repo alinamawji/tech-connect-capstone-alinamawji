@@ -56,69 +56,291 @@
 
 <hr>
 
-<h1 class = "display-6 text-color" style = "margin-bottom: 10px;">Meals: </h1>
+<%--        create list for each day/time meals     --%>
+<%
+  ArrayList sundayMeals
 
-<%--        this creates a card per meal, cannot group by day     --%>
+%>
 
-<div class = "container" id = "grid">
-  <div class = "row">
-    <for:forEach items="${mealPlan.plannedMeals}" var="plannedMeal" >
+  <c:forEach items="${mealPlan.plannedMeals}" var="plannedMeal">
+
+
+      <%-- set meals for each day --%>
+      plannedMeal.value.title
+
+
+
+
+      <%--          BUTTON TO VIEW MEAL?    --%>
       <%-- <c:url var="mealDetails" value="/mealDetails"> --%>
       <%--     <c:param name="mealplan_id" value="${mealPlan.plan_id}"/> --%>
       <%-- </c:url> --%>
-    <div class = "col-md-4">
-      <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">
-        <div class="card-body text-center">
+      <%-- <a href="${detailUrl}" class="btn btn-success">View Meal</a> --%>
+
+      <%--     set day name for each day     --%>
+      <c:if test="${plannedMeal.key.weekday == 1}">
+        <c:set var="dayString" value="Sunday"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.weekday == 2}">
+        <c:set var="dayString" value="Monday"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.weekday == 3}">
+        <c:set var="dayString" value="Tuesday"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.weekday == 4}">
+        <c:set var="dayString" value="Wednesday"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.weekday == 5}">
+        <c:set var="dayString" value="Thursday"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.weekday == 6}">
+        <c:set var="dayString" value="Friday"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.weekday == 7}">
+        <c:set var="dayString" value="Sunday"/>
+      </c:if>
+
+      <%--     set time name for each time     --%>
+      <c:if test="${plannedMeal.key.time_of_day == 1}">
+        <c:set var="timeString" value="Breakfast"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.time_of_day == 2}">
+        <c:set var="timeString" value="Lunch"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.time_of_day == 3}">
+        <c:set var="timeString" value="Dinner"/>
+      </c:if>
+      <c:if test="${plannedMeal.key.time_of_day == 4}">
+        <c:set var="timeString" value="Snack"/>
+      </c:if>
+
+    </c:forEach>
+
+<h1 class = "display-6 text-color" style = "margin-bottom: 10px;">Meals: </h1>
+
+<div class = "container" id = "grid">
+  <div class = "row">
+
+    <c:forEach var="day" begin="1" end="7">
+
+      <div class = "col-md-4">
+        <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">
+          <div class="card-body text-center">
+
+          <c:forEach var="meal" begin="1" end="4">
+
+            <%-- SUNDAY --%>
+            <c:if test="${day == 1}">
+              <h5 class="card-text" style="font-weight: bold">Sunday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ sundayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ sundayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ sundayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ sundaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
+
+            <%-- MONDAY --%>
+            <c:if test="${day == 2}">
+              <h5 class="card-text" style="font-weight: bold">Monday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ mondayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ mondayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ mondayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ mondaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
+
+            <%-- TUESDAY --%>
+            <c:if test="${day == 3}">
+              <h5 class="card-text" style="font-weight: bold">Tuesday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ tuesdayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ tuesdayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ tuesdayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ tuesdaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
+
+            <%-- WEDNESDAY --%>
+            <c:if test="${day == 4}">
+              <h5 class="card-text" style="font-weight: bold">Wednesday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ wednesdayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ wednesdayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ wednesdayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ wednesdaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
+
+            <%-- THURSDAY --%>
+            <c:if test="${day == 5}">
+              <h5 class="card-text" style="font-weight: bold">Thursday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ thursdayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ thursdayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ thursdayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ thursdaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
+
+            <%-- FRIDAY --%>
+            <c:if test="${day == 6}">
+              <h5 class="card-text" style="font-weight: bold">Friday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ fridayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ fridayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ fridayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ fridaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
+
+            <%-- SATURDAY --%>
+            <c:if test="${day == 7}">
+              <h5 class="card-text" style="font-weight: bold">Saturday</h5>
+              <c:if test="${meal == 1}">
+                <h6 class="card-text" style="font-style: italic">Breakfast</h6>
+                <c:forEach var="meal" items="${ saturdayBreakfast }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 2}">
+                <h6 class="card-text" style="font-style: italic">Lunch</h6>
+                <c:forEach var="meal" items="${ saturdayLunch }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 3}">
+                <h6 class="card-text" style="font-style: italic">Dinner</h6>
+                <c:forEach var="meal" items="${ saturdayDinner }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+              <c:if test="${meal == 4}">
+                <h6 class="card-text" style="font-style: italic">Snacks</h6>
+                <c:forEach var="meal" items="${ saturdaySnacks }">
+                  <p class="card-text">${meal}</p>
+                </c:forEach>
+              </c:if>
+            </c:if>
 
 
-            <%--     set day name for each day     --%>
-          <c:if test=${${plannedMeal.key.weekday} == 1}>
-          <c:set var="dayString" value="Sunday"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.weekday} == 2}>
-          <c:set var="dayString" value="Monday"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.weekday} == 3}>
-          <c:set var="dayString" value="Tuesday"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.weekday} == 4}>
-          <c:set var="dayString" value="Wednesday"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.weekday} == 5}>
-          <c:set var="dayString" value="Thursday"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.weekday} == 6}>
-          <c:set var="dayString" value="Friday"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.weekday} == 7}>
-          <c:set var="dayString" value="Sunday"/>
-          </c:if>
+          </c:forEach>
 
-          <%--     set time name for each time     --%>
-          <c:if test=${${plannedMeal.key.time_of_day} == 1}>
-          <c:set var="timeString" value="Breakfast"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.time_of_day} == 2}>
-          <c:set var="timeString" value="Lunch"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.time_of_day} == 3}>
-          <c:set var="timeString" value="Dinner"/>
-          </c:if>
-          <c:if test=${${plannedMeal.key.time_of_day} == 4}>
-          <c:set var="timeString" value="Snack"/>
-          </c:if>
-
-          <%--        print out day / time and meal     --%>
-          <h5 class="card-text" style="font-weight: bold">${dayString} </h5>&nbsp;
-          <h5 class="card-text">${timeString}</h5>
-
-          <p class="card-text">${plannedMeal.value.title}</p>
-
-          <%-- <a href="${detailUrl}" class="btn btn-success">View Meal</a> --%>
+          </div>
         </div>
       </div>
-    </div>
-    </for:forEach>
+
+    </c:forEach>
+
   </div>
 </div>
 

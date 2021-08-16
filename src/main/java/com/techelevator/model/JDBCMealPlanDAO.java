@@ -49,7 +49,7 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
 
     @Override
     public void deleteMealPlanFromDB(long plan_id) {
-        String sqlDeleteFromMealEventTable = "DELETE * FROM meal_event WHERE plan_id = ?";
+        String sqlDeleteFromMealEventTable = "DELETE FROM meal_event WHERE plan_id = ?";
         jdbcTemplate.update(sqlDeleteFromMealEventTable, plan_id);
 
         String sqlDeleteFromMealPlanTable = "DELETE FROM meal_plan WHERE plan_id = ?";
@@ -83,10 +83,7 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
         Map<MealEvent,Meal> plannedMeals = new HashMap<>();
         for(MealEvent event : mealKeys){
             long meal_id = event.getMealId();
-            //String sqlMeal = "SELECT * FROM meal WHERE meal_id = ? ";
-            //Meal mealValue = jdbcTemplate.queryForObject(sqlMeal, )
-            // Above will be replaced by function call to mealDAO:
-            Meal mealValue = null; // MealDAO.getMealByID(meal_id)
+            Meal mealValue = MealDAO.getMealByID(meal_id);
             plannedMeals.put(event, mealValue);
         }
         return plannedMeals;

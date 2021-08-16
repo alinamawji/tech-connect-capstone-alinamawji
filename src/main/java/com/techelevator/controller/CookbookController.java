@@ -42,9 +42,9 @@ public class CookbookController {
             user = (User) session.getAttribute("user");
             session.setAttribute("deletedRecipe", recipeDAO.getRecipeByID(recipe_id));
             cookbookDAO.deleteRecipeFromCookbook(recipe_id, user.getId());
-            return "redirect:/deletedRecipeFromCookbook";
+            return "redirect:/cookbook";
         }
-        else { return "private";}
+        else { return "redirect:/private";}
     }
 
     @RequestMapping(path = "/deletedRecipeFromCookbook", method = RequestMethod.GET)

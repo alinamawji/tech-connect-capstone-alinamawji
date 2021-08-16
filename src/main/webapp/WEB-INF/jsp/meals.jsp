@@ -49,10 +49,10 @@
 <%--                            </form>--%>
 
 <%--                        </div>--%>
+
                         <for:forEach items = "${recipesInMeal}" var = "recipeInMeal">
                             <p>${recipeInMeal}</p>
                         </for:forEach>
-                        <a href="${detailUrl}" class="btn btn-success">View More</a>
                          </div>
                     </div>
                 </div>

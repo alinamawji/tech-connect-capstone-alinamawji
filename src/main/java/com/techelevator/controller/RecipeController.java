@@ -58,14 +58,14 @@ public class RecipeController {
             return "redirect:/private";
         }
         session.setAttribute("addedRecipe", recipeDAO.getRecipeByID(recipe_id));
-        return "redirect:/addNewRecipeConfirmation";
+        return "redirect:/cookbook";
     }
 
-    @RequestMapping(path = "/addNewRecipeConfirmation", method = RequestMethod.GET)
-    public String addNewRecipeConfirmationPage(ModelMap modelMap) {
-//        Recipe recipe = (Recipe) modelMap.get("addedRecipe");
-        return "addNewRecipeConfirmation";
-    }
+//    @RequestMapping(path = "/addNewRecipeConfirmation", method = RequestMethod.GET)
+//    public String addNewRecipeConfirmationPage(ModelMap modelMap) {
+////        Recipe recipe = (Recipe) modelMap.get("addedRecipe");
+//        return "addNewRecipeConfirmation";
+//    }
 
 
     @RequestMapping(path = "/addNewRecipe", method = RequestMethod.GET)
@@ -85,9 +85,11 @@ public class RecipeController {
         try {
             List<String> categoryList = Arrays.asList(request.getParameterValues("categories"));
             List<String> ingredientList = Arrays.asList(request.getParameterValues("ingredients"));
+            Integer difficulty = Integer.parseInt(request.getParameter("difficulty"));
 
             recipe.setCategories(categoryList);
             recipe.setIngredients(ingredientList);
+            recipe.setDifficulty(difficulty);
 
             flash.addFlashAttribute("recipe", recipe);
 
@@ -122,7 +124,7 @@ public class RecipeController {
 
         ingredientDAO.addIngredientToDB(name);
         session.setAttribute("newIngredient", name);
-        return "redirect:/addIngredientConfirmation";
+        return "redirect:/addNewRecipe";
     }
 
     @RequestMapping(path = "/addIngredientConfirmation", method = RequestMethod.GET)
@@ -218,14 +220,14 @@ public class RecipeController {
 
         if (result.hasErrors() || removeTheseIngredients.size() == 0) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
-            return "private";
+            return "redirect:/private";
         }
         else {
             for (String removeThisIngredient: removeTheseIngredients) {
                 recipeDAO.removeIngredientFromList(oldRecipe.getRecipeId(), removeThisIngredient);
             }
             //change this confirmation page later
-            return "addNewRecipeConfirmation";
+            return "redirect:/addNewRecipeConfirmation";
         }
     }
 
@@ -256,7 +258,7 @@ public class RecipeController {
                 recipeDAO.addIngredientToList(oldRecipe.getRecipeId(), addThisIngredient);
             }
             //change this confirmation page later
-            return "addIngredientConfirmation";
+            return "redirect:/addIngredientConfirmation";
         }
     }
 

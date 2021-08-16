@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,54 +24,125 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
     }
 
     @Override
-    public void addMealPlanToDB(long plan_id, long user_id, String title, String description,
-                              DateTimeFormat date_created, Map<MealEvent,Meal> meals){
+    public void addMealPlanToDB(long user_id, String title, String description, Map<MealEvent, Meal> meals) {
         //insert mealPlan into meal plan table
-        String sqlNewMealPlan = "INSERT INTO meal_plan(plan_id,user_id,title,description,date_created) " +
-                "VALUES (?,?,?,?,?)";
-        jdbcTemplate.update(sqlNewMealPlan, plan_id, user_id, title, description, date_created);
+        String sqlNewMealPlan = "INSERT INTO meal_plan(user_id,title,description,date_created) " +
+                "VALUES (?,?,?,?)";
+        jdbcTemplate.update(sqlNewMealPlan, user_id, title, description, LocalDate.now());
 
-        //insert mealPlan meals into their associative table
-        for(Map.Entry<MealEvent, Meal> plannedMeal : meals.entrySet()) {
+        //insert meal events into the meal_event table
+        for (Map.Entry<MealEvent, Meal> plannedMeal : meals.entrySet()) {
+            String sqlNewMealEvent = "INSERT INTO meal_event(weekday,time_of_day,plan_id,meal_id) " +
+                    "VALUES (?,?,?,?)";
+            MealEvent event = plannedMeal.getKey();
+            jdbcTemplate.update(sqlNewMealEvent, event.getWeekday(),
+                    event.getTimeOfDay(), event.getPlanId(), event.getMealId());
+            //insert mealPlan meals into their associative table
+            String sqlNewPlannedMeal = "INSERT INTO meal_plan_meal(plan_id,meal_id) VAlUES " +
+                    "((SELECT plan_id FROM meal_plan WHERE title LIKE ? AND user_id = ? AND description LIKE ?), ?) ";
+            Meal meal = plannedMeal.getValue();
+            jdbcTemplate.update(sqlNewPlannedMeal, title, user_id, description, meal.getMealId());
 
         }
 
-
-        //insert meal events into the meal_event table
     }
 
     @Override
     public void deleteMealPlanFromDB(long plan_id) {
+        String sqlDeleteFromMealEventTable = "DELETE FROM meal_event WHERE plan_id = ?";
+        jdbcTemplate.update(sqlDeleteFromMealEventTable, plan_id);
+
+        String sqlDeleteFromMealPlanTable = "DELETE FROM meal_plan WHERE plan_id = ?";
+        jdbcTemplate.update(sqlDeleteFromMealPlanTable, plan_id);
+
+        String sqlDeleteFromMealPlanAssocTable = "DELETE FROM meal_plan_meal WHERE plan_id = ?";
+        jdbcTemplate.update(sqlDeleteFromMealPlanAssocTable, plan_id);
 
     }
 
     @Override
     public MealPlan getMealPlanByID(long plan_id) {
-        return null;
+        String sql = "SELECT * FROM meal_plan WHERE plan_id = ? ";
+        MealPlan mealPlan = (MealPlan) jdbcTemplate.queryForObject(sql, new mealPlanRowMapper(), plan_id);
+        return mealPlan;
     }
 
     @Override
-    public List<MealPlan> getAllMealPlans() {
-        return null;
+    public List<MealPlan> getAllMealPlansByUser(long user_id) {
+        String sql = "SELECT * FROM meal_plan WHERE user_id = ?";
+        List<MealPlan> mealPlans = jdbcTemplate.query(sql, new mealPlanRowMapper(), user_id);
+        return mealPlans;
     }
 
     @Override
     public Map<MealEvent, Meal> getPlannedMeals(long plan_id) {
-        return null;
+        String sqlMealEvent = "SELECT * FROM meal_event WHERE plan_id = ? " +
+                "ORDER BY weekday ASC, time_of_day ASC ";
+        List<MealEvent> mealKeys = jdbcTemplate.query(sqlMealEvent, new mealEventRowMapper(), plan_id);
+
+        Map<MealEvent,Meal> plannedMeals = new HashMap<>();
+        for(MealEvent event : mealKeys){
+            long meal_id = event.getMealId();
+            Meal mealValue = MealDAO.getMealByID(meal_id);
+            plannedMeals.put(event, mealValue);
+        }
+        return plannedMeals;
     }
 
     @Override
     public void addMealToPlan(long plan_id, Meal meal) {
+        String sqlMealAssocPlan = "INSERT INTO meal_plan_meal(plan_id,meal_id) VALUES (?,?) ";
+        jdbcTemplate.update(sqlMealAssocPlan, plan_id, meal.getMealId());
+    }
 
+    @Override
+    public void createMealEvent(MealEvent event){
+        String sql = "INSERT INTO meal_event(weekday,time_of_day,plan_id,meal_id) VALUES (?,?,?,?) ";
+        jdbcTemplate.update(sql,event.getWeekday(),event.getTimeOfDay(), event.getPlanId(), event.getMealId());
     }
 
     @Override
     public void removeMealFromPlan(long plan_id, Meal meal) {
+        String sqlRemovePlannedMeal = "DELETE FROM meal_plan_meal WHERE plan_id = ? AND meal_id = ? ";
+        jdbcTemplate.update(sqlRemovePlannedMeal, plan_id, meal.getMealId());
+    }
+
+    @Override
+    public void deleteMealEvent(MealEvent event){
+        String sql = "DELETE FROM meal_event WHERE event_id = ? ";
+        jdbcTemplate.update(sql, event.getEventId());
+    }
+
+    @Override
+    public void updateTitle(long plan_id, String title) {
+        String sql = "UPDATE meal_plan SET title = ? WHERE plan_id = ? ";
+        jdbcTemplate.update(sql,title,plan_id);
+    }
+
+    @Override
+    public void updateDescription(long plan_id, String description) {
+        String sql = "UPDATE meal_plan SET description = ? WHERE plan_id = ? ";
+        jdbcTemplate.update(sql,description,plan_id);
+    }
+
+    @Override
+    public List<String> generateGroceryList(long plan_id) {
+        String groceryListSql = "SELECT DISTINCT ingredient_name FROM ingredient i " +
+                "JOIN recipe_ingredient ri ON ri.ingredient_id = i.ingredient_id " +
+                "JOIN recipe r ON r.recipe_id = ri.recipe_id " +
+                "JOIN meal_recipe mr ON mr.recipe_id = r.recipe_id " +
+                "JOIN meal m ON m.meal_id = mr.meal_id " +
+                "JOIN meal_plan_meal mpm ON mpm.meal_id = m.meal_id " +
+                "JOIN meal_plan mp ON mp.plan_id = mpm.plan_id " +
+                "WHERE plan_id = ?";
+        List<String> groceryList = jdbcTemplate.query(groceryListSql, new mealPlanRowMapper(), plan_id);
+        return groceryList;
 
     }
 
 
 }
+
 
 class mealPlanRowMapper implements RowMapper {
     @Override
@@ -79,7 +152,20 @@ class mealPlanRowMapper implements RowMapper {
         mealPlan.setUserId(results.getLong("user_id"));
         mealPlan.setTitle(results.getString("title"));
         mealPlan.setDescription((results.getString("description")));
-        mealPlan.setDateCreated((DateTimeFormat) results.getDate("date_created"));
+        mealPlan.setDateCreated((results.getDate("date_created").toLocalDate()));
         return mealPlan;
+    }
+}
+
+class  mealEventRowMapper implements RowMapper {
+    @Override
+    public MealEvent mapRow(ResultSet results, int i) throws SQLException {
+        MealEvent mealEvent = new MealEvent();
+        mealEvent.setEventId(results.getLong("event_id"));
+        mealEvent.setPlanId(results.getLong("plan_id"));
+        mealEvent.setMealId(results.getLong("meal_id"));
+        mealEvent.setWeekday(results.getInt("weekday"));
+        mealEvent.setTimeOfDay(results.getInt("time_of_day"));
+        return mealEvent;
     }
 }

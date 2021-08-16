@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class MealPlan {
     @NotBlank(message = "Description is required")
     private String description;
 
-    private DateTimeFormat date_created;
+    private LocalDate date_created;
 
     @NotEmpty(message =  "Meal entry cannot be empty") // might need to change to Map<MealEvent,MealPlan>
     private Map<MealEvent,Meal> plannedMeals;
@@ -34,7 +35,7 @@ public class MealPlan {
 
     public String getDescription() { return description; }
 
-    public DateTimeFormat getDateCreated() {
+    public LocalDate getDateCreated() {
         return date_created;
     }
 
@@ -52,7 +53,7 @@ public class MealPlan {
 
     public void setDescription(String description) { this.description = description; }
 
-    public void setDateCreated(DateTimeFormat date_created) {
+    public void setDateCreated(LocalDate date_created) {
         this.date_created = date_created;
     }
 

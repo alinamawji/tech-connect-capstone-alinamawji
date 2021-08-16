@@ -249,7 +249,7 @@ public class RecipeController {
         Recipe oldRecipe = recipeDAO.getRecipeByID(Long.parseLong(request.getParameter("recipeId")));
         if (result.hasErrors() || newIngredients.size() == 0) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
-            return "private";
+            return "redirect:/private";
         }
         else {
             for (String addThisIngredient : newIngredients) {

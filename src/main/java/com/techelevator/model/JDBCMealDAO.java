@@ -53,7 +53,10 @@ public class JDBCMealDAO implements MealDAO{
     }
 
     @Override
-    public void deleteMeal(long meal_id) {
+    public void deleteMeal(long meal_id, long recipe_id) {
+        String sqlDeleteMealFromMealRecipe = "DELETE FROM meal_recipe WHERE meal_id = ? and recipe_id = ?";
+        jdbcTemplate.update(sqlDeleteMealFromMealRecipe, meal_id, recipe_id);
+
         String sqlDeleteMeal = "DELETE FROM meal WHERE meal_id = ?";
         jdbcTemplate.update(sqlDeleteMeal, meal_id);
     }

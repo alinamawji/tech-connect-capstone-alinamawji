@@ -5,5 +5,5 @@ import java.util.List;
 public interface IngredientDAO {
     public void addIngredientToDB(Ingredient ingredient);
 
-    public List<Ingredient> getAllIngredients();
+    public List<String> getAllIngredients();
 }

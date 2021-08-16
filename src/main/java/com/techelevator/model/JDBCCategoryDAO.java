@@ -20,10 +20,10 @@ public class JDBCCategoryDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public List<Category> getAllCategories(){
-        String sql = "SELECT * from category ORDER BY category_name";
+    public List<String> getAllCategories(){
+        String sql = "SELECT category_name from category ORDER BY category_name";
 
-        List <Category> categories = jdbcTemplate.query(sql, new categoryRowMapper());
+        List <String> categories = jdbcTemplate.query(sql, new categoryRowMapper());
         return categories;
     }
 
@@ -31,10 +31,11 @@ public class JDBCCategoryDAO {
 
 class categoryRowMapper implements RowMapper {
     @Override
-    public Category mapRow(ResultSet results, int i) throws SQLException {
-        Category category = new Category();
-        category.setCategoryId(results.getLong("category_id"));
-        category.setName(results.getString("category_name"));
-        return category;
+    public String mapRow(ResultSet results, int i) throws SQLException {
+//        Category category = new Category();
+//        category.setCategoryId(results.getLong("category_id"));
+//        category.setName(results.getString("category_name"));
+//        return category;
+        return results.getString("category_name");
     }
 }

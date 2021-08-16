@@ -20,7 +20,7 @@ public class Recipe {
     private String title;
 
     @NotEmpty(message = "Ingredient list cannot be empty")
-    private List<Ingredient> ingredients;
+    private List<String> ingredients;
 
     @NotBlank(message = "Instructions are required")
     public String instructions;
@@ -29,7 +29,7 @@ public class Recipe {
     public int difficulty;
 
     @NotEmpty(message = "Category list cannot be empty")
-    private List<Category> categories;
+    private List<String> categories;
 
     @NotBlank(message = "Overview is required")
     private String overview;
@@ -52,7 +52,7 @@ public class Recipe {
         return title;
     }
 
-    public List<Ingredient> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
@@ -64,7 +64,7 @@ public class Recipe {
         return difficulty;
     }
 
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
@@ -95,7 +95,7 @@ public class Recipe {
         this.title = title;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -107,7 +107,7 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 

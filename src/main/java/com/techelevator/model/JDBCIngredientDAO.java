@@ -19,15 +19,15 @@ public class JDBCIngredientDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void addIngredientToDB(Ingredient ingredient) {
-        String sqlAddIngredientToDB = "INSERT INTO ingredient(ingredient_id, ingredient_name) values(?, ?)";
-        jdbcTemplate.update(sqlAddIngredientToDB, ingredient.getIngredientId(), ingredient.getName());
+    public void addIngredientToDB(String ingredient) {
+        String sqlAddIngredientToDB = "INSERT INTO ingredient (ingredient_name) values(?)";
+        jdbcTemplate.update(sqlAddIngredientToDB, ingredient);
     }
 
-    public List<Ingredient> getAllIngredients() {
-        String sql = "SELECT * from ingredient ORDER BY ingredient_name;";
+    public List<String> getAllIngredients() {
+        String sql = "SELECT ingredient_name from ingredient ORDER BY ingredient_name;";
 
-                List <Ingredient> ingredients = jdbcTemplate.query(sql, new ingredientRowMapper());
+                List <String> ingredients = jdbcTemplate.query(sql, new ingredientRowMapper());
                 return ingredients;
     }
 
@@ -35,11 +35,12 @@ public class JDBCIngredientDAO {
 
 class ingredientRowMapper implements RowMapper {
     @Override
-    public Ingredient mapRow(ResultSet results, int i) throws SQLException {
-        Ingredient ingredient = new Ingredient();
-        ingredient.setIngredientId(results.getLong("ingredient_id"));
-        ingredient.setName(results.getString("ingredient_name"));
-        return ingredient;
+    public String mapRow(ResultSet results, int i) throws SQLException {
+//        Ingredient ingredient = new Ingredient();
+//        ingredient.setIngredientId(results.getLong("ingredient_id"));
+//        ingredient.setName(results.getString("ingredient_name"));
+//        return ingredient;
+        return results.getString("ingredient_name");
     }
 }
 

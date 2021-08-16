@@ -24,22 +24,26 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public void addRecipeToDB(long recipe_id, String title, String overview, int difficulty, LocalDate date_created, String instructions, List<Ingredient> ingredients, List<Category> categories) {
+    public void addRecipeToDB(String title, String overview, int difficulty, String instructions, List<String> ingredients, List<String> categories, String creatorUsername, long user_id) {
         // insert recipe into recipe table
-        String sqlNewRecipe = "INSERT INTO recipe(recipe_id, title, overview, difficulty, date_created, instructions) values(?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sqlNewRecipe, recipe_id, title, overview, difficulty, date_created, instructions);
+        String sqlNewRecipe = "INSERT INTO recipe(creator_username, title, overview, difficulty, date_created, instructions)  values(?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sqlNewRecipe, creatorUsername, title, overview, difficulty, LocalDate.now(), instructions);
 
         // insert recipe categories into recipe_category associative table
-        for (Category c : categories) {
-            String sqlRecipeIngredients = "INSERT INTO recipe_category(recipe_id, category_id) values(?, ?)";
-            jdbcTemplate.update(sqlRecipeIngredients, recipe_id, c.getCategoryId());
+        for (String categoryName : categories) {
+            String sqlRecipeIngredients = "INSERT INTO recipe_category(recipe_id, category_id) values((SELECT recipe_id FROM recipe WHERE title = ?), (SELECT category_id FROM category WHERE category_name = ?))";
+            jdbcTemplate.update(sqlRecipeIngredients, title, categoryName);
         }
 
         // insert recipe ingredients into recipe_ingredient associative table
-        for (Ingredient i : ingredients) {
-            String sqlRecipeIngredients = "INSERT INTO recipe_ingredient(recipe_id, ingredient_id) values(?, ?)";
-            jdbcTemplate.update(sqlRecipeIngredients, recipe_id, i.getIngredientId());
+        for (String ingredientName : ingredients) {
+            String sqlRecipeIngredients = "INSERT INTO recipe_ingredient(recipe_id, ingredient_id) values((SELECT recipe_id FROM recipe WHERE title = ?), (SELECT ingredient_id FROM ingredient WHERE ingredient_name = ?))";
+            jdbcTemplate.update(sqlRecipeIngredients, title, ingredientName);
         }
+
+        // we have to insert the recipe_id and user_id into the associative table so it comes back in the cookbookDAO method
+        String updateAppUserTable = "insert into app_user_recipe (user_id, recipe_id) values (?, (Select recipe_id from recipe where title = ?))";
+        jdbcTemplate.update(updateAppUserTable, user_id, title);
     }
 
     @Override
@@ -49,20 +53,20 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public List<Ingredient> getRecipeIngredients(long recipe_id) {
-        String sql = "SELECT * FROM ingredient i" +
+    public List<String> getRecipeIngredients(long recipe_id) {
+        String sql = "SELECT ingredient_name FROM ingredient i" +
                 " JOIN recipe_ingredient ri ON ri.ingredient_id = i.ingredient_id" +
                 " WHERE recipe_id = ?";
-        List<Ingredient> ingredientList = jdbcTemplate.query(sql, new ingredientRowMapper(), recipe_id);
+        List<String> ingredientList = jdbcTemplate.query(sql, new ingredientRowMapper(), recipe_id);
         return ingredientList;
     }
 
     @Override
-    public List<Category> getRecipeCategories(long recipe_id) {
-        String sql = "SELECT * FROM category c" +
+    public List<String> getRecipeCategories(long recipe_id) {
+        String sql = "SELECT category_name FROM category c" +
                 " JOIN recipe_category rc ON rc.category_id = c.category_id" +
                 " WHERE recipe_id = ?";
-        List<Category> categoryList = jdbcTemplate.query(sql, new categoryRowMapper(), recipe_id);
+        List<String> categoryList = jdbcTemplate.query(sql, new categoryRowMapper(), recipe_id);
         return categoryList;
     }
 
@@ -74,15 +78,16 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public void addIngredientToList(long recipe_id, Ingredient ingredient) {
-        String sqlNewIngredient = "INSERT INTO recipe_ingredient(recipe_id) values(?, ?)";
-        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient.getIngredientId());
+    public void addIngredientToList(long recipe_id, String ingredient) {
+        String sqlNewIngredient = "insert into recipe_ingredient (recipe_id, ingredient_id) \n" +
+                "values (?, (select ingredient_id from ingredient where ingredient_name = ?));";
+        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient);
     }
 
     @Override
-    public void removeIngredientFromList(long recipe_id, Ingredient ingredient) {
-        String sqlNewIngredient = "DELETE FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = ?";
-        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient.getIngredientId());
+    public void removeIngredientFromList(long recipe_id, String ingredient) {
+        String sqlDeleteIngredient = "DELETE FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = (select ingredient_id from ingredient where ingredient_name = ?)";
+        jdbcTemplate.update(sqlDeleteIngredient, recipe_id, ingredient);
     }
 
     @Override

@@ -25,7 +25,6 @@ public class RecipeController {
 
     @Autowired
     private JDBCRecipeDAO recipeDAO;
-
     @Autowired
     private JDBCCookbookDAO cookbookDAO;
 

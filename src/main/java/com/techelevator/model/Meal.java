@@ -2,10 +2,14 @@ package com.techelevator.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.awt.*;
 
 public class Meal {
+    @Autowired
+    private MealDAO mealDAO;
+
     private long meal_id;
 
     @NotBlank(message = "Title is required")
@@ -14,7 +18,7 @@ public class Meal {
     private long user_id;
 
     @NotEmpty(message = "Recipe list cannot be empty")
-    private List<Recipe> recipesInMeal;
+    private String recipesInMeal;
 
     public long getMealId() {
         return meal_id;
@@ -28,7 +32,7 @@ public class Meal {
         return title;
     }
 
-    public List<Recipe> getRecipesInMeal() {
+    public String getRecipesInMeal() {
         return recipesInMeal;
     }
 
@@ -36,11 +40,15 @@ public class Meal {
         this.meal_id = meal_id;
     }
 
+    public void setUserId(long user_id) {
+        this.user_id = user_id;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setRecipesInMeal(List<Recipe> recipesInMeal) {
+    public void setRecipesInMeal(String recipesInMeal) {
         this.recipesInMeal = recipesInMeal;
     }
 }

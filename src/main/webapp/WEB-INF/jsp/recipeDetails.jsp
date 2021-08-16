@@ -74,7 +74,7 @@
     <ul class = "list-group" style = "display: inline-block;">
 <%--        for loop to display the ingredients for the recipe&ndash;--%>
         <c:forEach items = "${ingredients}" var = "ingredient">
-            <li class = "list-group-item text-capitalize"><c:out value="${ingredient.name}"/></li>
+            <li class = "list-group-item text-capitalize"><c:out value="${ingredient}"/></li>
         </c:forEach>
     </ul>
 </div>

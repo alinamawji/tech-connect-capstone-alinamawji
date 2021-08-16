@@ -41,18 +41,19 @@
 <hr>
 
 
-<c:url var="recipeDetailsUrl" value="/recipeDetails"/>
-<form method="POST" action="${recipeDetailsUrl}">
+<%--<c:url var="recipeDetailsUrl" value="/recipeDetails"/>--%>
+<%--<form method="POST" action="${recipeDetailsUrl}">--%>
 
-    <c:url var="modifyUrl" value="/modifyRecipe"/>
-    <form:form method="POST" action="${modifyUrl}">
+<%--    <c:url var="modifyUrl" value="/modifyRecipe"/>--%>
+<%--    <form:form method="POST" action="${modifyUrl}">--%>
 
         <hr>
 
         <h1 class = "display-6 text-color" style = "margin-bottom: 10px;">Ingredients: </h1>
         <div class = "container">
             <ul class = "list-group" style = "display: inline-block;">
-                    <%--        for loop to display the ingredients for the recipe&ndash;--%>
+                <%--        for loop to display the ingredients for the recipe&ndash;--%>
+
                 <c:forEach items = "${ingredients}" var = "ingredient">
                         <li class = "list-group-item">
                                 <div class="input-group" style="display: table; width: 100%">
@@ -98,12 +99,12 @@
         </div>
 
 
-    </form:form>
+<%--    </form:form>--%>
 
     <div class="row" style="width: 90%; margin: auto;">
         <input type="submit" class="btn btn-success btn-sm" role="button" aria-disabled="true" value="Done"/>
     </div>
 
-</form>
+<%--</form>--%>
 
 <%--<%@ include file = "common/footer.jspf" %>--%>

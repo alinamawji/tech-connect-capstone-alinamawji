@@ -113,28 +113,30 @@ public class RecipeController {
         List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getUsername());
-
         return "recipeDetails";
+    }
+
+//    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
+//    public String displayModifyRecipePage(@RequestParam long recipe_id, ModelMap modelHolder) {
+//
+//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+//        modelHolder.put("recipe", recipe);
+//        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+//        modelHolder.put("ingredients", ingredients);
+//
+//        return "redirect:/modifyRecipe";
+//    }
+
+    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
+    public String displayModifyRecipePage() {
+        return "redirect:/modifyRecipe";
     }
 
     @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
     public String displayModifyRecipe(ModelMap modelHolder) {
         Recipe recipe = (Recipe) modelHolder.get("recipe");
-        List<Ingredient> ingredients = (List<Ingredient>) modelHolder.get("ingredients");
+        List<String> ingredients = (List<String>) modelHolder.get("ingredients");
         return "modifyRecipe";
-    }
-
-    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
-    public String displayModifyRecipePage(@RequestParam Long recipe_id, ModelMap modelHolder) {
-        System.out.println(recipe_id);
-
-        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-        modelHolder.put("recipe", recipe);
-        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
-        modelHolder.put("ingredients", ingredients);
-
-        return "redirect:/modifyRecipe";
     }
 
     @RequestMapping(path = "/modifyRecipe", method = RequestMethod.POST)

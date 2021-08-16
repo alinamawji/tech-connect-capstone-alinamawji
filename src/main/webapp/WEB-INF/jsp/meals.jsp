@@ -52,7 +52,7 @@
                         <for:forEach items = "${recipesInMeal}" var = "recipeInMeal">
                             <p>"${recipeInMeal}"</p>
                         </for:forEach>
-                        <a href="${detailUrl}" class="btn btn-success">View More</a>
+                        <a href="${detailUrl}" class="btn btn-success">Delete Meal</a>
                          </div>
                     </div>
                 </div>

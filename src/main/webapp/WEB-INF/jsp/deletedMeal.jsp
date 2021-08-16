@@ -1,16 +1,6 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Student
-  Date: 8/16/2021
-  Time: 11:47 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
-</html>
+<%@ include file = "common/header.jspf" %>
+
+<h1>You have deleted ${deletedMeal.title}.</h1>
+
+
+<%@ include file = "common/footer.jspf" %>

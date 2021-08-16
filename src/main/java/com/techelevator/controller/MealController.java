@@ -47,17 +47,25 @@ public class MealController {
         return "redirect:/private";
     }
 
-//    @RequestMapping(path="/meals", method = RequestMethod.POST)
-//    public String saveMeal(@RequestParam Long meal_id, ModelMap modelHolder, HttpSession session) {
-//        User user = (User) session.getAttribute("user");
-//        Recipe recipe = (Recipe) session.getAttribute("title");
-//        try {
-//            mealDAO.addRecipesToMeal(meal_id, recipe.getRecipeId());
-//        } catch (Exception e) {
-//            return "redirect:/private";
-//        }
-//        return "redirect:/addNewMealConfirmation";
-//    }
+    @RequestMapping(path="/meals", method = RequestMethod.POST)
+    public String deleteMeal(@RequestParam Long meal_id, HttpSession session) {
+        User user = new User();
+        if (session.getAttribute("user") != null) {
+            user = (User) session.getAttribute("user");
+            session.setAttribute("deletedMeal", mealDAO.getMealByID(meal_id));
+            mealDAO.deleteMeal(meal_id);
+            return "redirect:/deletedMeal";
+        }
+        else {
+            return "private";
+        }
+    }
+
+    @RequestMapping(path = "/deletedMeal", method = RequestMethod.GET)
+    public String displayDeletedMealConfirmation(ModelMap modelHolder) {
+        Meal meal = (Meal) modelHolder.get("deletedMeal");
+        return "deletedMeal";
+    }
 
     @RequestMapping(path = "/addNewMealConfirmation", method = RequestMethod.GET)
     public String addNewMealConfirmationPage() {
@@ -89,5 +97,7 @@ public class MealController {
 
         return "meals";
     }
+
+
 
 }

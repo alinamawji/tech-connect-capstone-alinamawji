@@ -23,6 +23,9 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+    @Autowired
+    MealDAO mealDAO;
+
     @Override
     public void addMealPlanToDB(long user_id, String title, String description, Map<MealEvent, Meal> meals) {
         //insert mealPlan into meal plan table
@@ -83,7 +86,7 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
         Map<MealEvent,Meal> plannedMeals = new HashMap<>();
         for(MealEvent event : mealKeys){
             long meal_id = event.getMealId();
-            Meal mealValue = MealDAO.getMealByID(meal_id);
+            Meal mealValue = mealDAO.getMealByID(meal_id);
             plannedMeals.put(event, mealValue);
         }
         return plannedMeals;

@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -29,23 +32,33 @@ public class MealController {
     private JDBCCookbookDAO cookbookDAO;
 
     @RequestMapping(path="/meals", method = RequestMethod.GET)
-    public String showAllMeals(ModelMap modelHolder) {
-        List<Meal> meals = mealDAO.getAllMeals();
-        modelHolder.put("meals", meals);
-        return "meals";
+    public String showAllMeals(ModelMap modelHolder, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+
+        if (user != null) {
+            List<Meal> meals = mealDAO.getAllMealsByUserID(user.getId());
+            for (Meal meal: meals) {
+                List <String> recipesInMeal = mealDAO.getRecipesInMeal(meal.getMealId());
+                modelHolder.put("recipesInMeal", recipesInMeal);
+            }
+            modelHolder.put("meals", meals);
+            return "meals";
+        }
+        return "redirect:/private";
     }
 
-    @RequestMapping(path="/meals", method = RequestMethod.POST)
-    public String saveMeal(@RequestParam Long meal_id, ModelMap modelHolder, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        Recipe recipe = (Recipe) session.getAttribute("title");
-        try {
-            mealDAO.addRecipesToMeal(meal_id, recipe.getRecipeId());
-        } catch (Exception e) {
-            return "redirect:/private";
-        }
-        return "redirect:/addNewMealConfirmation";
-    }
+//    @RequestMapping(path="/meals", method = RequestMethod.POST)
+//    public String saveMeal(@RequestParam Long meal_id, ModelMap modelHolder, HttpSession session) {
+//        User user = (User) session.getAttribute("user");
+//        Recipe recipe = (Recipe) session.getAttribute("title");
+//        try {
+//            mealDAO.addRecipesToMeal(meal_id, recipe.getRecipeId());
+//        } catch (Exception e) {
+//            return "redirect:/private";
+//        }
+//        return "redirect:/addNewMealConfirmation";
+//    }
+
     @RequestMapping(path = "/addNewMealConfirmation", method = RequestMethod.GET)
     public String addNewMealConfirmationPage() {
         return "addNewMealConfirmation";
@@ -61,10 +74,18 @@ public class MealController {
     }
 
     @RequestMapping(path="/addNewMeal", method = RequestMethod.POST)
-    public String processAddNewMealInput(@Valid @ModelAttribute Meal meal, BindingResult result, RedirectAttributes flash, HttpSession session) {
-        flash.addFlashAttribute("meal", meal);
+    public String processAddNewMealInput(@RequestParam List<String> recipesInMeal, @Valid @ModelAttribute Meal meal, BindingResult result, RedirectAttributes flash, HttpSession session, HttpServletRequest request) {
+//        flash.addFlashAttribute("meal", meal);
+        recipesInMeal = Arrays.asList(request.getParameterValues("recipesInMeal"));
         User user = (User) session.getAttribute("user");
+        if (result.hasErrors() || recipesInMeal.size() == 0) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "meal" , meal);
+            return "redirect:/private";
+        }
         mealDAO.createMeal(meal.getTitle(), user.getId());
+        for (String recipe: recipesInMeal) {
+            mealDAO.updateMealRecipeTable(meal.getTitle(), recipe);
+        }
 
         return "meals";
     }

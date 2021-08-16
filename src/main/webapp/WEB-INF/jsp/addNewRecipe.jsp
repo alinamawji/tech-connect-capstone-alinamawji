@@ -78,13 +78,15 @@
 <%--            Vegetarian <input type = "checkbox" name = "categories[]" value = "Vegetarian"/>--%>
         </div>
 
-        <div class = "form-group">
+        <div class = "form-group" style = "margin-bottom: 5px;">
             <label class = "display-5">Ingredients: </label>
             <div class = "container selectList">
                 <div class = "row text-capitalize" style = "margin-left: 15px;">
                         <form:checkboxes path="ingredients" name = "ingredients" items="${ingredients}"/>
                 </div>
             </div>
+            <p>Don't see an ingredient? Add an ingredient with the button below!</p>
+            <a href="addNewIngredient" class = "btn btn-success btn-sm">Add New Ingredient</a>
         </div>
 
         <div class = "form-group">

@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import java.util.ArrayList;
 
 public class Ingredient {
+
     private long ingredient_id;
 
     @NotBlank(message = "Name is required")

@@ -19,9 +19,9 @@ public class JDBCIngredientDAO {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void addIngredientToDB(Ingredient ingredient) {
-        String sqlAddIngredientToDB = "INSERT INTO ingredient(ingredient_id, ingredient_name) values(?, ?)";
-        jdbcTemplate.update(sqlAddIngredientToDB, ingredient.getIngredientId(), ingredient.getName());
+    public void addIngredientToDB(String ingredient) {
+        String sqlAddIngredientToDB = "INSERT INTO ingredient (ingredient_name) values(?)";
+        jdbcTemplate.update(sqlAddIngredientToDB, ingredient);
     }
 
     public List<String> getAllIngredients() {

@@ -37,9 +37,18 @@
                 <c:param name="meal_id" value="${meal.mealId}"/>
             </c:url>
             <div class = "col-md-4">
-                <div class = "card">
+                <div class = "card" style="margin-bottom: 5px; margin-top: 5px; ">
                     <div class="card-body text-center">
+                        <div style = "text-align: left">
+                            <c:url var="formAction" value="/meals"/>
+                            <form method="POST" action="${ formAction }">
+                                <input type="hidden" id="meal_id" name="meal_id" value="${meal.mealId}">
+                                <input type="submit" role="button" class = "btn btn-sm btn-success" style = "margin-bottom: 5px;" value="Delete">
+                            </form>
+                        </div>
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
+<<<<<<< HEAD
+=======
 <%--                        <div style = "text-align: right;" style = "margin-top: 5px; margin-bottom: 5px;">--%>
                                 <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
 <%--                            <c:url var="formAction" value="/meals"/>--%>
@@ -50,6 +59,7 @@
 
 <%--                        </div>--%>
 
+>>>>>>> 0aa7b837b963795881a8832f42df9b07f2da3c98
                         <for:forEach items = "${recipesInMeal}" var = "recipeInMeal">
                             <p>${recipeInMeal}</p>
                         </for:forEach>

@@ -93,8 +93,7 @@
             </blockquote>
         </div>
 
-
-<%--    </form:form>--%>
+    </form:form>
 
     <div class="row" style="width: 90%; margin: auto;">
         <input type="submit" class="btn btn-success btn-sm" role="button" aria-disabled="true" value="Done"/>

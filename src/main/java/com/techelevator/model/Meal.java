@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.awt.*;
+import java.util.*;
 
 public class Meal {
     @Autowired
@@ -18,7 +18,7 @@ public class Meal {
     private long user_id;
 
     @NotEmpty(message = "Recipe list cannot be empty")
-    private String recipesInMeal;
+    private List<String> recipesInMeal;
 
     public long getMealId() {
         return meal_id;
@@ -32,7 +32,7 @@ public class Meal {
         return title;
     }
 
-    public String getRecipesInMeal() {
+    public List<String> getRecipesInMeal() {
         return recipesInMeal;
     }
 
@@ -48,7 +48,7 @@ public class Meal {
         this.title = title;
     }
 
-    public void setRecipesInMeal(String recipesInMeal) {
+    public void setRecipesInMeal(List<String> recipesInMeal) {
         this.recipesInMeal = recipesInMeal;
     }
 }

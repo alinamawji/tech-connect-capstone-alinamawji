@@ -6,9 +6,11 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 @Component
 public class JDBCMealDAO implements MealDAO{
@@ -32,9 +34,9 @@ public class JDBCMealDAO implements MealDAO{
     }
 
     @Override
-    public List<Meal> getAllMeals() {
-        String sqlAllMeals = "SELECT * FROM meal";
-        java.util.List<Meal> meals = (List<Meal>) jdbcTemplate.query(sqlAllMeals, new mealRowMapper());
+    public List<Meal> getAllMealsByUserID(long user_id) {
+        String sqlAllMeals = "SELECT * FROM meal where user_id = ?";
+        java.util.List<Meal> meals = (List<Meal>) jdbcTemplate.query(sqlAllMeals, new mealRowMapper(), user_id);
         return meals;
     }
 
@@ -45,15 +47,37 @@ public class JDBCMealDAO implements MealDAO{
     }
 
     @Override
+    public void updateMealRecipeTable(String mealTitle, String recipeTitle) {
+        String sql = "INSERT INTO meal_recipe (meal_id, recipe_id) VALUES ((SELECT meal_id FROM meal where title = ?), (SELECT recipe_id FROM recipe where title = ?))";
+        jdbcTemplate.update(sql, mealTitle, recipeTitle);
+    }
+
+    @Override
     public void deleteMeal(long meal_id) {
         String sqlDeleteMeal = "DELETE FROM meal WHERE meal_id = ?";
         jdbcTemplate.update(sqlDeleteMeal, meal_id);
     }
 
     @Override
-    public void getMealByID(long meal_id) {
+    public Meal getMealByID(long meal_id) {
         String sqlGetMealById = "SELECT * FROM meal WHERE meal_id = ?";
-        jdbcTemplate.queryForObject(sqlGetMealById, new mealRowMapper(), meal_id);
+        Meal meal = (Meal) jdbcTemplate.queryForObject(sqlGetMealById, new mealRowMapper(), meal_id);
+        return meal;
+    }
+
+    @Override
+    public List<String> getRecipesInMeal(long meal_id) {
+        String sql = "select recipe.title from recipe\n" +
+                "join meal_recipe mr on recipe.recipe_id = mr.recipe_id\n" +
+                "join meal m on mr.meal_id = m.meal_id\n" +
+                "where m.meal_id = ?;";
+        List<Map<String, Object>> recipesInMeal = jdbcTemplate.queryForList(sql, meal_id);
+
+        List <String> recipeTitles = new ArrayList<>();
+        for (Map <String, Object> recipe: recipesInMeal) {
+            recipeTitles.add((String) recipe.get("title"));
+        }
+        return recipeTitles;
     }
 }
 

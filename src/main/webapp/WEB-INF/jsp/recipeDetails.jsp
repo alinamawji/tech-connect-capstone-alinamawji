@@ -31,14 +31,17 @@
 
 <%--            <c:set var = "activeButton" value = "${user.firstName != null ? '' : 'disabled'}"/>--%>
             <c:if test = "${activeButton == 'disabled'}">
-                <c:out value = "Looks like you aren't currently logged in! Please login to access some of our other features like uploading and saving recipes."/>
+                <c:out value = "You can only edit recipes you've created."/>
             </c:if>
 
-            <c:url var="formAction" value="/recipeDetails"/>
-            <form method="POST" action="${ formAction }">
-                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">
-                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" aria-disabled="true" value="Edit Recipe">
-            </form>
+<%--            <c:url var="formAction" value="/recipeDetails"/>--%>
+<%--            <form method="POST" action="${ formAction }">--%>
+<%--                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">--%>
+<%--                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" aria-disabled="true" value="Edit Recipe">--%>
+<%--            </form>--%>
+            <a  class = "btn btn-success ${activeButton}" href="<c:url value='/modifyRecipe'>
+             <c:param name="recipe_id" value='${recipe.recipeId}'/>
+            </c:url>">Edit</a>
 
         </div>
     </div>

@@ -19,9 +19,9 @@ public interface RecipeDAO {
 
     public Recipe getRecipeByID(long recipe_id);
 
-    public void addIngredientToList(long recipe_id, Ingredient ingredient);
+    public void addIngredientToList(long recipe_id, String ingredient);
 
-    public void removeIngredientFromList(long recipe_id, Ingredient ingredient);
+    public void removeIngredientFromList(long recipe_id, String ingredient);
 
     public void modifyInstructions(long recipe_id, String instructions);
 

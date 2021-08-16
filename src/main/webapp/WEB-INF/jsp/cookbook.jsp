@@ -18,11 +18,9 @@
     }
 </style>
 
-<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 20px;">My Cookbook</h1>
-
-<%--maybe try ${user.firstName}'s Cookbook?--%>
-
+<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 20px;"><c:out value = "${user.firstName}'s Cookbook"/></h1>
 <hr>
+
 <div class = "container" id = "grid">
     <div class = "row">
         <for:forEach items="${savedRecipes}" var="recipe" >
@@ -30,15 +28,13 @@
                 <c:param name="recipe_id" value="${recipe.recipeId}"/>
             </c:url>
             <div class = "col-md-4">
-                <div class = "card">
+                <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
                             <c:set var="activeButton" value=""/>
                                 <c:if test = "${recipe.creatorUsername != user.username}">
                                     <c:set var="activeButton" value="disabled"/>
                                 </c:if>
-<%--                            find a way to disable this button when the recipe does not belong to the user (possibly a another ternary operator)!--%>
-<%--                            <a href="modifyRecipe" class="btn btn-success ${ activeButton }">Edit</a>--%>
                         </div>
 
                         <div style = "text-align: left">

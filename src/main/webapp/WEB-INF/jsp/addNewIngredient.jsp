@@ -8,7 +8,8 @@
 <form:form method = "POST" action = "${addNewIngredientUrl}" modelAttribute = "ingredient">
     <label>Please submit one ingredient at a time: </label>
     <form:input path = "name"/>
-    <input type = "submit" class = "btn btn-success">
+    <form:errors path = "name" cssClass="errors"/>
+    <input type = "submit" class = "btn btn-success" value = "Submit">
 </form:form>
 
 

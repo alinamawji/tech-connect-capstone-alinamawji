@@ -21,6 +21,7 @@
 
 <%--make sure you replace these features with the expression language call for the recipe models--%>
 <h1 class="display-5 text-italic text-color"><c:out value="${recipe.title}"/> </h1>
+<p>Date Created: <c:out value = "${recipe.dateCreated}"/></p>
 
 <%-- for loop to display difficulty rating --%>
         <c:forEach var = "i" begin = "1" end = "3">
@@ -46,26 +47,32 @@
         <h1 class = "display-6 text-color" style = "margin-bottom: 10px;">Ingredients: </h1>
         <div class = "container">
             <ul class = "list-group" style = "display: inline-block;">
-                    <%--        for loop to display the ingredients for the recipe&ndash;--%>
+                    <%--        for loop to display the ingredients for the recipe--%>
                 <c:forEach items = "${ingredients}" var = "ingredient">
                         <li class = "text-capitalize list-group-item">
                                 <div class="input-group" style="display: table; width: 100%">
                                     <span style="display: table-cell">
                                             <c:out value="${ingredient}"/>
                                     </span>
-                                    <span style="display: table-cell; text-align: right">
-                                        <input type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Delete Ingredient"/>
-                                    </span>
                                 </div>
                         </li>
                     </c:forEach>
             </ul>
+            <span style="display: table-cell; margin: 10px; text-align: right;">
+                                        <a  class = "btn btn-success btn-sm" href="<c:url value="/addNewIngredientsToRecipe">
+                                        <c:param name="recipe_id" value='${recipe.recipeId}'/>
+                                        </c:url>">Add Ingredients</a>
+
+                                        <a  class = "btn btn-success btn-sm" href="<c:url value="/deleteIngredientsFromRecipe">
+                                        <c:param name="recipe_id" value='${recipe.recipeId}'/>
+                                        </c:url>">Delete Ingredients</a>
+                                    </span>
         </div>
 
         <hr>
         <br>
 
-        <a href="addNewIngredient" class="btn btn-success btn-sm" role="button" aria-disabled="true">Add Ingredient</a>
+
 
         <div class = "container">
             <h1 class = "display-6 text-color">Instructions: </h1>
@@ -73,7 +80,10 @@
             <div class = "row d-flex">
                 <div class = "col-md-12">
                     <div>
-                        <input name="instructions" type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Change Instructions"/>
+                        <a class = "btn btn-success btn-sm" style = "text-align: right;" href="<c:url value="/changeInstructions">
+                        <c:param name="recipe_id" value='${recipe.recipeId}'/>
+                        </c:url>">Change Instructions</a>
+<%--                        <input name="instructions" type="submit" style="float: right" class="btn btn-success btn-sm" aria-disabled="true" role="button" value="Change Instructions"/>--%>
                     </div>
                 </div>
             </div>
@@ -81,17 +91,11 @@
             <blockquote class="blockquote">
                 <p>${recipe.instructions}</p>
             </blockquote>
-
-<%--            <div>--%>
-<%--                <label for="instructions">Enter new instructions:</label>--%>
-<%--                <form:textarea path="instructions" rows="5" cols="30"/>--%>
-<%--            </div>--%>
-
         </div>
     </form:form>
 
-    <div class="row" style="width: 90%; margin: auto;">
-        <input type="submit" class="btn btn-success btn-sm" role="button" aria-disabled="true" value="Done"/>
-    </div>
+<%--    <div class="row" style="width: 90%; margin: auto;">--%>
+<%--        <input type="submit" class="btn btn-success btn-sm" role="button" aria-disabled="true" value="Done"/>--%>
+<%--    </div>--%>
 
 <%--<%@ include file = "common/footer.jspf" %>--%>

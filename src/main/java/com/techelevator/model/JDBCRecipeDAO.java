@@ -78,15 +78,16 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
-    public void addIngredientToList(long recipe_id, Ingredient ingredient) {
-        String sqlNewIngredient = "INSERT INTO recipe_ingredient(recipe_id) values(?, ?)";
-        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient.getIngredientId());
+    public void addIngredientToList(long recipe_id, String ingredient) {
+        String sqlNewIngredient = "insert into recipe_ingredient (recipe_id, ingredient_id) \n" +
+                "values (?, (select ingredient_id from ingredient where ingredient_name = ?));";
+        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient);
     }
 
     @Override
-    public void removeIngredientFromList(long recipe_id, Ingredient ingredient) {
-        String sqlNewIngredient = "DELETE FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = ?";
-        jdbcTemplate.update(sqlNewIngredient, recipe_id, ingredient.getIngredientId());
+    public void removeIngredientFromList(long recipe_id, String ingredient) {
+        String sqlDeleteIngredient = "DELETE FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = (select ingredient_id from ingredient where ingredient_name = ?)";
+        jdbcTemplate.update(sqlDeleteIngredient, recipe_id, ingredient);
     }
 
     @Override

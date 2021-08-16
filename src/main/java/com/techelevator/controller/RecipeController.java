@@ -48,23 +48,23 @@ public class RecipeController {
     }
 
     @RequestMapping(path = "/recipes", method = RequestMethod.POST)
-    public String saveRecipeFromUniversal(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
+    public String saveRecipeFromUniversal(@RequestParam Long recipe_id, HttpSession session) {
 
         // user log in
         User user = (User) session.getAttribute("user");
-
         try {
             // save to cookbook
             cookbookDAO.addRecipeToCookbook(recipe_id, user.getId());
         } catch (Exception e) {
             return "redirect:/private";
         }
-
+        session.setAttribute("addedRecipe", recipeDAO.getRecipeByID(recipe_id));
         return "redirect:/addNewRecipeConfirmation";
     }
 
     @RequestMapping(path = "/addNewRecipeConfirmation", method = RequestMethod.GET)
-    public String addNewRecipeConfirmationPage() {
+    public String addNewRecipeConfirmationPage(ModelMap modelMap) {
+//        Recipe recipe = (Recipe) modelMap.get("addedRecipe");
         return "addNewRecipeConfirmation";
     }
 
@@ -143,30 +143,107 @@ public class RecipeController {
         return "recipeDetails";
     }
 
-    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
-    public String displayModifyRecipePage(@RequestParam Long recipe_id, ModelMap modelHolder, HttpSession session) {
-        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-//        modelHolder.put("recipe", recipe);
-        session.setAttribute("recipe", recipe);
-        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
-        session.setAttribute("ingredients", ingredients);
-//        modelHolder.put("ingredients", ingredients);
-
-        return "redirect:/modifyRecipe";
-    }
-
     @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
-    public String displayModifyRecipe(ModelMap modelHolder) {
+    public String displayModifyRecipe(@RequestParam Long recipe_id, HttpSession session) {
+        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+        session.setAttribute("recipe", recipe);
+        session.setAttribute("ingredients", recipeDAO.getRecipeIngredients(recipe_id));
         return "modifyRecipe";
     }
 
     @RequestMapping(path = "/modifyRecipe", method = RequestMethod.POST)
     public String returnToRecipeDetailsAfterModifying(ModelMap modelHolder) {
-        Recipe recipe = (Recipe) modelHolder.get("recipe");
-        List<String> ingredients = (List<String>) modelHolder.get("ingredients");
-        List <String> ingredientsAvailable = ingredientDAO.getAllIngredients();
-        modelHolder.put("ingredientsAvailable", ingredientsAvailable);
+//        Recipe recipe = (Recipe) modelHolder.get("recipe");
+//        List<String> ingredients = (List<String>) modelHolder.get("ingredients");
+//        List <String> ingredientsAvailable = ingredientDAO.getAllIngredients();
+//        modelHolder.put("ingredientsAvailable", ingredientsAvailable);
         return "redirect:/recipeDetails";
+    }
+
+    @RequestMapping(path = "/changeInstructions", method = RequestMethod.GET)
+    public String showEditInstructionsPage(@RequestParam long recipe_id, HttpSession session, ModelMap modelHolder) {
+        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+        session.setAttribute("recipe", recipe);
+        modelHolder.put("recipe", recipe);
+        modelHolder.put("instructions", "");
+
+        return "changeInstructions";
+    }
+
+    @RequestMapping(path = "/changeInstructions", method = RequestMethod.POST)
+    public String processEditedInstructions(@Valid @ModelAttribute String instructions, BindingResult result,
+                                            RedirectAttributes flash,
+                                            @RequestParam String newInstructions, ModelMap modelHolder,
+                                            HttpServletRequest request) {
+        Recipe oldRecipe = recipeDAO.getRecipeByID(Long.parseLong(request.getParameter("recipeId")));
+        newInstructions = (request.getParameter("newInstructions"));
+
+        if (newInstructions != null) {
+            recipeDAO.modifyInstructions(oldRecipe.getRecipeId(), newInstructions);
+            // this has to be changed later
+            return "redirect:/addNewRecipeConfirmation";
+        }
+
+        return "redirect:/private";
+    }
+
+    @RequestMapping(path = "/deleteIngredientsFromRecipe", method = RequestMethod.GET)
+    public String displayDeleteIngredientsForm(@RequestParam long recipe_id, ModelMap modelHolder) {
+        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+        List <String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+        modelHolder.put("recipe", recipe);
+        modelHolder.put("ingredients", ingredients);
+        modelHolder.put("ingredient", "");
+        return "deleteIngredientsFromRecipe";
+    }
+
+    @RequestMapping(path = "deleteIngredientsFromRecipe", method = RequestMethod.POST)
+    public String handleRemovalOfIngredients(@Valid @ModelAttribute String ingredient, BindingResult result,
+                                             RedirectAttributes flash, @RequestParam List <String> removeTheseIngredients, HttpServletRequest request) {
+        Recipe oldRecipe = recipeDAO.getRecipeByID(Long.parseLong(request.getParameter("recipeId")));
+
+        if (result.hasErrors() || removeTheseIngredients.size() == 0) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
+            return "private";
+        }
+        else {
+            for (String removeThisIngredient: removeTheseIngredients) {
+                recipeDAO.removeIngredientFromList(oldRecipe.getRecipeId(), removeThisIngredient);
+            }
+            //change this confirmation page later
+            return "addNewRecipeConfirmation";
+        }
+    }
+
+    @RequestMapping(path = "addNewIngredientsToRecipe", method = RequestMethod.GET)
+    public String displayAddNewIngredientsToRecipe(@RequestParam long recipe_id, ModelMap modelHolder) {
+        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+        List <String> allIngredients = ingredientDAO.getAllIngredients();
+
+        modelHolder.put("recipe", recipe);
+        modelHolder.put("allIngredients", allIngredients);
+        modelHolder.put("newIngredients", "");
+
+        return "addNewIngredientsToRecipe";
+    }
+
+    @RequestMapping(path = "addNewIngredientsToRecipe", method = RequestMethod.POST)
+    public String handleAddNewIngredientsToRecipe(@Valid @ModelAttribute String ingredient, BindingResult result,
+                                                  RedirectAttributes flash, @RequestParam List <String> newIngredients,
+                                                  HttpServletRequest request) {
+
+        Recipe oldRecipe = recipeDAO.getRecipeByID(Long.parseLong(request.getParameter("recipeId")));
+        if (result.hasErrors() || newIngredients.size() == 0) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
+            return "private";
+        }
+        else {
+            for (String addThisIngredient : newIngredients) {
+                recipeDAO.addIngredientToList(oldRecipe.getRecipeId(), addThisIngredient);
+            }
+            //change this confirmation page later
+            return "addIngredientConfirmation";
+        }
     }
 
     // add methods for modifying a recipe and deleting a recipe, those will have different method calls from the recipe class.

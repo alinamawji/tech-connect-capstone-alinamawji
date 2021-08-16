@@ -21,7 +21,7 @@ public class JDBCMealDAO implements MealDAO{
 
     @Override
     public void addRecipesToMeal(long meal_id, long recipe_id) {
-        String sqlNewRecipe = "INSERT INTO meal_recipe(meal_id) values (?, ?)";
+        String sqlNewRecipe = "INSERT INTO meal_recipe(meal_id, recipe_id) values (?, ?)";
         jdbcTemplate.update(sqlNewRecipe, meal_id, recipe_id);
     }
 
@@ -39,15 +39,21 @@ public class JDBCMealDAO implements MealDAO{
     }
 
     @Override
-    public void createMeal(long meal_id, String title, long user_id) {
-        String sqlCreateNewMeal = "INSERT INTO meal(meal_id, title, user_id) values(?, ?, ?)";
-        jdbcTemplate.update(sqlCreateNewMeal, meal_id, title, user_id);
+    public void createMeal(String title, long user_id) {
+        String sqlCreateNewMeal = "INSERT INTO meal(title, user_id) values(?, ?)";
+        jdbcTemplate.update(sqlCreateNewMeal, title, user_id);
     }
 
     @Override
     public void deleteMeal(long meal_id) {
         String sqlDeleteMeal = "DELETE FROM meal WHERE meal_id = ?";
         jdbcTemplate.update(sqlDeleteMeal, meal_id);
+    }
+
+    @Override
+    public void getMealByID(long meal_id) {
+        String sqlGetMealById = "SELECT * FROM meal WHERE meal_id = ?";
+        jdbcTemplate.queryForObject(sqlGetMealById, new mealRowMapper(), meal_id);
     }
 }
 
@@ -58,7 +64,6 @@ class mealRowMapper implements RowMapper {
         meal.setMealId(results.getLong("meal_id"));
         meal.setUserId(results.getLong("user_id"));
         meal.setTitle(results.getString("title"));
-        meal.setRecipesInMeal(results.getString("recipes"));
         return meal;
     }
 }

@@ -16,14 +16,15 @@
             <label>Recipes from My Cookbook: </label>
             <div class="row">
                 <div class="container" style="border: 2px solid; width:300px; height:100px; overflow-y: scroll;">
-                    <for:forEach items="${recipes}" var="recipe">
-                        <div class="row text-capitalize">
-                            <input type="checkbox" name="recipes[]" value="${recipe.title}"/>${recipe.title}
+                    <for:forEach items="${cookbookRecipes}" var="cookbookRecipe">
+                        <div class="row text-capitalize" style="margin-left: 15px;">
+                            ${cookbookRecipe.title}<input type="checkbox" name="cookbookRecipe" value="${cookbookRecipe}"/>
                         </div>
                     </for:forEach>
                 </div>
             </div>
         </div>
+            <input class = "btn btn-success text-left" type = "submit" value = "Create Meal">
     </form:form>
 </div>
 

@@ -16,10 +16,18 @@
         grid-auto-rows: minmax(150px, 1fr);
         grid-auto-flow: row dense;
     }
+    .text-right {
+        text-align: right !important;
+    }
 </style>
 
 <h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 20px;"><c:out value = "${user.firstName}'s Cookbook"/></h1>
 <hr>
+
+<div class = "text-right" style = "margin-bottom: 10px; margin-top: 10px;">
+    <%--button is not active when the user is not logged in  --%>
+    <a href="addNewRecipe" class="btn btn-success btn-sm" role="button" aria-disabled="true">Upload New Recipe</a>
+</div>
 
 <div class = "container" id = "grid">
     <div class = "row">

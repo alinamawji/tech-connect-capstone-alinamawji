@@ -87,7 +87,7 @@ public class MealController {
             mealDAO.updateMealRecipeTable(meal.getTitle(), recipe);
         }
 
-        return "meals";
+        return "redirect:/meals";
     }
 
 }

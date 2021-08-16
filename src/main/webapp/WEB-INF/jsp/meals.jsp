@@ -47,6 +47,19 @@
                             </form>
                         </div>
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
+<<<<<<< HEAD
+=======
+<%--                        <div style = "text-align: right;" style = "margin-top: 5px; margin-bottom: 5px;">--%>
+                                <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
+<%--                            <c:url var="formAction" value="/meals"/>--%>
+<%--                            <form method="POST" action="${ formAction }">--%>
+<%--                                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">--%>
+<%--                                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" value="Save">--%>
+<%--                            </form>--%>
+
+<%--                        </div>--%>
+
+>>>>>>> 0aa7b837b963795881a8832f42df9b07f2da3c98
                         <for:forEach items = "${recipesInMeal}" var = "recipeInMeal">
                             <p>${recipeInMeal}</p>
                         </for:forEach>

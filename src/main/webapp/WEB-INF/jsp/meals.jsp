@@ -37,22 +37,19 @@
                 <c:param name="meal_id" value="${meal.mealId}"/>
             </c:url>
             <div class = "col-md-4">
-                <div class = "card">
+                <div class = "card" style="margin-bottom: 5px; margin-top: 5px; ">
                     <div class="card-body text-center">
+                        <div style = "text-align: left">
+                            <c:url var="formAction" value="/meals"/>
+                            <form method="POST" action="${ formAction }">
+                                <input type="hidden" id="meal_id" name="meal_id" value="${meal.mealId}">
+                                <input type="submit" role="button" class = "btn btn-sm btn-success" style = "margin-bottom: 5px;" value="Delete">
+                            </form>
+                        </div>
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
-<%--                        <div style = "text-align: right;" style = "margin-top: 5px; margin-bottom: 5px;">--%>
-                                <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
-<%--                            <c:url var="formAction" value="/meals"/>--%>
-<%--                            <form method="POST" action="${ formAction }">--%>
-<%--                                <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">--%>
-<%--                                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" value="Save">--%>
-<%--                            </form>--%>
-
-<%--                        </div>--%>
                         <for:forEach items = "${recipesInMeal}" var = "recipeInMeal">
-                            <p>"${recipeInMeal}"</p>
+                            <p>${recipeInMeal}</p>
                         </for:forEach>
-                        <a href="${detailUrl}" class="btn btn-success">Delete Meal</a>
                          </div>
                     </div>
                 </div>

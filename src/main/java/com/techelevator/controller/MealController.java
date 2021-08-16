@@ -50,11 +50,12 @@ public class MealController {
     @RequestMapping(path="/meals", method = RequestMethod.POST)
     public String deleteMeal(@RequestParam Long meal_id, HttpSession session) {
         User user = new User();
+        Recipe recipe = new Recipe();
         if (session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
             session.setAttribute("deletedMeal", mealDAO.getMealByID(meal_id));
-            mealDAO.deleteMeal(meal_id);
-            return "redirect:/deletedMeal";
+            mealDAO.deleteMeal(meal_id, recipe.getRecipeId());
+            return "redirect:/meals";
         }
         else {
             return "private";
@@ -88,7 +89,7 @@ public class MealController {
         User user = (User) session.getAttribute("user");
         if (result.hasErrors() || recipesInMeal.size() == 0) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "meal" , meal);
-            return "redirect:/private";
+            return "redirect:/meals";
         }
         mealDAO.createMeal(meal.getTitle(), user.getId());
         for (String recipe: recipesInMeal) {

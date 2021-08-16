@@ -18,7 +18,7 @@
                 <div class="container" style="border: 2px solid; width:300px; height:100px; overflow-y: scroll;">
                     <for:forEach items="${cookbookRecipes}" var="cookbookRecipe">
                         <div class="row text-capitalize" style="margin-left: 15px;">
-                            ${cookbookRecipe.title}<input type="checkbox" name="cookbookRecipe" value="${cookbookRecipe}"/>
+                            ${cookbookRecipe.title}<input type="checkbox" name="recipesInMeal" id="recipesInMeal" value="${cookbookRecipe.title}"/>
                         </div>
                     </for:forEach>
                 </div>

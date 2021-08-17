@@ -21,7 +21,7 @@ To change this template use File | Settings | File Templates.
     }
 </style>
 
-<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Recipes</h1>
+<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Meal Plans</h1>
 <hr>
 
 
@@ -42,7 +42,7 @@ To change this template use File | Settings | File Templates.
     <div class = "row">
         <for:forEach items="${mealPlans}" var="mealPlan" >
             <c:url var="detailUrl" value="/mealPlanDetails">
-                <c:param name="mealplan_id" value="${mealPlan.plan_id}"/>
+                <c:param name="plan_id" value="${mealPlan.planId}"/>
             </c:url>
             <div class = "col-md-4">
                 <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">

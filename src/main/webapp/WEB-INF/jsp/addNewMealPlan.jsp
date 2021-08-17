@@ -16,10 +16,9 @@
 <form:form method = "POST" action = "${addNewMealPlanUrl}" modelAttribute="mealPlan">
     <div class = "form-group">
     <label for = "title">Title: </label>
-    <form:input path="title"/>
+    <form:input type = "textarea" path="title"/>
     <form:errors path="title" cssClass="errors"/>
     </div>
-<%--    <form:hidden path="userId" value = "${user.userId}"/>--%>
 
     <div class = "form-group">
     <label for = "description">Description: </label>
@@ -27,43 +26,29 @@
     <form:errors path = "description" cssClass = "errors"/>
     </div>
 
-
-    <div class = "form-group">
-    <label>Select which day you're planning meals for: </label>
-    <select>
-    <for:forEach var = "day" begin = "1" end = "7">
-        <option><p class = "fw-bold"><c:out value = "Day ${day} "/></option>
-    </for:forEach>
-    </select>
-    </div>
-
-
-        <for:forEach var = "numberOfMeals" begin = "1" end = "4">
-            <p><c:out value = "Meal #${numberOfMeals}"/></p>
     <div class="form-group">
-        <label>Select which meal you'd like to add: </label>
-        <select>
-    <for:forEach items = "${meals}" var = "meal">
-        <label for = "meal">${meal.title}</label>
-        <option id = "meal" value = "${meal.mealId}">${meal.title}</option>
-    </for:forEach>
-        </select>
+        <label>Select which meal you'd like to add : </label>
+            <ul class = "list-group" style = "display: inline-block;">
+                    <%--        for loop to display the ingredients for the recipe--%>
+                        <for:forEach items = "${meals}" var = "meal">
+                    <li class = "text-capitalize list-group-item">
+                        <div class="input-group" style="display: table; width: 100%">
+                                    <span style="display: table-cell">
+                                               <label for = "meal_id"><c:out value = "${meal.title}"/></label>
+            <input type = "checkbox" name = "meal_id" id = "meal_id" value = "${meal.mealId}">
+                                    </span>
+                        </div>
+                    </li>
+                </for:forEach>
+        </ul>
     </div>
 
     <div class = "form-group">
-        <label>Select what time of day you'd like for this meal: </label>
-        <select>
-            <for:forEach var = "i" begin = "1" end = "4">
-                <option id = "mealEvent" value ="${i}">${i}</option>
-            </for:forEach>
-        </select>
-    </div>
-        </for:forEach>
-    <div class = "form-group">
-        <input type = "submit" class="btn btn-success" value = "Submit">
+        <p>Continue to the next page to schedule your meals.</p>
+        <input type = "submit" class="btn btn-success" value = "Continue to Next Page">
     </div>
 </form:form>
-</div>
+
 
 
 

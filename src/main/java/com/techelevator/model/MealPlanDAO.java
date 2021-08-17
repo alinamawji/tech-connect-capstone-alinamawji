@@ -21,9 +21,9 @@ public interface MealPlanDAO {
 
     public Map<MealEvent,Meal> getPlannedMeals(long plan_id);
 
-    public void addMealToPlan(long plan_id,long meal_id);
+    public void addMealToPlan(long user_id, String title, long meal_id);
 
-    public void createMealEvent(int weekday, int time_of_day, long plan_id, long meal_id);
+    public void createMealEvent(int weekday, int time_of_day, long user_id, String title, long meal_id);
 
     public void removeMealFromPlan(long plan_id, long meal_id);
 

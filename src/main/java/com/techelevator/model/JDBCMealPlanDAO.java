@@ -100,15 +100,21 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
     }
 
     @Override
-    public void addMealToPlan(long plan_id, long meal_id) {
-        String sqlMealAssocPlan = "INSERT INTO meal_plan_meal(plan_id,meal_id) VALUES (?,?) ";
-        jdbcTemplate.update(sqlMealAssocPlan, plan_id, meal_id);
+    public void addMealToPlan(long user_id,String title, long meal_id) {
+        String sqlMealAssocPlan = "INSERT INTO meal_plan_meal(plan_id,meal_id) " +
+                "VALUES (" +
+                "(SELECT plan_id FROM meal_plan WHERE user_id = ? AND title = ?)," +
+                "?) ";
+        jdbcTemplate.update(sqlMealAssocPlan, user_id, title, meal_id);
     }
 
     @Override
-    public void createMealEvent(int weekday, int time_of_day, long plan_id, long meal_id){
-        String sql = "INSERT INTO meal_event(weekday,time_of_day,plan_id,meal_id) VALUES (?,?,?,?) ";
-        jdbcTemplate.update(sql,weekday,time_of_day,plan_id,meal_id);
+    public void createMealEvent(int weekday, int time_of_day, long user_id, String title, long meal_id){
+        String sql = "INSERT INTO meal_event(weekday,time_of_day,plan_id,meal_id) " +
+                "VALUES (?,?," +
+                "(SELECT plan_id FROM meal_plan WHERE user_id = ? AND title = ?)," +
+                "?) ";
+        jdbcTemplate.update(sql,weekday,time_of_day,user_id,title,meal_id);
     }
 
     @Override

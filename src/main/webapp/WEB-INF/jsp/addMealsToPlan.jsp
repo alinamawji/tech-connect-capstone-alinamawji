@@ -13,21 +13,20 @@
 
 <c:url value="/addMealsToPlan" var="addMealsToPlanUrl"/>
 <div class="container">
-    <form method="POST" action="${addMealsToPlanUrl}">
+    <form:form method="POST" action="${addMealsToPlanUrl}" modelAttribute="mealEvent">
     <div id="planned_meal">
         <div class="form-group">
             <label>Select which meal you'd like to add: </label>
-            <select>
-                <for:forEach items="${meals}" var="meal">
-                    <label for="meal_id">${meal.title}</label>
-                    <option id="meal_id" name="meal_id" value="${meal.mealId}">${meal.title}</option>
+            <select id="meal_id" name="meal_id">
+                <for:forEach items="${mealPlan.selectedMeals}" var="meal">
+                    <option value="${meal.mealId}">${meal.title}</option>
                 </for:forEach>
             </select>
         </div>
 
         <div class="form-group">
             <label>Select which day you're planning meals for: </label>
-            <select id = "weekday">
+            <select id="weekday" name="weekday">
                 <option name="weekday" value="1">Monday</option>
                 <option name="weekday" value="2">Tuesday</option>
                 <option name="weekday" value="3">Wednesday</option>
@@ -39,21 +38,24 @@
         </div>
 
         <div class="form-group">
-            <label>Select what time of day you'd like for this meal (up to seven meal time slots per day): </label>
-            <select>
-                <for:forEach var="i" begin="1" end="7">
-                    <option id="mealEvent" value="${i}">${i}</option>
-                </for:forEach>
+            <label>Select what time of day you'd like for this meal:</label>
+            <select id="time_of_day" name="time_of_day">
+                <option name="time_of_day" value="1">Breakfast</option>
+                <option name="time_of_day" value="2">Lunch</option>
+                <option name="time_of_day" value="3">Dinner</option>
+                <option name="time_of_day" value="4">Snack</option>
             </select>
         </div>
         <input type="submit" id="submitMeal" name="submitMeal" value="Add Planned Meal">
     </div>
-    </form>
-    <form method="GET" action="/mealPlans">
-        <div class="form-group">
+    </form:form>
+
+    <for:url value="/mealPlans" var="mealPlanUrl"/>
+    <div class="form-group">
+        <a href="${mealPlanUrl}">
             <input type="submit" class="btn btn-success" value="Submit Meal Plan">
-        </div>
-    </form>
+        </a>
+    </div>
 
 
 <%@ include file="common/footer.jspf" %>

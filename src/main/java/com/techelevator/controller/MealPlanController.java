@@ -26,26 +26,26 @@ public class MealPlanController {
     private JDBCMealDAO mealDAO;
 
     @RequestMapping(path = "/mealPlans", method = RequestMethod.GET)
-    public String showUserMealPlans(ModelMap modelHolder, HttpSession session){
+    public String showUserMealPlans(ModelMap modelHolder, HttpSession session) {
         List<MealPlan> plans = new ArrayList<>();
         // Checks to see if there is a logged in user (only members can view meal plans)
         User user = (User) session.getAttribute("user");
         try {
             plans = mealPlanDAO.getAllMealPlansByUser(user.getId());
-        } catch (Exception e){
+        } catch (Exception e) {
             return "redirect:/private";
         }
         modelHolder.put("mealPlans", plans);
         return "mealPlans";
     }
 
-    @RequestMapping(path = "/addNewMealPlanConfirmation", method = RequestMethod.GET)
-    public String addNewMealPlanConfirmation() {
-        return "addNewMealPlanConfirmation";
-    }
+//    @RequestMapping(path = "/addNewMealPlanConfirmation", method = RequestMethod.GET)
+//    public String addNewMealPlanConfirmation() {
+//        return "addNewMealPlanConfirmation";
+//    }
 
     @RequestMapping(path = "/mealPlanDetails", method = RequestMethod.GET)
-    public String showMealPlanDetails(@RequestParam Long plan_id, ModelMap modelHolder){
+    public String showMealPlanDetails(@RequestParam Long plan_id, ModelMap modelHolder) {
         MealPlan plan = mealPlanDAO.getMealPlanByID(plan_id);
         plan.setPlannedMeals(mealPlanDAO.getPlannedMeals(plan_id));
         modelHolder.put("mealPlan", plan);
@@ -54,7 +54,7 @@ public class MealPlanController {
     }
 
     @RequestMapping(path = "/addNewMealPlan", method = RequestMethod.GET)
-    public String showAddNewMealPlan(HttpSession session, ModelMap modelHolder){
+    public String showAddNewMealPlan(HttpSession session, ModelMap modelHolder) {
         User user = (User) session.getAttribute("user");
         modelHolder.put("mealPlan", new MealPlan());
         modelHolder.put("meals", mealDAO.getAllMealsByUserID(user.getId()));
@@ -62,58 +62,60 @@ public class MealPlanController {
     }
 
     @RequestMapping(path = "/addNewMealPlan", method = RequestMethod.POST)
-    public String processAddNewMealPlan(@Valid@ModelAttribute("mealPlan") MealPlan mealPlan,
+    public String processAddNewMealPlan(@Valid @ModelAttribute("mealPlan") MealPlan mealPlan,
                                         BindingResult result, RedirectAttributes flash, HttpSession session,
                                         HttpServletRequest request) {
-        flash.addFlashAttribute("mealPlan", mealPlan);
         User user = (User) session.getAttribute("user");
-        session.setAttribute("mealPlan",mealPlan);
 
-        if(result.hasErrors()){
+        List<String> mealIds = Arrays.asList(request.getParameterValues("meal_id"));
+        List<Meal> selectedMeals = new ArrayList<>();
+        for (String mealId : mealIds) {
+            Long longMealId = Long.parseLong(mealId);
+            selectedMeals.add(mealDAO.getMealByID(longMealId));
+        }
+        mealPlan.setSelectedMeals(selectedMeals);
+        mealPlan.setUserId(user.getId());
+
+        session.setAttribute("mealPlan", mealPlan);
+
+        if (result.hasErrors()) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
             return "redirect:/addNewMealPlan";
         }
-        List <Long> mealIds = Arrays.asList(Long.parseLong(request.getParameter("meal_id")));
-        List <Meal> selectedMeals = new ArrayList<>();
-        for (Long mealId: mealIds) {
-            selectedMeals.add(mealDAO.getMealByID(mealId));
-        }
-        mealPlan.setSelectedMeals(selectedMeals);
         mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
+        for (Meal meal : mealPlan.getSelectedMeals()) {
+            mealPlanDAO.addMealToPlan(mealPlan.getUserId(), mealPlan.getTitle(), meal.getMealId());
+        }
         return "redirect:/addMealsToPlan";
     }
 
     @RequestMapping(path = "/addMealsToPlan", method = RequestMethod.GET)
-    public String showAddMealsToPlan(HttpSession session, ModelMap modelHolder){
+    public String showAddMealsToPlan(HttpSession session, ModelMap modelHolder, RedirectAttributes flash) {
         MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
-        modelHolder.put("planTitle", mealPlan.getTitle());
-        //modelHolder.put()
-        modelHolder.put("planDescription", mealPlan.getDescription());
+        modelHolder.put("mealEvent", new MealEvent());
+        // modelHolder.put("plannedMeals",) COME BACK TO AFTER MEAL PLAN DETAILS IS DONE
+
         return "addMealsToPlan";
     }
 
     @RequestMapping(path = "/addMealsToPlan", method = RequestMethod.POST)
-    public String processAddMealsToPlan(HttpSession session, @RequestParam long meal_id, @RequestParam int weekday,
-                                        @RequestParam int time_of_day) {
+    public String processAddMealsToPlan(@Valid @ModelAttribute("mealEvent") MealEvent mealEvent, BindingResult result,
+                                        HttpSession session, ModelMap modelHolder, RedirectAttributes flash,
+                                        HttpServletRequest request) {
+
+        mealEvent.setMealId(Long.parseLong((request.getParameter("meal_id"))));
+        mealEvent.setWeekday(Integer.parseInt((request.getParameter("weekday"))));
+        mealEvent.setTimeOfDay(Integer.parseInt((request.getParameter("time_of_day"))));
+
         MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
-        mealPlanDAO.createMealEvent(weekday, time_of_day, mealPlan.getPlanId(), meal_id);
-        session.removeAttribute("mealPlan"); //removes variable so we can submit another meal plan in a single session
+        if (result.hasErrors()) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealEvent" + result);
+            return "redirect:/addMealsToPlan";
+        }
+        mealPlanDAO.createMealEvent(mealEvent.getWeekday(), mealEvent.getTimeOfDay(), mealPlan.getUserId(),
+                mealPlan.getTitle(), mealEvent.getMealId());
         return "redirect:/addMealsToPlan";
     }
-
-//    @RequestMapping(path = "/addMealToMealPlan", method = RequestMethod.POST)
-//    public String handleAddMealToMealPlan(@Valid @ModelAttribute Meal meal, @RequestParam List <String> meals, BindingResult result, RedirectAttributes flash,
-//                                          ModelMap modelHolder, HttpSession session) {
-//        MealPlan mealPlan = (MealPlan) modelHolder.get("mealPlan");
-//
-//        if (result.hasErrors()) {
-//            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "meal", meal);
-//            return "redirect:/private";
-//        }
-//        for (String newMeal :meals) {
-//            mealPlanDAO.addMealToPlan(mealPlan.getPlanId(), newMeal);
-//        }
-//        return "redirect:/mealPlans";
-//    }
+    
 }
 

@@ -3,16 +3,18 @@ package com.techelevator.model;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.NotNull;
+
 public class MealEvent {
 
     private long event_id;
     private long plan_id;
     private long meal_id;
 
-    @NotEmpty(message = "Please choose what day your meal is planned for")
+    @NotNull(message = "Please choose what day your meal is planned for")
     private int weekday;
 
-    @NotEmpty(message = "Please choose what time of day your meal is planned for")
+    @NotNull(message = "Please choose what time of day your meal is planned for")
     private int time_of_day;
 
     public long getEventId() {

@@ -139,8 +139,23 @@ public class RecipeController {
         List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
         modelHolder.put("ingredients", ingredients);
         User user = (User) session.getAttribute("user");
-
         return "recipeDetails";
+    }
+
+//    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
+//    public String displayModifyRecipePage(@RequestParam long recipe_id, ModelMap modelHolder) {
+//
+//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+//        modelHolder.put("recipe", recipe);
+//        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+//        modelHolder.put("ingredients", ingredients);
+//
+//        return "redirect:/modifyRecipe";
+//    }
+
+    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
+    public String displayModifyRecipePage() {
+        return "redirect:/modifyRecipe";
     }
 
     @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)

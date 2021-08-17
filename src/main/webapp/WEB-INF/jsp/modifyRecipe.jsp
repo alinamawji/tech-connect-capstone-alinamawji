@@ -92,10 +92,13 @@
                 <p>${recipe.instructions}</p>
             </blockquote>
         </div>
+
     </form:form>
 
-<%--    <div class="row" style="width: 90%; margin: auto;">--%>
-<%--        <input type="submit" class="btn btn-success btn-sm" role="button" aria-disabled="true" value="Done"/>--%>
-<%--    </div>--%>
+    <div class="row" style="width: 90%; margin: auto;">
+        <input type="submit" class="btn btn-success btn-sm" role="button" aria-disabled="true" value="Done"/>
+    </div>
+
+<%--</form>--%>
 
 <%--<%@ include file = "common/footer.jspf" %>--%>

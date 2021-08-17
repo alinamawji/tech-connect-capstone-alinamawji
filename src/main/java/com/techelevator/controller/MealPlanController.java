@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.lang.reflect.Array;
 import java.util.*;
 
 @Controller
@@ -45,10 +46,158 @@ public class MealPlanController {
 //    }
 
     @RequestMapping(path = "/mealPlanDetails", method = RequestMethod.GET)
-    public String showMealPlanDetails(@RequestParam Long plan_id, ModelMap modelHolder) {
+    public String showMealPlanDetails(@RequestParam Long plan_id, ModelMap modelHolder, HttpSession session){
         MealPlan plan = mealPlanDAO.getMealPlanByID(plan_id);
         plan.setPlannedMeals(mealPlanDAO.getPlannedMeals(plan_id));
         modelHolder.put("mealPlan", plan);
+
+        User user = (User) session.getAttribute("user");
+
+        // initialize arrays for each day/time meal
+        ArrayList<String> sundayBreakfast = new ArrayList<>();
+        ArrayList<String> sundayLunch = new ArrayList<>();
+        ArrayList<String> sundayDinner = new ArrayList<>();
+        ArrayList<String> sundaySnacks = new ArrayList<>();
+
+        ArrayList<String> mondayBreakfast = new ArrayList<>();
+        ArrayList<String> mondayLunch = new ArrayList<>();
+        ArrayList<String> mondayDinner = new ArrayList<>();
+        ArrayList<String> mondaySnacks = new ArrayList<>();
+
+        ArrayList<String> tuesdayBreakfast = new ArrayList<>();
+        ArrayList<String> tuesdayLunch = new ArrayList<>();
+        ArrayList<String> tuesdayDinner = new ArrayList<>();
+        ArrayList<String> tuesdaySnacks = new ArrayList<>();
+
+        ArrayList<String> wednesdayBreakfast = new ArrayList<>();
+        ArrayList<String> wednesdayLunch = new ArrayList<>();
+        ArrayList<String> wednesdayDinner = new ArrayList<>();
+        ArrayList<String> wednesdaySnacks = new ArrayList<>();
+
+        ArrayList<String> thursdayBreakfast = new ArrayList<>();
+        ArrayList<String> thursdayLunch = new ArrayList<>();
+        ArrayList<String> thursdayDinner = new ArrayList<>();
+        ArrayList<String> thursdaySnacks = new ArrayList<>();
+
+        ArrayList<String> fridayBreakfast = new ArrayList<>();
+        ArrayList<String> fridayLunch = new ArrayList<>();
+        ArrayList<String> fridayDinner = new ArrayList<>();
+        ArrayList<String> fridaySnacks = new ArrayList<>();
+
+        ArrayList<String> saturdayBreakfast = new ArrayList<>();
+        ArrayList<String> saturdayLunch = new ArrayList<>();
+        ArrayList<String> saturdayDinner = new ArrayList<>();
+        ArrayList<String> saturdaySnacks = new ArrayList<>();
+
+        for (Map.Entry<MealEvent, Meal> entry : plan.getPlannedMeals().entrySet()) {
+            switch (entry.getKey().getWeekday()) {
+                case 1:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        sundayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        sundayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        sundayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        sundaySnacks.add(entry.getValue().getTitle());
+                    }
+                case 2:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        mondayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        sundayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        sundayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        sundaySnacks.add(entry.getValue().getTitle());
+                    }
+                case 3:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        tuesdayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        tuesdayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        tuesdayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        tuesdaySnacks.add(entry.getValue().getTitle());
+                    }
+                case 4:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        wednesdayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        wednesdayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        wednesdayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        wednesdaySnacks.add(entry.getValue().getTitle());
+                    }
+                case 5:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        thursdayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        thursdayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        thursdayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        thursdaySnacks.add(entry.getValue().getTitle());
+                    }
+                case 6:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        fridayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        fridayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        fridayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        fridaySnacks.add(entry.getValue().getTitle());
+                    }
+                case 7:
+                    if (entry.getKey().getTimeOfDay() == 1) {
+                        saturdayBreakfast.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 2) {
+                        saturdayLunch.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 3) {
+                        saturdayDinner.add(entry.getValue().getTitle());
+                    } else if (entry.getKey().getTimeOfDay() == 4) {
+                        saturdaySnacks.add(entry.getValue().getTitle());
+                    }
+            }
+        }
+
+        modelHolder.put("sundayBreakfast", sundayBreakfast);
+        modelHolder.put("sundayLunch", sundayLunch);
+        modelHolder.put("sundayDinner", sundayDinner);
+        modelHolder.put("sundaySnacks", sundaySnacks);
+
+        modelHolder.put("mondayBreakfast", mondayBreakfast);
+        modelHolder.put("mondayLunch", mondayLunch);
+        modelHolder.put("mondayDinner", mondayDinner);
+        modelHolder.put("mondaySnacks", mondaySnacks);
+
+        modelHolder.put("tuesdayBreakfast", tuesdayBreakfast);
+        modelHolder.put("tuesdayLunch", tuesdayLunch);
+        modelHolder.put("tuesdayDinner", tuesdayDinner);
+        modelHolder.put("tuesdaySnacks", tuesdaySnacks);
+
+        modelHolder.put("wednesdayBreakfast", wednesdayBreakfast);
+        modelHolder.put("wednesdayLunch", wednesdayLunch);
+        modelHolder.put("wednesdayDinner", wednesdayDinner);
+        modelHolder.put("wednesdaySnacks", wednesdaySnacks);
+
+        modelHolder.put("thursdayBreakfast", thursdayBreakfast);
+        modelHolder.put("thursdayLunch", thursdayLunch);
+        modelHolder.put("thursdayDinner", thursdayDinner);
+        modelHolder.put("thursdaySnacks", thursdaySnacks);
+
+        modelHolder.put("fridayBreakfast", fridayBreakfast);
+        modelHolder.put("fridayLunch", fridayLunch);
+        modelHolder.put("fridayDinner", fridayDinner);
+        modelHolder.put("fridaySnacks", fridaySnacks);
+
+        modelHolder.put("saturdayBreakfast", saturdayBreakfast);
+        modelHolder.put("saturdayLunch", saturdayLunch);
+        modelHolder.put("saturdayDinner", saturdayDinner);
+        modelHolder.put("saturdaySnacks", saturdaySnacks);
 
         return "mealPlanDetails";
     }
@@ -59,6 +208,15 @@ public class MealPlanController {
         modelHolder.put("mealPlan", new MealPlan());
         modelHolder.put("meals", mealDAO.getAllMealsByUserID(user.getId()));
         return "addNewMealPlan";
+    }
+
+    @RequestMapping(path = "/groceryList", method = RequestMethod.GET)
+    public String showGroceryList(@RequestParam Long plan_id, ModelMap modelHolder) {
+        List<String> groceryList = mealPlanDAO.generateGroceryList(plan_id);
+        MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id);
+        modelHolder.put("mealPlan", mealPlan);
+        modelHolder.put("groceryList", groceryList);
+        return "groceryList";
     }
 
     @RequestMapping(path = "/addNewMealPlan", method = RequestMethod.POST)

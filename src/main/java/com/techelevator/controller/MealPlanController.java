@@ -116,6 +116,38 @@ public class MealPlanController {
                 mealPlan.getTitle(), mealEvent.getMealId());
         return "redirect:/addMealsToPlan";
     }
+
+    @RequestMapping(path = "/modifyMealPlan", method = RequestMethod.GET)
+    public String showModifyMealPlanPage(@RequestParam long plan_id, ModelMap modelHolder) {
+        MealPlan plan = mealPlanDAO.getMealPlanByID(plan_id);
+        plan.setPlannedMeals(mealPlanDAO.getPlannedMeals(plan_id));
+        modelHolder.put("mealPlan", plan);
+        return "modifyMealPlan";
+    }
+
+    @RequestMapping(path = "/addSelectedMeal", method = RequestMethod.GET)
+    public String showAddSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        return "addSelectedMeal";
+    }
+
+
+    @RequestMapping(path = "/deleteSelectedMeal", method = RequestMethod.GET)
+    public String showDeleteSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        return "deleteSelectedMeal";
+    }
+
+
+    @RequestMapping(path = "/addScheduledMeal", method = RequestMethod.GET)
+    public String showAddScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        return "addScheduledMeal";
+    }
+
+
+    @RequestMapping(path = "/deleteScheduledMeal", method = RequestMethod.GET)
+    public String showDeleteScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        return "deleteScheduledMeal";
+    }
+
     
 }
 

@@ -14,10 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MealPlanController {
@@ -70,17 +67,39 @@ public class MealPlanController {
                                         HttpServletRequest request) {
         flash.addFlashAttribute("mealPlan", mealPlan);
         User user = (User) session.getAttribute("user");
-        Map<MealEvent, Meal> plannedMeals = new HashMap<>();
+        session.setAttribute("mealPlan",mealPlan);
 
         if(result.hasErrors()){
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
             return "redirect:/addNewMealPlan";
         }
-        else if (request.getParameter("submitMeal") != null ) {
-            plannedMeals.put(request.getParameter("mealEvent"), request.getParameter("meal"));
+        List <Long> mealIds = Arrays.asList(Long.parseLong(request.getParameter("meal_id")));
+        List <Meal> selectedMeals = new ArrayList<>();
+        for (Long mealId: mealIds) {
+            selectedMeals.add(mealDAO.getMealByID(mealId));
         }
+        mealPlan.setSelectedMeals(selectedMeals);
+        mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
+        return "redirect:/addMealsToPlan";
     }
 
+    @RequestMapping(path = "/addMealsToPlan", method = RequestMethod.GET)
+    public String showAddMealsToPlan(HttpSession session, ModelMap modelHolder){
+        MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
+        modelHolder.put("planTitle", mealPlan.getTitle());
+        //modelHolder.put()
+        modelHolder.put("planDescription", mealPlan.getDescription());
+        return "addMealsToPlan";
+    }
+
+    @RequestMapping(path = "/addMealsToPlan", method = RequestMethod.POST)
+    public String processAddMealsToPlan(HttpSession session, @RequestParam long meal_id, @RequestParam int weekday,
+                                        @RequestParam int time_of_day) {
+        MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
+        mealPlanDAO.createMealEvent(weekday, time_of_day, mealPlan.getPlanId(), meal_id);
+        session.removeAttribute("mealPlan"); //removes variable so we can submit another meal plan in a single session
+        return "redirect:/addMealsToPlan";
+    }
 
 //    @RequestMapping(path = "/addMealToMealPlan", method = RequestMethod.POST)
 //    public String handleAddMealToMealPlan(@Valid @ModelAttribute Meal meal, @RequestParam List <String> meals, BindingResult result, RedirectAttributes flash,

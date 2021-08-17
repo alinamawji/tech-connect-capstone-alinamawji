@@ -22,8 +22,9 @@ public class MealPlan {
 
     private LocalDate date_created;
 
-    @NotEmpty(message =  "Meal entry cannot be empty") // might need to change to Map<MealEvent,MealPlan>
     private Map<MealEvent,Meal> plannedMeals;
+
+    private List<Meal> selectedMeals;
 
     public long getPlanId() {
         return plan_id;
@@ -67,5 +68,12 @@ public class MealPlan {
 
     public void setUserId(long user_id) {
         this.user_id = user_id;
+    }
+
+    public List<Meal> getSelectedMeals() {
+        return selectedMeals;
+    }
+    public void setSelectedMeals(List<Meal> selectedMeals){
+        this.selectedMeals = selectedMeals;
     }
 }

@@ -33,11 +33,11 @@
 <div class = "container" id = "grid">
     <div class = "row">
         <for:forEach items="${meals}" var="meal" >
-            <c:url var="detailUrl" value="/meals">
-                <c:param name="meal_id" value="${meal.mealId}"/>
-            </c:url>
+<%--            <c:url var="detailUrl" value="/meals">--%>
+<%--                <c:param name="meal_id" value="${meal.mealId}"/>--%>
+<%--            </c:url>--%>
             <div class = "col-md-4">
-                <div class = "card" style="margin-bottom: 5px; margin-top: 5px; ">
+                <div class = "card" style="margin-bottom: 5px; margin-top: 5px;">
                     <div class="card-body text-center">
                         <div style = "text-align: left">
                             <c:url var="formAction" value="/meals"/>
@@ -47,8 +47,7 @@
                             </form>
                         </div>
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
-<<<<<<< HEAD
-=======
+
 <%--                        <div style = "text-align: right;" style = "margin-top: 5px; margin-bottom: 5px;">--%>
                                 <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
 <%--                            <c:url var="formAction" value="/meals"/>--%>
@@ -58,11 +57,14 @@
 <%--                            </form>--%>
 
 <%--                        </div>--%>
-
->>>>>>> 0aa7b837b963795881a8832f42df9b07f2da3c98
                         <for:forEach items = "${recipesInMeal}" var = "recipeInMeal">
                             <p>${recipeInMeal}</p>
                         </for:forEach>
+<%--                        <for:forEach var = "i" begin = "1" end = "${requestScope.size()}">--%>
+<%--                            <for:forEach items = "recipesInMeal${i}" var = "recipeInMeal">--%>
+<%--                                <p>${recipeInMeal}</p>--%>
+<%--                            </for:forEach>--%>
+<%--                        </for:forEach>--%>
                          </div>
                     </div>
                 </div>

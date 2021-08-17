@@ -33,7 +33,7 @@
     </div>
 
     <div class = "container">
-<%--    <input type = "hidden" id = "recipe_id" name = "recipe_id" value = "${recipe.recipeId}"/>--%>
+    <input type = "hidden" id = "recipe_id" name = "recipe_id" value = "${recipe.recipeId}"/>
     <input type = "submit" class = "btn btn-success" value = "Submit">
     </div>
 </form:form>

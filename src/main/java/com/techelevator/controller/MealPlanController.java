@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,9 +65,20 @@ public class MealPlanController {
     }
 
     @RequestMapping(path = "/addNewMealPlan", method = RequestMethod.POST)
-    public String processAddNewMealPlan() {
-        return
-                
+    public String processAddNewMealPlan(@Valid@ModelAttribute("mealPlan") MealPlan mealPlan,
+                                        BindingResult result, RedirectAttributes flash, HttpSession session,
+                                        HttpServletRequest request) {
+        flash.addFlashAttribute("mealPlan", mealPlan);
+        User user = (User) session.getAttribute("user");
+        Map<MealEvent, Meal> plannedMeals = new HashMap<>();
+
+        if(result.hasErrors()){
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
+            return "redirect:/addNewMealPlan";
+        }
+        else if (request.getParameter("submitMeal") != null ) {
+            plannedMeals.put(request.getParameter("mealEvent"), request.getParameter("meal"));
+        }
     }
 
 

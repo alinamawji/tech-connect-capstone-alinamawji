@@ -27,7 +27,7 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
     MealDAO mealDAO;
 
     @Override
-    public void addMealPlanToDB(long user_id, String title, String description, Map<MealEvent, Meal> meals) {
+    public void addMealPlanToDB(long user_id, String title, String description,Map<MealEvent, Meal> meals) {
         //insert mealPlan into meal plan table
         String sqlNewMealPlan = "INSERT INTO meal_plan(user_id,title,description,date_created) " +
                 "VALUES (?,?,?,?)";
@@ -48,6 +48,13 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
 
         }
 
+    }
+
+    @Override
+    public void addMealPlanOnly(long user_id, String title, String description){
+        String sqlNewMealPlan = "INSERT INTO meal_plan(user_id,title,description,date_created) " +
+                "VALUES (?,?,?,?)";
+        jdbcTemplate.update(sqlNewMealPlan, user_id, title, description, LocalDate.now());
     }
 
     @Override
@@ -93,27 +100,27 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
     }
 
     @Override
-    public void addMealToPlan(long plan_id, Meal meal) {
+    public void addMealToPlan(long plan_id, long meal_id) {
         String sqlMealAssocPlan = "INSERT INTO meal_plan_meal(plan_id,meal_id) VALUES (?,?) ";
-        jdbcTemplate.update(sqlMealAssocPlan, plan_id, meal.getMealId());
+        jdbcTemplate.update(sqlMealAssocPlan, plan_id, meal_id);
     }
 
     @Override
-    public void createMealEvent(MealEvent event){
+    public void createMealEvent(int weekday, int time_of_day, long plan_id, long meal_id){
         String sql = "INSERT INTO meal_event(weekday,time_of_day,plan_id,meal_id) VALUES (?,?,?,?) ";
-        jdbcTemplate.update(sql,event.getWeekday(),event.getTimeOfDay(), event.getPlanId(), event.getMealId());
+        jdbcTemplate.update(sql,weekday,time_of_day,plan_id,meal_id);
     }
 
     @Override
-    public void removeMealFromPlan(long plan_id, Meal meal) {
+    public void removeMealFromPlan(long plan_id, long meal_id) {
         String sqlRemovePlannedMeal = "DELETE FROM meal_plan_meal WHERE plan_id = ? AND meal_id = ? ";
-        jdbcTemplate.update(sqlRemovePlannedMeal, plan_id, meal.getMealId());
+        jdbcTemplate.update(sqlRemovePlannedMeal, plan_id, meal_id);
     }
 
     @Override
-    public void deleteMealEvent(MealEvent event){
+    public void deleteMealEvent(long event_id){
         String sql = "DELETE FROM meal_event WHERE event_id = ? ";
-        jdbcTemplate.update(sql, event.getEventId());
+        jdbcTemplate.update(sql, event_id);
     }
 
     @Override

@@ -9,7 +9,9 @@ import java.util.Map;
 public interface MealPlanDAO {
 
     public void addMealPlanToDB(long user_id, String title, String description,
-                                Map<MealEvent,Meal> meals); //might need to add List<Meal> to store
+                                Map<MealEvent,Meal> meals);
+
+    public void addMealPlanOnly(long user_id, String title, String description);
 
     public void deleteMealPlanFromDB(long plan_id);
 
@@ -19,13 +21,13 @@ public interface MealPlanDAO {
 
     public Map<MealEvent,Meal> getPlannedMeals(long plan_id);
 
-    public void addMealToPlan(long plan_id, Meal meal);
+    public void addMealToPlan(long plan_id,long meal_id);
 
-    public void createMealEvent(MealEvent event);
+    public void createMealEvent(int weekday, int time_of_day, long plan_id, long meal_id);
 
-    public void removeMealFromPlan(long plan_id, Meal meal);
+    public void removeMealFromPlan(long plan_id, long meal_id);
 
-    public void deleteMealEvent(MealEvent event);
+    public void deleteMealEvent(long event_id);
 
     public void updateTitle(long plan_id,String title);
 

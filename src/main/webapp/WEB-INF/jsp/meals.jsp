@@ -49,7 +49,11 @@
                             </form>
                         </div>
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
-                                    <c:out value="${meal.recipesInMeal}"/>
+
+                        <c:forEach items="${meal.recipesInMeal}" var="recipe" varStatus="status">
+                            ${recipe}<c:if test="${!status.last}">,</c:if>
+                        </c:forEach>
+<%--                                    <c:out value="${meal.recipesInMeal}"/>--%>
                     </div>
                 </div>
             </div>

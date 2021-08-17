@@ -9,6 +9,9 @@
         width: 150px;
         min-height: 80px;
     }
+    footer {
+        width: 100% !important;
+    }
 </style>
 <hr/>
 

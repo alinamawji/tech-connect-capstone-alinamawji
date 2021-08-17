@@ -92,7 +92,7 @@
         <div class = "form-group">
             <label class = "display-5" for="instructions">Instructions: </label>
             <div class = "row textarea" style = "margin-left: 5px;">
-            <form:input type = "textarea" path="instructions"/>
+            <form:input type = "textarea" path="instructions" />
             <form:errors path="instructions" cssClass="error"/>
             </div>
         </div>

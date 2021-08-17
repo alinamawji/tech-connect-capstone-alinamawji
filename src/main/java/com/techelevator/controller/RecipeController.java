@@ -61,11 +61,11 @@ public class RecipeController {
         return "redirect:/cookbook";
     }
 
-//    @RequestMapping(path = "/addNewRecipeConfirmation", method = RequestMethod.GET)
-//    public String addNewRecipeConfirmationPage(ModelMap modelMap) {
-////        Recipe recipe = (Recipe) modelMap.get("addedRecipe");
-//        return "addNewRecipeConfirmation";
-//    }
+    @RequestMapping(path = "/addNewRecipeConfirmation", method = RequestMethod.GET)
+    public String addNewRecipeConfirmationPage(ModelMap modelMap) {
+        Recipe recipe = (Recipe) modelMap.get("addedRecipe");
+        return "addNewRecipeConfirmation";
+    }
 
 
     @RequestMapping(path = "/addNewRecipe", method = RequestMethod.GET)
@@ -121,7 +121,6 @@ public class RecipeController {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
             return "redirect:/addNewIngredient";
         }
-
         ingredientDAO.addIngredientToDB(name);
         session.setAttribute("newIngredient", name);
         return "redirect:/addNewRecipe";
@@ -197,7 +196,7 @@ public class RecipeController {
         if (newInstructions != null) {
             recipeDAO.modifyInstructions(oldRecipe.getRecipeId(), newInstructions);
             // this has to be changed later
-            return "redirect:/addNewRecipeConfirmation";
+            return "redirect:/cookbook";
         }
 
         return "redirect:/private";
@@ -227,7 +226,7 @@ public class RecipeController {
                 recipeDAO.removeIngredientFromList(oldRecipe.getRecipeId(), removeThisIngredient);
             }
             //change this confirmation page later
-            return "redirect:/addNewRecipeConfirmation";
+            return "redirect:/cookbook";
         }
     }
 
@@ -248,7 +247,7 @@ public class RecipeController {
                                                   RedirectAttributes flash, @RequestParam List <String> newIngredients,
                                                   HttpServletRequest request) {
 
-        Recipe oldRecipe = recipeDAO.getRecipeByID(Long.parseLong(request.getParameter("recipeId")));
+        Recipe oldRecipe = recipeDAO.getRecipeByID(Long.parseLong(request.getParameter("recipe_id")));
         if (result.hasErrors() || newIngredients.size() == 0) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "ingredient", ingredient);
             return "redirect:/private";
@@ -258,14 +257,9 @@ public class RecipeController {
                 recipeDAO.addIngredientToList(oldRecipe.getRecipeId(), addThisIngredient);
             }
             //change this confirmation page later
-            return "redirect:/addIngredientConfirmation";
+            return "redirect:/cookbook";
         }
     }
-
-    // add methods for modifying a recipe and deleting a recipe, those will have different method calls from the recipe class.
-    // These will be implemented on the cookbookController, which handles a user's personal library of recipes. They can only
-    // modify/delete the recipes they created.
-
 
 }
 

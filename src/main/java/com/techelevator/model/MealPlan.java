@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,8 +23,9 @@ public class MealPlan {
 
     private LocalDate date_created;
 
-    @NotEmpty(message =  "Meal entry cannot be empty") // might need to change to Map<MealEvent,MealPlan>
     private Map<MealEvent,Meal> plannedMeals;
+
+    private List<Meal> selectedMeals;
 
     public long getPlanId() {
         return plan_id;
@@ -67,5 +69,12 @@ public class MealPlan {
 
     public void setUserId(long user_id) {
         this.user_id = user_id;
+    }
+
+    public List<Meal> getSelectedMeals() {
+        return selectedMeals;
+    }
+    public void setSelectedMeals(List<Meal> selectedMeals){
+        this.selectedMeals = selectedMeals;
     }
 }

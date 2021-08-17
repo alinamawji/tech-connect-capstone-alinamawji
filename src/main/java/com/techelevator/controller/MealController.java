@@ -30,30 +30,51 @@ public class MealController {
     @Autowired
     private JDBCCookbookDAO cookbookDAO;
 
+    @Autowired
+    private JDBCRecipeDAO recipeDAO;
+
     @RequestMapping(path="/meals", method = RequestMethod.GET)
     public String showAllMeals(ModelMap modelHolder, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
         if (user != null) {
             List<Meal> meals = mealDAO.getAllMealsByUserID(user.getId());
-            modelHolder.put("meals", meals);
+            session.setAttribute("meals", meals);
 
             for (Meal meal: meals) {
                 meal.setRecipesInMeal( mealDAO.getRecipesInMeal(meal.getMealId()));
             }
             return "meals";
         }
-        return "redirect:/private";
+        return "private";
     }
 
     @RequestMapping(path="/meals", method = RequestMethod.POST)
-    public String deleteMeal(@RequestParam Long meal_id, HttpSession session) {
+    public String deleteMeal(@RequestParam Long meal_id, HttpSession session, ModelMap modelHolder) {
         User user = new User();
-        Recipe recipe = new Recipe();
+//        Meal meal = mealDAO.getMealByID(meal_id);
+
+        List <Meal> listOfMeals = (List<Meal>) session.getAttribute("meals");
         if (session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
             session.setAttribute("deletedMeal", mealDAO.getMealByID(meal_id));
-            mealDAO.deleteMeal(meal_id, recipe.getRecipeId());
+//            List<String> stringList = meal.getRecipesInMeal();
+            for (Meal meal : listOfMeals) {
+                if (meal.getMealId() == meal_id) {
+                    for (String title: meal.getRecipesInMeal()) {
+                        Recipe recipe = recipeDAO.getRecipeByTitle(title);
+                        mealDAO.deleteMealFromMealRecipe(meal.getMealId(), recipe.getRecipeId());
+                    }
+                    mealDAO.deleteMealFromMeal(meal_id);
+                }
+//                Recipe recipe = recipeDAO.getRecipeByTitle(title);
+//                mealDAO.deleteMealFromMealRecipe(meal_id, recipe.getRecipeId());
+
+                // call on recipe dao to get recipe ID by it's title (should be a simple query)
+                // delete all from meal recipe table first, and then delete the meal from the meal table outside of the loop
+                // move this for each loop into the if statement
+            }
+
             return "redirect:/meals";
         }
         else {

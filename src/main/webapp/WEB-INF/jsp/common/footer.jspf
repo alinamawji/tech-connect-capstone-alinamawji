@@ -29,10 +29,7 @@
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
-                    <h6 class="text-uppercase display-6 mb-4" style = "font-size: 1rem;">
-                        <i class="fas fa-gem me-3"></i>The Best Byte
-                    </h6>
-                    <img class = "rounded" src = https://seeklogo.com/images/G/good-food-logo-36B7F2C85D-seeklogo.com.png alt = "The Best Byte logo">
+                    <img src = "img/logo.png" alt = "The Best Byte logo">
                 </div>
 
                 <!-- Grid column -->

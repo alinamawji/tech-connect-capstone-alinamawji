@@ -78,6 +78,13 @@ public class JDBCRecipeDAO implements RecipeDAO {
     }
 
     @Override
+    public Recipe getRecipeByTitle(String title) {
+        String sqlGetRecipeByTitle = "SELECT * FROM recipe WHERE title = ?";
+        Recipe recipe = (Recipe) jdbcTemplate.queryForObject(sqlGetRecipeByTitle, new recipeRowMapper(), title);
+        return recipe;
+    }
+
+    @Override
     public void addIngredientToList(long recipe_id, String ingredient) {
         String sqlNewIngredient = "insert into recipe_ingredient (recipe_id, ingredient_id) \n" +
                 "values (?, (select ingredient_id from ingredient where ingredient_name = ?));";

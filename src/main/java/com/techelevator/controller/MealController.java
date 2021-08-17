@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class MealController {
@@ -38,9 +37,9 @@ public class MealController {
         if (user != null) {
             List<Meal> meals = mealDAO.getAllMealsByUserID(user.getId());
             modelHolder.put("meals", meals);
+
             for (Meal meal: meals) {
-                List <String> recipesInMeal = mealDAO.getRecipesInMeal(meal.getMealId());
-                modelHolder.put("recipesInMeal", recipesInMeal);
+                meal.setRecipesInMeal( mealDAO.getRecipesInMeal(meal.getMealId()));
             }
             return "meals";
         }

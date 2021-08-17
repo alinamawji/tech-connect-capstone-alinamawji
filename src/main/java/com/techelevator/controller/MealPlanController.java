@@ -105,11 +105,11 @@ public class MealPlanController {
                     if (entry.getKey().getTimeOfDay() == 1) {
                         mondayBreakfast.add(entry.getValue().getTitle());
                     } else if (entry.getKey().getTimeOfDay() == 2) {
-                        sundayLunch.add(entry.getValue().getTitle());
+                        mondayLunch.add(entry.getValue().getTitle());
                     } else if (entry.getKey().getTimeOfDay() == 3) {
-                        sundayDinner.add(entry.getValue().getTitle());
+                        mondayDinner.add(entry.getValue().getTitle());
                     } else if (entry.getKey().getTimeOfDay() == 4) {
-                        sundaySnacks.add(entry.getValue().getTitle());
+                        mondaySnacks.add(entry.getValue().getTitle());
                     }
                 case 3:
                     if (entry.getKey().getTimeOfDay() == 1) {

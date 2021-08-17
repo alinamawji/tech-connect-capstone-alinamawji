@@ -37,11 +37,11 @@ public class MealController {
 
         if (user != null) {
             List<Meal> meals = mealDAO.getAllMealsByUserID(user.getId());
+            modelHolder.put("meals", meals);
             for (Meal meal: meals) {
                 List <String> recipesInMeal = mealDAO.getRecipesInMeal(meal.getMealId());
                 modelHolder.put("recipesInMeal", recipesInMeal);
             }
-            modelHolder.put("meals", meals);
             return "meals";
         }
         return "redirect:/private";
@@ -58,7 +58,7 @@ public class MealController {
             return "redirect:/meals";
         }
         else {
-            return "private";
+            return "redirect:/private";
         }
     }
 

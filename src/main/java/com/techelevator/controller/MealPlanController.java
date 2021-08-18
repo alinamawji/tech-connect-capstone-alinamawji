@@ -304,6 +304,9 @@ public class MealPlanController {
 
     @RequestMapping(path = "/addScheduledMeal", method = RequestMethod.GET)
     public String showAddScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        Map<MealEvent, Meal> plannedMeals = mealPlanDAO.getPlannedMeals(plan_id);
+        modelHolder.put("plannedMeals", plannedMeals);
+        modelHolder.put("mealEvent", new MealEvent());
         return "addScheduledMeal";
     }
 
@@ -311,11 +314,23 @@ public class MealPlanController {
     @RequestMapping(path = "/deleteScheduledMeal", method = RequestMethod.GET)
     public String showDeleteScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
         Map<MealEvent, Meal> plannedMeals = mealPlanDAO.getPlannedMeals(plan_id);
-        List<MealEvent> events = new ArrayList<MealEvent>(plannedMeals.keySet());
-        modelHolder.put("PlannedMeals", plannedMeals);
+        modelHolder.put("plannedMeals", plannedMeals);
         modelHolder.put("mealEvent", new MealEvent());
         return "deleteScheduledMeal";
     }
+    @RequestMapping(path = "/deleteScheduledMeal", method = RequestMethod.POST)
+    public String processDeleteScheduledMeal(@Valid@ModelAttribute("mealEvent") MealEvent event, BindingResult result,
+                                             RedirectAttributes flash, @RequestParam List<String> removeTheseMealEvents){
+        if(result.hasErrors() || removeTheseMealEvents.size() == 0){
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealEvent" + result);
+            return "redirect:/deleteScheduledMeal";
+        }
+        for(String removeMealEvent : removeTheseMealEvents){
+            mealPlanDAO.deleteMealEvent(Long.parseLong(removeMealEvent));
+        }
+        return "redirect:/mealPlans";
+    }
+
 
     
 }

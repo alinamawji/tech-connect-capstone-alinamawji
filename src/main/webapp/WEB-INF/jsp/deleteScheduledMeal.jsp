@@ -19,13 +19,33 @@
         </thead>
         <tbody>
         <c:forEach items="${plannedMeals}" var="event">
-            <p>${event.key.eventId}</p>
+            <c:set var="eventMeal" value="${event.key}"/>
+            <c:set var="meal" value="${event.value}"/>
+            <tr>
+                <td><c:out value="${event.value.title}" </td>
+                <td>
+                    <c:if test="${eventMeal.weekday} == 1">Monday</c:if>
+                    <c:if test="${event.key.weekday} == 2">Tuesday</c:if>
+                    <c:if test="${event.key.weekday} == 3">Wednesday</c:if>
+                    <c:if test="${event.key.weekday} == 4">Thursday</c:if>
+                    <c:if test="${event.key.weekday} == 5">Friday</c:if>
+                    <c:if test="${event.key.weekday} == 6">Saturday</c:if>
+                    <c:if test="${event.key.weekday} == 7">Sunday</c:if>
+                </td>
+                <td>
+                    <c:if test="${event.key.timeOfDay} == 1">Breakfast</c:if>
+                    <c:if test="${event.key.timeOfDay} == 2">Lunch</c:if>
+                    <c:if test="${event.key.timeOfDay} == 3">Dinner</c:if>
+                    <c:if test="${event.key.timeOfDay} == 4">Snack</c:if>
+                </td>
+                <td>
+                    <input type="checkbox" name="removeTheseMealEvents" id="removeTheseMealEvents" value="${event.key.eventId}"/>
+                </td>
+            </tr>
             <%--            <li class = "text-capitalize list-group-item">--%>
             <%--                <div class="input-group" style="display: table; width: 100%">--%>
             <%--                                    <span style="display: table-cell">--%>
             <%--                                               <label for = "removeTheseMealEvents"><c:out value = "${ingredient}"></c:out></label>--%>
-            <
-            <input type="checkbox" name="removeTheseMealEvents" id="removeTheseMealEvents" value="${event.key.eventId}"/>
             <%--                                    </span>--%>
             <%--                </div>--%>
             <%--            </li>--%>

@@ -19,7 +19,7 @@
 <%--title, date created, description--%>
 <h1 class="display-5 text-italic text-color">Grocery List for <c:out value="${mealPlan.title}"/> </h1>
 <p>Meal Plan Date Created: ${mealPlan.dateCreated}</p>
-<h5 class="display-5 text-italic text-color">Description:</h5>
+<h5 class="display-6 text-color">Description:</h5>
 <p class = "text-capitalize">${mealPlan.description} </p>
 
 <hr>

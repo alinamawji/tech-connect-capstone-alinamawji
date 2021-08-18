@@ -101,6 +101,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         sundaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
                 case 2:
                     if (entry.getKey().getTimeOfDay() == 1) {
                         mondayBreakfast.add(entry.getValue().getTitle());
@@ -111,6 +112,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         mondaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
                 case 3:
                     if (entry.getKey().getTimeOfDay() == 1) {
                         tuesdayBreakfast.add(entry.getValue().getTitle());
@@ -121,6 +123,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         tuesdaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
                 case 4:
                     if (entry.getKey().getTimeOfDay() == 1) {
                         wednesdayBreakfast.add(entry.getValue().getTitle());
@@ -131,6 +134,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         wednesdaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
                 case 5:
                     if (entry.getKey().getTimeOfDay() == 1) {
                         thursdayBreakfast.add(entry.getValue().getTitle());
@@ -141,6 +145,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         thursdaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
                 case 6:
                     if (entry.getKey().getTimeOfDay() == 1) {
                         fridayBreakfast.add(entry.getValue().getTitle());
@@ -151,6 +156,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         fridaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
                 case 7:
                     if (entry.getKey().getTimeOfDay() == 1) {
                         saturdayBreakfast.add(entry.getValue().getTitle());
@@ -161,6 +167,7 @@ public class MealPlanController {
                     } else if (entry.getKey().getTimeOfDay() == 4) {
                         saturdaySnacks.add(entry.getValue().getTitle());
                     }
+                    break;
             }
         }
 

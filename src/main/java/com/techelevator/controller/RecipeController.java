@@ -140,10 +140,10 @@ public class RecipeController {
         return "recipeDetails";
     }
 
-<<<<<<< HEAD
+
 //    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
 //    public String displayModifyRecipePage() {
-=======
+
     @RequestMapping(path = "/search", method = RequestMethod.GET)
     public String processSearch(@RequestParam String string, @RequestParam String filter, ModelMap modelHolder){
         List <Recipe> recipes = new ArrayList<>();
@@ -165,7 +165,6 @@ public class RecipeController {
 //        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
 //        modelHolder.put("ingredients", ingredients);
 //
->>>>>>> 9b723f3696f930612acef117c36d4b66bdac06d0
 //        return "redirect:/modifyRecipe";
 //    }
 

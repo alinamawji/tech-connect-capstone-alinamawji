@@ -127,9 +127,9 @@ public class JDBCRecipeDAO implements RecipeDAO {
                 "    join recipe_ingredient ri on ingredient.ingredient_id = ri.ingredient_id\n" +
                 "    where recipe_id = ?)" +
                 "order by ingredient_name;";
-        List <String> ingredients = jdbcTemplate.query(sqlIngredients, new ingredientRowMapper(), recipe_id);
+        List<String> ingredients = jdbcTemplate.query(sqlIngredients, new ingredientRowMapper(), recipe_id);
         return ingredients;
-
+    }
     @Override
     public List<Recipe> getRecipeByCategory(String category) {
         category = "%" + category + "%";
@@ -150,7 +150,6 @@ public class JDBCRecipeDAO implements RecipeDAO {
                 " WHERE ingredient_name ILIKE ?";
         List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sql, new recipeRowMapper(), ingredient);
         return recipes;
->>>>>>> 9b723f3696f930612acef117c36d4b66bdac06d0
     }
 }
 

@@ -16,14 +16,6 @@
 <h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Recipes</h1>
 <hr>
 
-
-<%--ternary operator to determine if there is a user logged in--%>
-<c:set var = "activeButton" value = "${user.firstName != null ? '' : 'disabled'}"/>
-
-<c:if test = "${activeButton == 'disabled'}">
-    <c:out value = "Looks like you aren't currently logged in! Please login to access some of our other features like uploading and saving recipes."/>
-</c:if>
-
 <div class = "container" id = "grid">
     <div class = "row row-cols-1 row-cols-md-3 g-4">
         <for:forEach items="${recipes}" var="recipe" >

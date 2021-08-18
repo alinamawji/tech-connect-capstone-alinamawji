@@ -23,8 +23,9 @@
 <form:form method="POST" action="${deleteEventsUrl}" modelAttribute="mealEvent">
     <%--    <ul class = "list-group" style = "display: inline-block;">--%>
     <%--        for loop to display the ingredients for the recipe--%>
-    <p class="row">Select any scheduled meals you'd like to remove from the plan: </p>
+
     <div class = "form-group">
+        <p class="row">Select any scheduled meals you'd like to remove from the plan: </p>
     <table class = "table">
         <thead>
         <tr>

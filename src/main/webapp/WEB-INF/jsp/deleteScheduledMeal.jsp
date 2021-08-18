@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="common/header.jspf" %>
-<h1 class="display-5">Delete Ingredients</h1>
+<h1 class="display-5">Delete Scheduled Meals</h1>
 <hr>
 
 <c:url var="deleteEventsUrl" value="/deleteScheduledMeal"/>
@@ -22,21 +22,21 @@
             <c:set var="eventMeal" value="${event.key}"/>
             <c:set var="meal" value="${event.value}"/>
             <tr>
-                <td><c:out value="${event.value.title}" </td>
+                <td><c:out value="${meal.title}"/> </td>
                 <td>
-                    <c:if test="${eventMeal.weekday} == 1">Monday</c:if>
-                    <c:if test="${event.key.weekday} == 2">Tuesday</c:if>
-                    <c:if test="${event.key.weekday} == 3">Wednesday</c:if>
-                    <c:if test="${event.key.weekday} == 4">Thursday</c:if>
-                    <c:if test="${event.key.weekday} == 5">Friday</c:if>
-                    <c:if test="${event.key.weekday} == 6">Saturday</c:if>
-                    <c:if test="${event.key.weekday} == 7">Sunday</c:if>
+                    <c:if test="${eventMeal.weekday == 1}">Monday</c:if>
+                    <c:if test="${eventMeal.weekday == 2}">Tuesday</c:if>
+                    <c:if test="${eventMeal.weekday == 3}">Wednesday</c:if>
+                    <c:if test="${eventMeal.weekday == 4}">Thursday</c:if>
+                    <c:if test="${eventMeal.weekday == 5}">Friday</c:if>
+                    <c:if test="${eventMeal.weekday == 6}">Saturday</c:if>
+                    <c:if test="${eventMeal.weekday == 7}">Sunday</c:if>
                 </td>
                 <td>
-                    <c:if test="${event.key.timeOfDay} == 1">Breakfast</c:if>
-                    <c:if test="${event.key.timeOfDay} == 2">Lunch</c:if>
-                    <c:if test="${event.key.timeOfDay} == 3">Dinner</c:if>
-                    <c:if test="${event.key.timeOfDay} == 4">Snack</c:if>
+                    <c:if test="${eventMeal.timeOfDay == 1}">Breakfast</c:if>
+                    <c:if test="${eventMeal.timeOfDay == 2}">Lunch</c:if>
+                    <c:if test="${eventMeal.timeOfDay == 3}">Dinner</c:if>
+                    <c:if test="${eventMeal.timeOfDay == 4}">Snack</c:if>
                 </td>
                 <td>
                     <input type="checkbox" name="removeTheseMealEvents" id="removeTheseMealEvents" value="${event.key.eventId}"/>
@@ -56,7 +56,6 @@
 
 
     <div class="container">
-        <input type="hidden" id="plan_id" name="_id" value="${event.recipeId}"/>
         <input type="submit" class="btn btn-success" value="Submit">
     </div>
 </form:form>

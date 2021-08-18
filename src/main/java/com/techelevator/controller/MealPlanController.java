@@ -303,6 +303,10 @@ public class MealPlanController {
 
     @RequestMapping(path = "/deleteScheduledMeal", method = RequestMethod.GET)
     public String showDeleteScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        Map<MealEvent, Meal> plannedMeals = mealPlanDAO.getPlannedMeals(plan_id);
+        List<MealEvent> events = new ArrayList<MealEvent>(plannedMeals.keySet());
+        modelHolder.put("PlannedMeals", plannedMeals);
+        modelHolder.put("mealEvent", new MealEvent());
         return "deleteScheduledMeal";
     }
 

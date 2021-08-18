@@ -149,6 +149,12 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
     }
 
     @Override
+    public void deleteMealEventByID(long event_id){
+        String sql = "DELETE FROM meal_event WHERE event_id = ?";
+        jdbcTemplate.update(sql, event_id);
+    }
+
+    @Override
     public void updateTitle(long plan_id, String title) {
         String sql = "UPDATE meal_plan SET title = ? WHERE plan_id = ? ";
         jdbcTemplate.update(sql,title,plan_id);

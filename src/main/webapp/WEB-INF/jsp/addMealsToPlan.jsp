@@ -56,6 +56,49 @@
             <input type="submit" class="btn btn-success" value="Submit Meal Plan">
         </a>
     </div>
+    <h4>Current Schedule of Meals</h4>
+        <table>
+            <thead>
+            <tr>
+                <th>Meal</th>
+                <th>Day</th>
+                <th>Time of day</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${plannedMeals}" var="event">
+                <c:set var="eventMeal" value="${event.key}"/>
+                <c:set var="meal" value="${event.value}"/>
+                <tr>
+                    <td><c:out value="${meal.title}"/> </td>
+                    <td>
+                        <c:if test="${eventMeal.weekday == 1}">Monday</c:if>
+                        <c:if test="${eventMeal.weekday == 2}">Tuesday</c:if>
+                        <c:if test="${eventMeal.weekday == 3}">Wednesday</c:if>
+                        <c:if test="${eventMeal.weekday == 4}">Thursday</c:if>
+                        <c:if test="${eventMeal.weekday == 5}">Friday</c:if>
+                        <c:if test="${eventMeal.weekday == 6}">Saturday</c:if>
+                        <c:if test="${eventMeal.weekday == 7}">Sunday</c:if>
+                    </td>
+                    <td>
+                        <c:if test="${eventMeal.timeOfDay == 1}">Breakfast</c:if>
+                        <c:if test="${eventMeal.timeOfDay == 2}">Lunch</c:if>
+                        <c:if test="${eventMeal.timeOfDay == 3}">Dinner</c:if>
+                        <c:if test="${eventMeal.timeOfDay == 4}">Snack</c:if>
+                    </td>
+                </tr>
+                <%--            <li class = "text-capitalize list-group-item">--%>
+                <%--                <div class="input-group" style="display: table; width: 100%">--%>
+                <%--                                    <span style="display: table-cell">--%>
+                <%--                                               <label for = "removeTheseMealEvents"><c:out value = "${ingredient}"></c:out></label>--%>
+                <%--                                    </span>--%>
+                <%--                </div>--%>
+                <%--            </li>--%>
+            </c:forEach>
+            </tbody>
+            <%--    </ul>--%>
+        </table>
+
 
 
 <%@ include file="common/footer.jspf" %>

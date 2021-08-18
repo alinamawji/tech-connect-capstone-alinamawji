@@ -21,6 +21,8 @@ import java.util.*;
 @Controller
 public class MealPlanController {
 
+    private Map<MealEvent, Meal> listOfScheduledMeals = new HashMap<>();
+
     @Autowired
     private JDBCMealPlanDAO mealPlanDAO;
 
@@ -255,6 +257,7 @@ public class MealPlanController {
         MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
         modelHolder.put("mealEvent", new MealEvent());
         // modelHolder.put("plannedMeals",) COME BACK TO AFTER MEAL PLAN DETAILS IS DONE
+        modelHolder.put("plannedMeals", mealPlan.getPlannedMeals());
 
         return "addMealsToPlan";
     }
@@ -269,12 +272,15 @@ public class MealPlanController {
         mealEvent.setTimeOfDay(Integer.parseInt((request.getParameter("time_of_day"))));
 
         MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
+
         if (result.hasErrors()) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealEvent" + result);
             return "redirect:/addMealsToPlan";
         }
         mealPlanDAO.createMealEvent(mealEvent.getWeekday(), mealEvent.getTimeOfDay(), mealPlan.getUserId(),
                 mealPlan.getTitle(), mealEvent.getMealId());
+        mealPlan.setPlannedMeals(mealPlanDAO.getPlannedMeals(mealPlan.getPlanId()));
+        session.setAttribute("mealPlan", mealPlan);
         return "redirect:/addMealsToPlan";
     }
 
@@ -349,15 +355,61 @@ public class MealPlanController {
 
 
     @RequestMapping(path = "/addScheduledMeal", method = RequestMethod.GET)
-    public String showAddScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+    public String showAddScheduledMealPage(@RequestParam(required = false) Long plan_id, ModelMap modelHolder, HttpSession session){
+        Long plan_id_used;
+        if (session.getAttribute("planId") == null) {
+            session.setAttribute("planId", plan_id);
+        }
+        plan_id_used = (Long) session.getAttribute("planId");
+        Map<MealEvent, Meal> plannedMeals = mealPlanDAO.getPlannedMeals(plan_id_used);
+        MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id_used);
+        mealPlan.setSelectedMeals(mealPlanDAO.getMealsInAPlan(plan_id_used));
+        modelHolder.put("plannedMeals", plannedMeals);
+        modelHolder.put("mealEvent", new MealEvent());
+        session.setAttribute("mealPlan", mealPlan);
         return "addScheduledMeal";
+    }
+
+    @RequestMapping(path = "/addScheduledMeal", method = RequestMethod.POST)
+    public String processAddScheduledMeal(@Valid @ModelAttribute("mealEvent") MealEvent mealEvent, BindingResult result,
+                                          ModelMap modelHolder, RedirectAttributes flash, HttpServletRequest request,
+                                          HttpSession session) {
+
+        mealEvent.setMealId(Long.parseLong((request.getParameter("meal_id"))));
+        mealEvent.setWeekday(Integer.parseInt((request.getParameter("weekday"))));
+        mealEvent.setTimeOfDay(Integer.parseInt((request.getParameter("time_of_day"))));
+
+        MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
+        if (result.hasErrors()) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealEvent" + result);
+            return "redirect:/addScheduledMeal";
+        }
+        mealPlanDAO.createMealEvent(mealEvent.getWeekday(), mealEvent.getTimeOfDay(), mealPlan.getUserId(),
+                mealPlan.getTitle(), mealEvent.getMealId());
+        return "redirect:/addScheduledMeal";
     }
 
 
     @RequestMapping(path = "/deleteScheduledMeal", method = RequestMethod.GET)
     public String showDeleteScheduledMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+        Map<MealEvent, Meal> plannedMeals = mealPlanDAO.getPlannedMeals(plan_id);
+        modelHolder.put("plannedMeals", plannedMeals);
+        modelHolder.put("mealEvent", new MealEvent());
         return "deleteScheduledMeal";
     }
+    @RequestMapping(path = "/deleteScheduledMeal", method = RequestMethod.POST)
+    public String processDeleteScheduledMeal(@Valid@ModelAttribute("mealEvent") MealEvent event, BindingResult result,
+                                             RedirectAttributes flash, @RequestParam List<String> removeTheseMealEvents){
+        if(result.hasErrors() || removeTheseMealEvents.size() == 0){
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealEvent" + result);
+            return "redirect:/deleteScheduledMeal";
+        }
+        for(String removeMealEvent : removeTheseMealEvents){
+            mealPlanDAO.deleteMealEventByID(Long.parseLong(removeMealEvent));
+        }
+        return "redirect:/mealPlans";
+    }
+
 
     
 }

@@ -66,17 +66,31 @@
 <%--                    </ul>--%>
 <%--                </li>--%>
             </ul>
-            <form class="d-flex">
-                <div class="dropdown" style = "margin-right: 10px;">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Filter By:
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Category</a></li>
-                        <li><a class="dropdown-item" href="#">Ingredient</a></li>
-                    </ul>
+            <c:url value="/search" var = "searchUrl" />
+            <form action = "${searchUrl}" method = "GET" class="d-flex">
+<%--                <div class="dropdown" style = "margin-right: 10px;">--%>
+<%--                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--                        Filter By:--%>
+<%--                    </button>--%>
+<%--                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">--%>
+<%--                        <li><a class="dropdown-item" href="#">Category</a></li>--%>
+<%--                        <li><a class="dropdown-item" href="#">Ingredient</a></li>--%>
+<%--                    </ul>--%>
+<%--                </div>--%>
+
+                <div class = "form-group" style="margin-right: 10px">
+                    <select aria-label="Filter By: " name = "filter" id = "filter" class="btn btn-light dropdown-toggle" style="display: inline-block" >
+                        <option name = "filter" value = "ingredient">Ingredient</option>
+                        <option name = "filter" value = "category">Category</option>
+                    </select>
                 </div>
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+<%--                <div class = "form-group" style="margin-right: 10px">--%>
+<%--                     <select aria-label = "Filter By: " name = "filter" id = "filter" class = "form-select" >--%>
+<%--                        <option name = "filter" value = "ingredient">Ingredient</option>--%>
+<%--                       <option name = "filter" value = "category">Category</option>--%>
+<%--                     </select>--%>
+<%--                </div>--%>
+                <input class="form-control me-2" type="search" name = "string" id = "string" placeholder="Search" aria-label="Search">
                 <button class="btn btn-light" type="submit">Search</button>
 
                 <li class="account dropdown navbar-nav me-auto mb-2 mb-lg-0" style = "margin-left: 5px;">

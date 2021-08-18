@@ -31,4 +31,8 @@ public interface RecipeDAO {
 
     public List<Recipe> getRecipesFromUser(String username);
 
+    public List<Recipe> getRecipeByCategory(String category);
+
+    public List<Recipe> getRecipeByIngredient(String ingredient);
+
 }

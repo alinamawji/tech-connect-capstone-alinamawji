@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -138,8 +140,32 @@ public class RecipeController {
         return "recipeDetails";
     }
 
+<<<<<<< HEAD
 //    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
 //    public String displayModifyRecipePage() {
+=======
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public String processSearch(@RequestParam String string, @RequestParam String filter, ModelMap modelHolder){
+        List <Recipe> recipes = new ArrayList<>();
+        if (filter.equals("ingredient")) {
+           recipes = recipeDAO.getRecipeByIngredient(string);
+        }
+        else if (filter.equals("category")) {
+          recipes =  recipeDAO.getRecipeByCategory(string);
+        }
+        modelHolder.put("recipes", recipes);
+        return "search";
+    }
+
+//    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
+//    public String displayModifyRecipePage(@RequestParam long recipe_id, ModelMap modelHolder) {
+//
+//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+//        modelHolder.put("recipe", recipe);
+//        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
+//        modelHolder.put("ingredients", ingredients);
+//
+>>>>>>> 9b723f3696f930612acef117c36d4b66bdac06d0
 //        return "redirect:/modifyRecipe";
 //    }
 

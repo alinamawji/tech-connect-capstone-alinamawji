@@ -39,13 +39,13 @@ To change this template use File | Settings | File Templates.
 </div>
 
 <div class = "container" id = "grid">
-    <div class = "row">
+    <div class = "row row-cols-1 row-cols-md-3 g-4">
         <for:forEach items="${mealPlans}" var="mealPlan" >
             <c:url var="detailUrl" value="/mealPlanDetails">
                 <c:param name="plan_id" value="${mealPlan.planId}"/>
             </c:url>
             <div class = "col-md-4">
-                <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">
+                <div class="card border-success h-100" style="margin-top: 5px !important;">
                     <div class="card-body text-center">
                         <h5 class="card-title"><c:out value="${mealPlan.title}"/></h5>
                         <p class="card-text">${mealPlan.description}</p>

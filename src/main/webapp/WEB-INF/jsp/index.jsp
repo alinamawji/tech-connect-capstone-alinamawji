@@ -37,7 +37,7 @@
 <div class = "container">
     <div class = "row">
         <div class = "col-md-4">
-        <div class="card">
+        <div class="card border-success">
                 <img src="https://images-gmi-pmc.edge-generalmills.com/c35325b7-3553-482c-a625-7dba7f5b2597.jpg" class="card-img-top" alt="Waffles with fruit image">
                     <div class="card-body text-center">
                         <h5 class="card-title">Fruit Topped Whole Grain Waffles</h5>
@@ -49,7 +49,7 @@
         </div>
 
         <div class = "col-md-4">
-            <div class="card">
+            <div class="card border-success">
                 <img src="https://www.spendwithpennies.com/wp-content/uploads/2019/05/Classic-Club-Sandwich-Spend-With-Pennies-23.jpg" class="card-img-top" alt="Club sandwich photo">
                 <div class="card-body text-center">
                     <h5 class="card-title">Healthy Club Sandwich</h5>
@@ -60,7 +60,7 @@
         </div>
 
         <div class = "col-md-4">
-            <div class="card">
+            <div class="card border-success">
                 <img src="https://spoonuniversity.com/wp-content/uploads/sites/66/2016/04/PizzaBites2.jpg" class="card-img-top" alt="Pizza bagel bites">
                 <div class="card-body text-center">
                     <h5 class="card-title">Pizza Bagel Bites</h5>

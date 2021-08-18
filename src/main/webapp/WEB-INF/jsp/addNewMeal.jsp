@@ -7,10 +7,6 @@
         margin: 5px;
         font-size: 1.5rem !important;
     }
-    #recipeLabels {
-        font-size: 20px !important;
-    }
-
     .form-group {
         margin: 20px;
         text-align: left;

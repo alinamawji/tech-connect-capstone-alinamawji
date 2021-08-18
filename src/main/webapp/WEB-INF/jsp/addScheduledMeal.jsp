@@ -1,6 +1,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="for" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file = "common/header.jspf" %>
+<%@ include file="common/header.jspf" %>
+
+<style>
+    label {
+        margin: 5px;
+        font-size: 1.5rem !important;
+    }
+
+    .form-group {
+        margin: 20px;
+        text-align: left;
+        border-radius: 3px;
+    }
+    input[type="checkbox"]
+    {
+        vertical-align:middle;
+    }
+</style>
 
 <h1 class="display-5">Add More Scheduled Meals</h1>
 <hr>
@@ -11,7 +28,7 @@
     <div id="planned_meal">
         <div class="form-group">
             <label>Select which meal you'd like to add: </label>
-            <select id="meal_id" name="meal_id">
+            <select class = "form-select" id="meal_id" name="meal_id">
                 <for:forEach items="${mealPlan.selectedMeals}" var="meal">
                     <option value="${meal.mealId}">${meal.title}</option>
                 </for:forEach>
@@ -20,7 +37,7 @@
 
         <div class="form-group">
             <label>Select which day you're planning meals for: </label>
-            <select id="weekday" name="weekday">
+            <select class = "form-select" id="weekday" name="weekday">
                 <option name="weekday" value="1">Monday</option>
                 <option name="weekday" value="2">Tuesday</option>
                 <option name="weekday" value="3">Wednesday</option>
@@ -33,30 +50,25 @@
 
         <div class="form-group">
             <label>Select what time of day you'd like for this meal:</label>
-            <select id="time_of_day" name="time_of_day">
+            <select class = "form-select" id="time_of_day" name="time_of_day">
                 <option name="time_of_day" value="1">Breakfast</option>
                 <option name="time_of_day" value="2">Lunch</option>
                 <option name="time_of_day" value="3">Dinner</option>
                 <option name="time_of_day" value="4">Snack</option>
             </select>
         </div>
-        <input type="submit" id="submitMeal" name="submitMeal" value="Add Planned Meal">
+        <div class = "form-group">
+        <input class = "btn btn-success btn-sm" type="submit" id="submitMeal" name="submitMeal" value="Add Planned Meal">
+        </div>
     </div>
     </form:form>
-
-    <c:url value="/mealPlans" var="mealPlanUrl"/>
-    <div class="form-group">
-        <a href="${mealPlanUrl}">
-            <input type="submit" class="btn btn-success" value="Submit Meal Plan">
-        </a>
-    </div>
     <h4>Current Schedule of Meals</h4>
-    <table>
+    <table class = "table">
         <thead>
         <tr>
-            <th>Meal</th>
-            <th>Day</th>
-            <th>Time of day</th>
+            <th scope = "col">Meal</th>
+            <th scope = "col">Day</th>
+            <th scope = "col">Time of Day</th>
         </tr>
         </thead>
         <tbody>
@@ -64,7 +76,7 @@
             <c:set var="eventMeal" value="${event.key}"/>
             <c:set var="meal" value="${event.value}"/>
             <tr>
-                <td><c:out value="${meal.title}"/> </td>
+                <td class = "text-capitalize"><c:out value="${meal.title}"/></td>
                 <td>
                     <c:if test="${eventMeal.weekday == 1}">Monday</c:if>
                     <c:if test="${eventMeal.weekday == 2}">Tuesday</c:if>
@@ -81,18 +93,16 @@
                     <c:if test="${eventMeal.timeOfDay == 4}">Snack</c:if>
                 </td>
             </tr>
-            <%--            <li class = "text-capitalize list-group-item">--%>
-            <%--                <div class="input-group" style="display: table; width: 100%">--%>
-            <%--                                    <span style="display: table-cell">--%>
-            <%--                                               <label for = "removeTheseMealEvents"><c:out value = "${ingredient}"></c:out></label>--%>
-            <%--                                    </span>--%>
-            <%--                </div>--%>
-            <%--            </li>--%>
         </c:forEach>
         </tbody>
         <%--    </ul>--%>
     </table>
 
+        <c:url value="/mealPlans" var="mealPlanUrl"/>
+        <div class="form-group">
+            <a href="${mealPlanUrl}">
+                <input type="submit" class="btn btn-success" value="Submit Meal Plan">
+            </a>
+        </div>
 
-
-<%@ include file = "common/footer.jspf" %>
+<%@ include file="common/footer.jspf" %>

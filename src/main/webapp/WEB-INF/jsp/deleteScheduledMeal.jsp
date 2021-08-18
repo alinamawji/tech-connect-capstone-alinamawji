@@ -1,5 +1,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="common/header.jspf" %>
+<style>
+    label {
+        margin: 5px;
+        font-size: 1.5rem !important;
+    }
+
+    .form-group {
+        margin: 20px;
+        text-align: left;
+        border-radius: 3px;
+    }
+    input[type="checkbox"]
+    {
+        vertical-align:middle;
+    }
+</style>
 <h1 class="display-5">Delete Scheduled Meals</h1>
 <hr>
 
@@ -8,13 +24,14 @@
     <%--    <ul class = "list-group" style = "display: inline-block;">--%>
     <%--        for loop to display the ingredients for the recipe--%>
     <p class="row">Select any scheduled meals you'd like to remove from the plan: </p>
-    <table>
+    <div class = "form-group">
+    <table class = "table">
         <thead>
         <tr>
-            <th>Meal</th>
-            <th>Day</th>
-            <th>Time of day</th>
-            <th>Delete?</th>
+            <th scope = "col">Meal</th>
+            <th scope = "col">Day</th>
+            <th scope = "col">Time of day</th>
+            <th scope = "col">Delete?</th>
         </tr>
         </thead>
         <tbody>
@@ -53,9 +70,10 @@
         </tbody>
             <%--    </ul>--%>
     </table>
+    </div>
 
 
-    <div class="container">
+    <div class="form-group">
         <input type="submit" class="btn btn-success" value="Submit">
     </div>
 </form:form>

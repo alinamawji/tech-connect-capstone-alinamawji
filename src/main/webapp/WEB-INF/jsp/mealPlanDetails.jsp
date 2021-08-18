@@ -66,12 +66,12 @@
 <h1 class="display-6 text-color" style="margin-bottom: 10px;">Meals: </h1>
 
 <div class="container" id="grid">
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
 
         <c:forEach var="day" begin="1" end="7">
 
             <div class="col-md-4">
-                <div class="card" style="margin-bottom: 5px; margin-top: 5px;">
+                <div class="card border-success h-100" style="margin-bottom: 5px; margin-top: 5px;">
                     <div class="card-body text-center">
 
                             <%-- SUNDAY --%>

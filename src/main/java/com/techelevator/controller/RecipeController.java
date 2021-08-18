@@ -4,6 +4,7 @@ import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,7 @@ import javax.naming.Binding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -140,6 +142,19 @@ public class RecipeController {
         modelHolder.put("ingredients", ingredients);
         User user = (User) session.getAttribute("user");
         return "recipeDetails";
+    }
+
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public String processSearch(@RequestParam String string, @RequestParam String filter, ModelMap modelHolder){
+        List <Recipe> recipes = new ArrayList<>();
+        if (filter.equals("ingredient")) {
+           recipes = recipeDAO.getRecipeByIngredient(string);
+        }
+        else if (filter.equals("category")) {
+          recipes =  recipeDAO.getRecipeByCategory(string);
+        }
+        modelHolder.put("recipes", recipes);
+        return "search";
     }
 
 //    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)

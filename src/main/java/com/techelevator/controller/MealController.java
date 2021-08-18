@@ -42,7 +42,7 @@ public class MealController {
             session.setAttribute("meals", meals);
 
             for (Meal meal: meals) {
-                meal.setRecipesInMeal( mealDAO.getRecipesInMeal(meal.getMealId()));
+                meal.setRecipesInMeal(mealDAO.getRecipesInMeal(meal.getMealId()));
             }
             return "meals";
         }
@@ -52,13 +52,11 @@ public class MealController {
     @RequestMapping(path="/meals", method = RequestMethod.POST)
     public String deleteMeal(@RequestParam Long meal_id, HttpSession session, ModelMap modelHolder) {
         User user = new User();
-//        Meal meal = mealDAO.getMealByID(meal_id);
 
         List <Meal> listOfMeals = (List<Meal>) session.getAttribute("meals");
         if (session.getAttribute("user") != null) {
             user = (User) session.getAttribute("user");
             session.setAttribute("deletedMeal", mealDAO.getMealByID(meal_id));
-//            List<String> stringList = meal.getRecipesInMeal();
             for (Meal meal : listOfMeals) {
                 if (meal.getMealId() == meal_id) {
                     for (String title: meal.getRecipesInMeal()) {

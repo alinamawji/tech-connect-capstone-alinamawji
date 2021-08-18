@@ -116,6 +116,28 @@ public class JDBCRecipeDAO implements RecipeDAO {
         List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sqlRecipesFromUser, new recipeRowMapper(), username);
         return recipes;
     }
+
+    @Override
+    public List<Recipe> getRecipeByCategory(String category) {
+        category = "%" + category + "%";
+        String sql = "SELECT * FROM recipe r " +
+                " JOIN recipe_category rc ON rc.recipe_id = r.recipe_id " +
+                " JOIN category c ON c.category_id = rc.category_id" +
+                " WHERE category_name ILIKE ?";
+        List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sql, new recipeRowMapper(), category);
+        return recipes;
+    }
+
+    @Override
+    public List<Recipe> getRecipeByIngredient(String ingredient) {
+        ingredient = "%" + ingredient + "%";
+        String sql = "SELECT * FROM recipe r " +
+                " JOIN recipe_ingredient ri ON ri.recipe_id = r.recipe_id " +
+                " JOIN ingredient i ON i.ingredient_id = ri.ingredient_id" +
+                " WHERE ingredient_name ILIKE ?";
+        List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sql, new recipeRowMapper(), ingredient);
+        return recipes;
+    }
 }
 
 class recipeRowMapper implements RowMapper {

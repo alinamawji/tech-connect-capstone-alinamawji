@@ -99,6 +99,7 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
         return plannedMeals;
     }
 
+    @Override
     public List <Meal> getMealsInAPlan(long plan_id) {
         String sqlMeal = "select *\n" +
                 "from meal\n" +
@@ -108,13 +109,24 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
         return mealsInAPlan;
     }
 
-    public List <Meal> getMealsNotAlreadyInAPlan(long plan_id){
-        String sqlMeal = "select * from meal\n" +
+    @Override
+    public List <Meal> getMealsNotAlreadyInAPlan(long planId, long userId){
+//        String sqlMeal = "select * from meal\n" +
+//                "where meal_id NOT IN (select meal.meal_id\n" +
+//                "    from meal\n" +
+//                "    join meal_plan_meal mpm on meal.meal_id = mpm.meal_id\n" +
+//                "    where plan_id = ?);";
+        String sqlMeal = "select *\n" +
+                "from meal\n" +
+                "join meal_plan m on meal.user_id = m.user_id\n" +
                 "where meal_id NOT IN (select meal.meal_id\n" +
                 "    from meal\n" +
                 "    join meal_plan_meal mpm on meal.meal_id = mpm.meal_id\n" +
-                "    where plan_id = ?);";
-        List <Meal> mealsInAPlan = jdbcTemplate.query(sqlMeal, new mealRowMapper(), plan_id);
+                "    join meal_plan mp on mpm.plan_id = mp.plan_id\n" +
+                "    where mp.plan_id = ?)\n" +
+                "and m.user_id = ?;";
+
+        List <Meal> mealsInAPlan = jdbcTemplate.query(sqlMeal, new mealRowMapper(), planId, userId);
         return mealsInAPlan;
     }
 

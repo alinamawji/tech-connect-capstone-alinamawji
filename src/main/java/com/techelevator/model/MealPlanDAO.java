@@ -33,6 +33,10 @@ public interface MealPlanDAO {
 
     public void updateTitle(long plan_id,String title);
 
+    public List <Meal> getMealsNotAlreadyInAPlan(long planId, long userId);
+
+    public List <Meal> getMealsInAPlan(long planId);
+
     public void updateDescription(long plan_id, String description);
 
     public List<String> generateGroceryList(long plan_id); //this might have to be a list of string

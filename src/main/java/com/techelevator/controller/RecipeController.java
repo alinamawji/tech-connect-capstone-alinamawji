@@ -3,7 +3,6 @@ package com.techelevator.controller;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -103,7 +102,7 @@ public class RecipeController {
         recipeDAO.addRecipeToDB(recipe.getTitle(), recipe.getOverview(), recipe.getDifficulty(),
                 recipe.getInstructions(), recipe.getIngredients(), recipe.getCategories(), user.getUsername(), user.getId());
 
-        return "redirect:/cookbook"; //Change this to redirect to the cookbook when jsp pages/controller exists
+        return "redirect:/cookbook";
     }
 
     @RequestMapping(path = "/addNewIngredient", method = RequestMethod.GET)
@@ -141,9 +140,6 @@ public class RecipeController {
     }
 
 
-//    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
-//    public String displayModifyRecipePage() {
-
     @RequestMapping(path = "/search", method = RequestMethod.GET)
     public String processSearch(@RequestParam String string, @RequestParam String filter, ModelMap modelHolder){
         List <Recipe> recipes = new ArrayList<>();
@@ -154,27 +150,9 @@ public class RecipeController {
           recipes =  recipeDAO.getRecipeByCategory(string);
         }
         modelHolder.put("recipes", recipes);
+        modelHolder.put("string", string);
         return "search";
     }
-
-//    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
-//    public String displayModifyRecipePage(@RequestParam long recipe_id, ModelMap modelHolder) {
-//
-//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-//        modelHolder.put("recipe", recipe);
-//        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
-//        modelHolder.put("ingredients", ingredients);
-//
-//        return "redirect:/modifyRecipe";
-//    }
-
-//    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
-//    public String displayModifyRecipe(@RequestParam Long recipe_id, HttpSession session) {
-//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-//        session.setAttribute("recipe", recipe);
-//        session.setAttribute("ingredients", recipeDAO.getRecipeIngredients(recipe_id));
-//        return "modifyRecipe";
-//    }
 
     @RequestMapping(path = "/changeInstructions", method = RequestMethod.GET)
     public String showEditInstructionsPage(@RequestParam long recipe_id, HttpSession session, ModelMap modelHolder) {

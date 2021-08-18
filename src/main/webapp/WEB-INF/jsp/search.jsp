@@ -1,4 +1,4 @@
-<%@ include file = "common/header.jspf" %>
+<%@ include file="common/header.jspf" %>
 <%@ taglib prefix="for" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
 <style>
@@ -8,53 +8,51 @@
         grid-auto-rows: minmax(150px, 1fr);
         grid-auto-flow: row dense;
     }
-    .text-right {
-        text-align: right !important;
+    .display-6 {
+        font-size: 24px !important;
     }
 </style>
 
-<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Recipes</h1>
+<h1 class="display-5" style="margin-top: 20px; margin-bottom: 10px;">Recipes</h1>
 <hr>
+<h2 class = "display-6">Search Results For: ${string}</h2>
 
-<div class = "container" id = "grid">
-    <div class = "row row-cols-1 row-cols-md-3 g-4">
-        <for:forEach items="${recipes}" var="recipe" >
+<c:set var="activeButton" value="${user.firstName != null ? '' : 'disabled'}"/>
+
+<div class="container" id="grid">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <for:forEach items="${recipes}" var="recipe">
             <c:url var="detailUrl" value="/recipeDetails">
                 <c:param name="recipe_id" value="${recipe.recipeId}"/>
             </c:url>
-            <div class = "col-md-4">
-                <div class="card border-success h-100"  style = "margin-bottom: 5px; margin-top: 5px;">
+            <div class="col-md-4">
+                <div class="card border-success h-100" style="margin-bottom: 5px; margin-top: 5px;">
                     <div class="card-body text-center">
-                        <div style = "text-align: right;">
+                        <div style="text-align: right;">
                                 <%--    add in ternary operator that adds a "disabled" string to the end of the class for the button if the user is not logged in--%>
                             <c:url var="formAction" value="/recipes"/>
                             <form method="POST" action="${ formAction }">
                                 <input type="hidden" id="recipe_id" name="recipe_id" value="${ recipe.recipeId }">
-                                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" value="Save">
+                                <input type="submit" role="button" class="btn btn-sm btn-success ${activeButton}"
+                                       style="margin-bottom: 5px;" value="Save">
                             </form>
 
                         </div>
 
-                            <%--                            <div style = "text-align: right !important;">--%>
-                            <%--                                <button type="button" class="btn btn-success">--%>
-                            <%--                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-save" viewBox="0 0 14 14">--%>
-                            <%--                                        <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>--%>
-                            <%--                                    </svg>--%>
-                            <%--                                </button>--%>
-                            <%--                            </div>--%>
-
                         <h5 class="card-title"><c:out value="${recipe.title}"/></h5>
 
-                        <c:set var = "difficulty" value = "${recipe.difficulty}"/>
-                        <c:forEach var = "i" begin = "1" end = "3">
+                        <c:set var="difficulty" value="${recipe.difficulty}"/>
+                        <c:forEach var="i" begin="1" end="3">
                             <c:choose>
-                                <c:when test = "${i <= difficulty}">
-        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                <c:when test="${i <= difficulty}">
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill"
+                   viewBox="0 0 16 16">
   <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
 </svg></span>
                                 </c:when>
                                 <c:otherwise>
-            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star"
+                       viewBox="0 0 16 16">
   <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
 </svg></span>
                                 </c:otherwise>
@@ -71,4 +69,4 @@
 </div>
 </body>
 
-<%@ include file = "common/footer.jspf" %>
+<%@ include file="common/footer.jspf" %>

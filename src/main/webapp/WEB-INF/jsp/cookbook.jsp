@@ -30,13 +30,13 @@
 </div>
 
 <div class = "container" id = "grid">
-    <div class = "row">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         <for:forEach items="${savedRecipes}" var="recipe" >
             <c:url var="detailUrl" value="/recipeDetails">
                 <c:param name="recipe_id" value="${recipe.recipeId}"/>
             </c:url>
             <div class = "col-md-4">
-                <div class = "card" style = "margin-bottom: 5px; margin-top: 5px;">
+                <div class="card border-success h-100" style="margin-top: 5px !important;">
                     <div class="card-body text-center">
                         <div style = "text-align: right;">
                             <c:set var="activeButton" value=""/>

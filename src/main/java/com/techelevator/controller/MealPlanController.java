@@ -284,18 +284,11 @@ public class MealPlanController {
         return "redirect:/addMealsToPlan";
     }
 
-    @RequestMapping(path = "/modifyMealPlan", method = RequestMethod.GET)
-    public String showModifyMealPlanPage(@RequestParam long plan_id, ModelMap modelHolder) {
-        MealPlan plan = mealPlanDAO.getMealPlanByID(plan_id);
-        plan.setPlannedMeals(mealPlanDAO.getPlannedMeals(plan_id));
-        modelHolder.put("mealPlan", plan);
-        return "modifyMealPlan";
-    }
 
     @RequestMapping(path = "/addSelectedMeal", method = RequestMethod.GET)
     public String showAddSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder, HttpSession session){
         User user = (User) session.getAttribute("user");
-        List<Meal> listOfMeals = mealPlanDAO.getMealsNotAlreadyInAPlan(plan_id);
+        List<Meal> listOfMeals = mealPlanDAO.getMealsNotAlreadyInAPlan(plan_id, user.getId());
         MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id);
 
         modelHolder.put("newMeal", "");

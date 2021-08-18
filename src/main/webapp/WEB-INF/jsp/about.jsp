@@ -46,8 +46,8 @@
 
         <div class="card" style="width: 16rem;">
             <div class="card-body">
-                <h5 class="card-title">What is the difference between an anonymous user and a registered user?</h5>
-                <p class="card-text">Registered users: upload and edit recipes, save them to your cookbook, create meals and meal plans. Anonymous users can only access recipes.</p>
+                <h5 class="card-title">What do I gain as a logged in user of Best Byte?</h5>
+                <p class="card-text">You can upload and edit recipes, combine them to create meals, and add them to your own personalized meal plan. Otherwise, you can only see recipes!</p>
             </div>
         </div>
 
@@ -60,8 +60,8 @@
 
         <div class="card" style="width: 16rem;">
             <div class="card-body">
-                <h5 class="card-title">What's the difference between "Remove From Cookbook" and "Delete Recipe"?</h5>
-                <p class="card-text">"Remove From Cookbook" removes the saved recipe from your cookbook. "Delete Recipe" removes a recipe you've created off of the entire website.</p>
+                <h5 class="card-title">How can I contact you guys about improving something on the site?</h5>
+                <p class="card-text">Good question! We're always looking for ways to improve. Send us an email or call us to tell us how you'd want Best Byte to better fit your needs.</p>
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@
 
     <div class = "container">
         <input type = "hidden" id = "recipeId" name = "recipeId" value = "${recipe.recipeId}"/>
-        <input type = "submit" class = "btn btn-success" value = "Submit">
+        <input style = "margin-top: 5px;" type = "submit" class = "btn btn-success" value = "Submit">
     </div>
 </form:form>
 

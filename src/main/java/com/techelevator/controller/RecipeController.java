@@ -2,7 +2,6 @@ package com.techelevator.controller;
 
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.naming.Binding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -122,13 +119,12 @@ public class RecipeController {
             return "redirect:/addNewIngredient";
         }
         ingredientDAO.addIngredientToDB(name);
-        session.setAttribute("newIngredient", name);
-        return "redirect:/addNewRecipe";
+        flash.addFlashAttribute("ingredient", name);
+        return "redirect:/addIngredientConfirmation";
     }
 
     @RequestMapping(path = "/addIngredientConfirmation", method = RequestMethod.GET)
     public String displayAddedIngredientConfirmation(ModelMap modelMap) {
-        Ingredient ingredient = (Ingredient) modelMap.get("ingredient");
         return "addIngredientConfirmation";
     }
 
@@ -142,38 +138,18 @@ public class RecipeController {
         return "recipeDetails";
     }
 
-//    @RequestMapping(path = "/recipeDetails", method = RequestMethod.POST)
-//    public String displayModifyRecipePage(@RequestParam long recipe_id, ModelMap modelHolder) {
-//
-//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-//        modelHolder.put("recipe", recipe);
-//        List<String> ingredients = recipeDAO.getRecipeIngredients(recipe_id);
-//        modelHolder.put("ingredients", ingredients);
-//
+//    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
+//    public String displayModifyRecipePage() {
 //        return "redirect:/modifyRecipe";
 //    }
 
-    @RequestMapping(path = "/recipeDetails", method=RequestMethod.POST)
-    public String displayModifyRecipePage() {
-        return "redirect:/modifyRecipe";
-    }
-
-    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
-    public String displayModifyRecipe(@RequestParam Long recipe_id, HttpSession session) {
-        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-        session.setAttribute("recipe", recipe);
-        session.setAttribute("ingredients", recipeDAO.getRecipeIngredients(recipe_id));
-        return "modifyRecipe";
-    }
-
-    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.POST)
-    public String returnToRecipeDetailsAfterModifying(ModelMap modelHolder) {
-//        Recipe recipe = (Recipe) modelHolder.get("recipe");
-//        List<String> ingredients = (List<String>) modelHolder.get("ingredients");
-//        List <String> ingredientsAvailable = ingredientDAO.getAllIngredients();
-//        modelHolder.put("ingredientsAvailable", ingredientsAvailable);
-        return "redirect:/recipeDetails";
-    }
+//    @RequestMapping(path = "/modifyRecipe", method = RequestMethod.GET)
+//    public String displayModifyRecipe(@RequestParam Long recipe_id, HttpSession session) {
+//        Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
+//        session.setAttribute("recipe", recipe);
+//        session.setAttribute("ingredients", recipeDAO.getRecipeIngredients(recipe_id));
+//        return "modifyRecipe";
+//    }
 
     @RequestMapping(path = "/changeInstructions", method = RequestMethod.GET)
     public String showEditInstructionsPage(@RequestParam long recipe_id, HttpSession session, ModelMap modelHolder) {
@@ -233,7 +209,7 @@ public class RecipeController {
     @RequestMapping(path = "addNewIngredientsToRecipe", method = RequestMethod.GET)
     public String displayAddNewIngredientsToRecipe(@RequestParam long recipe_id, ModelMap modelHolder) {
         Recipe recipe = recipeDAO.getRecipeByID(recipe_id);
-        List <String> allIngredients = ingredientDAO.getAllIngredients();
+        List <String> allIngredients = recipeDAO.getIngredientsNotInRecipe(recipe_id);
 
         modelHolder.put("recipe", recipe);
         modelHolder.put("allIngredients", allIngredients);

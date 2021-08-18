@@ -56,7 +56,8 @@ public class JDBCRecipeDAO implements RecipeDAO {
     public List<String> getRecipeIngredients(long recipe_id) {
         String sql = "SELECT ingredient_name FROM ingredient i" +
                 " JOIN recipe_ingredient ri ON ri.ingredient_id = i.ingredient_id" +
-                " WHERE recipe_id = ?";
+                " WHERE recipe_id = ?" +
+                " order by ingredient_name";
         List<String> ingredientList = jdbcTemplate.query(sql, new ingredientRowMapper(), recipe_id);
         return ingredientList;
     }
@@ -115,6 +116,19 @@ public class JDBCRecipeDAO implements RecipeDAO {
         String sqlRecipesFromUser = "SELECT * FROM recipe WHERE creator_username = ?";
         List<Recipe> recipes = (List<Recipe>) jdbcTemplate.query(sqlRecipesFromUser, new recipeRowMapper(), username);
         return recipes;
+    }
+
+    public List <String> getIngredientsNotInRecipe(long recipe_id) {
+        String sqlIngredients = "\n" +
+                "select ingredient_name\n" +
+                "from ingredient\n" +
+                "where ingredient_name NOT IN (select ingredient_name\n" +
+                "    from ingredient\n" +
+                "    join recipe_ingredient ri on ingredient.ingredient_id = ri.ingredient_id\n" +
+                "    where recipe_id = ?)" +
+                "order by ingredient_name;";
+        List <String> ingredients = jdbcTemplate.query(sqlIngredients, new ingredientRowMapper(), recipe_id);
+        return ingredients;
     }
 }
 

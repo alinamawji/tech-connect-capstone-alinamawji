@@ -35,16 +35,11 @@ public class MealPlanController {
         try {
             plans = mealPlanDAO.getAllMealPlansByUser(user.getId());
         } catch (Exception e) {
-            return "redirect:/private";
+            return "private";
         }
         modelHolder.put("mealPlans", plans);
         return "mealPlans";
     }
-
-//    @RequestMapping(path = "/addNewMealPlanConfirmation", method = RequestMethod.GET)
-//    public String addNewMealPlanConfirmation() {
-//        return "addNewMealPlanConfirmation";
-//    }
 
     @RequestMapping(path = "/mealPlanDetails", method = RequestMethod.GET)
     public String showMealPlanDetails(@RequestParam Long plan_id, ModelMap modelHolder, HttpSession session){

@@ -42,13 +42,13 @@
             <tr>
                 <td><c:out value="${meal.title}"/> </td>
                 <td>
-                    <c:if test="${eventMeal.weekday == 1}">Monday</c:if>
-                    <c:if test="${eventMeal.weekday == 2}">Tuesday</c:if>
-                    <c:if test="${eventMeal.weekday == 3}">Wednesday</c:if>
-                    <c:if test="${eventMeal.weekday == 4}">Thursday</c:if>
-                    <c:if test="${eventMeal.weekday == 5}">Friday</c:if>
-                    <c:if test="${eventMeal.weekday == 6}">Saturday</c:if>
-                    <c:if test="${eventMeal.weekday == 7}">Sunday</c:if>
+                    <c:if test="${eventMeal.weekday == 2}">Monday</c:if>
+                    <c:if test="${eventMeal.weekday == 3}">Tuesday</c:if>
+                    <c:if test="${eventMeal.weekday == 4}">Wednesday</c:if>
+                    <c:if test="${eventMeal.weekday == 5}">Thursday</c:if>
+                    <c:if test="${eventMeal.weekday == 6}">Friday</c:if>
+                    <c:if test="${eventMeal.weekday == 7}">Saturday</c:if>
+                    <c:if test="${eventMeal.weekday == 1}">Sunday</c:if>
                 </td>
                 <td>
                     <c:if test="${eventMeal.timeOfDay == 1}">Breakfast</c:if>

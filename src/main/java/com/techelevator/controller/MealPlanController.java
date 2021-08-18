@@ -277,8 +277,10 @@ public class MealPlanController {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealEvent" + result);
             return "redirect:/addMealsToPlan";
         }
+        User user = (User) session.getAttribute("user");
         mealPlanDAO.createMealEvent(mealEvent.getWeekday(), mealEvent.getTimeOfDay(), mealPlan.getUserId(),
                 mealPlan.getTitle(), mealEvent.getMealId());
+        mealPlan.setPlanId(mealPlanDAO.getMealPlanID(user.getId(), mealPlan.getTitle(), mealPlan.getDescription()));
         mealPlan.setPlannedMeals(mealPlanDAO.getPlannedMeals(mealPlan.getPlanId()));
         session.setAttribute("mealPlan", mealPlan);
         return "redirect:/addMealsToPlan";

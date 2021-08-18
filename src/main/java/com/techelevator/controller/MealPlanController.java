@@ -294,7 +294,7 @@ public class MealPlanController {
     @RequestMapping(path = "/addSelectedMeal", method = RequestMethod.GET)
     public String showAddSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder, HttpSession session){
         User user = (User) session.getAttribute("user");
-        List<Meal> listOfMeals = mealDAO.getAllMealsByUserID(user.getId());
+        List<Meal> listOfMeals = mealPlanDAO.getMealsNotAlreadyInAPlan(plan_id);
         MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id);
 
         modelHolder.put("newMeal", "");
@@ -325,8 +325,8 @@ public class MealPlanController {
 
     @RequestMapping(path = "/deleteSelectedMeal", method = RequestMethod.GET)
     public String showDeleteSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder, HttpSession session){
-        User user = (User) session.getAttribute("user");
         MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id);
+        mealPlan.setSelectedMeals(mealPlanDAO.getMealsInAPlan(plan_id));
         modelHolder.put("deleteMeal", "");
         session.setAttribute("editMealPlan", mealPlan);
         modelHolder.put("listOfMeals", mealPlan.getSelectedMeals());
@@ -334,7 +334,7 @@ public class MealPlanController {
     }
 
     @RequestMapping(path = "/deleteSelectedMeal", method = RequestMethod.POST)
-    public String showDeleteSelectedMealPage(@Valid @ModelAttribute String deleteMeals,
+    public String handleDeleteSelectedMealPage(@Valid @ModelAttribute String deleteMeals,
                                              @RequestParam List <String> deleteTheseMeals,
                                              BindingResult result, RedirectAttributes flash,
                                              ModelMap modelHolder, HttpSession session){
@@ -342,10 +342,10 @@ public class MealPlanController {
         MealPlan mealPlan = (MealPlan) session.getAttribute("editMealPlan");
         if (result.hasErrors()) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "editMealPlan", mealPlan);
+            return "redirect:/private";
         }
         for (String mealId:deleteTheseMeals) {
             mealPlanDAO.deleteMealEvent(mealPlan.getPlanId(), Long.parseLong(mealId));
-//            we only have meal id, maybe change query to delete from meal_event where meal_id = ?
             mealPlanDAO.removeMealFromPlan(mealPlan.getPlanId(), Long.parseLong(mealId));
         }
         // how can we redirect back to the modify page with the same details?

@@ -14,9 +14,16 @@
     .text-color {
         color: darkgreen;
     }
+    .print-align-right {
+        text-align: right !important;
+        margin-top: 5px;
+    }
 </style>
 
 <%--title, date created, description--%>
+<p class = "print-align-right">
+    <a href = "#" class = "btn btn-success btn-sm"onClick = "javascript:window.print();">Print</a>
+</p>
 <h1 class="display-5 text-italic text-color">Grocery List for <c:out value="${mealPlan.title}"/> </h1>
 <p>Meal Plan Date Created: ${mealPlan.dateCreated}</p>
 <h5 class="display-6 text-color">Description:</h5>

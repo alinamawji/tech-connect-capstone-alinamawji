@@ -99,6 +99,25 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
         return plannedMeals;
     }
 
+    public List <Meal> getMealsInAPlan(long plan_id) {
+        String sqlMeal = "select *\n" +
+                "from meal\n" +
+                "join meal_plan_meal mpm on meal.meal_id = mpm.meal_id\n" +
+                "where plan_id = ?;";
+        List <Meal> mealsInAPlan = jdbcTemplate.query(sqlMeal, new mealRowMapper(), plan_id);
+        return mealsInAPlan;
+    }
+
+    public List <Meal> getMealsNotAlreadyInAPlan(long plan_id){
+        String sqlMeal = "select * from meal\n" +
+                "where meal_id NOT IN (select meal.meal_id\n" +
+                "    from meal\n" +
+                "    join meal_plan_meal mpm on meal.meal_id = mpm.meal_id\n" +
+                "    where plan_id = ?);";
+        List <Meal> mealsInAPlan = jdbcTemplate.query(sqlMeal, new mealRowMapper(), plan_id);
+        return mealsInAPlan;
+    }
+
     @Override
     public void addMealToPlan(long user_id,String title, long meal_id) {
         String sqlMealAssocPlan = "INSERT INTO meal_plan_meal(plan_id,meal_id) " +
@@ -150,7 +169,8 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
                 "JOIN meal m ON m.meal_id = mr.meal_id " +
                 "JOIN meal_plan_meal mpm ON mpm.meal_id = m.meal_id " +
                 "JOIN meal_plan mp ON mp.plan_id = mpm.plan_id " +
-                "WHERE mp.plan_id = ?";
+                "WHERE mp.plan_id = ?" +
+                " ORDER BY ingredient_name";
         List<String> groceryList = jdbcTemplate.query(groceryListSql, new ingredientRowMapper(), plan_id);
         return groceryList;
 
@@ -158,7 +178,6 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
 
 
 }
-
 
 class mealPlanRowMapper implements RowMapper {
     @Override

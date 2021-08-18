@@ -150,8 +150,8 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
                 "JOIN meal m ON m.meal_id = mr.meal_id " +
                 "JOIN meal_plan_meal mpm ON mpm.meal_id = m.meal_id " +
                 "JOIN meal_plan mp ON mp.plan_id = mpm.plan_id " +
-                "WHERE plan_id = ?";
-        List<String> groceryList = jdbcTemplate.query(groceryListSql, new mealPlanRowMapper(), plan_id);
+                "WHERE mp.plan_id = ?";
+        List<String> groceryList = jdbcTemplate.query(groceryListSql, new ingredientRowMapper(), plan_id);
         return groceryList;
 
     }

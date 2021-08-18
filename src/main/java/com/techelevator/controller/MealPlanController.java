@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.model.*;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -291,14 +292,64 @@ public class MealPlanController {
     }
 
     @RequestMapping(path = "/addSelectedMeal", method = RequestMethod.GET)
-    public String showAddSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+    public String showAddSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        List<Meal> listOfMeals = mealPlanDAO.getMealsNotAlreadyInAPlan(plan_id);
+        MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id);
+
+        modelHolder.put("newMeal", "");
+        session.setAttribute("editMealPlan", mealPlan);
+        modelHolder.put("listOfMeals", listOfMeals);
         return "addSelectedMeal";
+    }
+
+    @RequestMapping(path = "/addSelectedMeal", method = RequestMethod.POST)
+    public String processAddingSelectedMeal(@Valid @ModelAttribute String newMeal, BindingResult result,
+                                            RedirectAttributes flash, ModelMap modelMap, HttpSession session,
+                                            @RequestParam List <String> selectedMeals){
+        User user = (User) session.getAttribute("user");
+        MealPlan mealPlan = (MealPlan) session.getAttribute("editMealPlan");
+        if (result.hasErrors()) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "newMeal", newMeal);
+        }
+
+        for (String mealId: selectedMeals) {
+            Meal meal = mealDAO.getMealByID(Long.parseLong(mealId));
+            mealPlanDAO.addMealToPlan(user.getId(), mealPlan.getTitle(), meal.getMealId());
+        }
+
+        // how can we redirect back to the modify page with the same details?
+        return "redirect:/mealPlans";
     }
 
 
     @RequestMapping(path = "/deleteSelectedMeal", method = RequestMethod.GET)
-    public String showDeleteSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder){
+    public String showDeleteSelectedMealPage(@RequestParam long plan_id, ModelMap modelHolder, HttpSession session){
+        MealPlan mealPlan = mealPlanDAO.getMealPlanByID(plan_id);
+        mealPlan.setSelectedMeals(mealPlanDAO.getMealsInAPlan(plan_id));
+        modelHolder.put("deleteMeal", "");
+        session.setAttribute("editMealPlan", mealPlan);
+        modelHolder.put("listOfMeals", mealPlan.getSelectedMeals());
         return "deleteSelectedMeal";
+    }
+
+    @RequestMapping(path = "/deleteSelectedMeal", method = RequestMethod.POST)
+    public String handleDeleteSelectedMealPage(@Valid @ModelAttribute String deleteMeals,
+                                             @RequestParam List <String> deleteTheseMeals,
+                                             BindingResult result, RedirectAttributes flash,
+                                             ModelMap modelHolder, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        MealPlan mealPlan = (MealPlan) session.getAttribute("editMealPlan");
+        if (result.hasErrors()) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "editMealPlan", mealPlan);
+            return "redirect:/private";
+        }
+        for (String mealId:deleteTheseMeals) {
+            mealPlanDAO.deleteMealEvent(mealPlan.getPlanId(), Long.parseLong(mealId));
+            mealPlanDAO.removeMealFromPlan(mealPlan.getPlanId(), Long.parseLong(mealId));
+        }
+        // how can we redirect back to the modify page with the same details?
+        return "redirect:/mealPlans";
     }
 
 

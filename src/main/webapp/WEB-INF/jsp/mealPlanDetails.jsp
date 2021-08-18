@@ -22,6 +22,29 @@
 <%--make sure you replace these features with the expression language call for the recipe models--%>
 <div class = "container">
   <div class = "row">
+
+    <div class = "text-left" style = "margin-bottom: 5px; margin-top: 10px;">
+      <div class="btn-group">
+        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Edit
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <li><a class="dropdown-item" href="<c:url value="/addSelectedMeal">
+                                        <c:param name="plan_id" value='${mealPlan.planId}'/>
+                                        </c:url>">Add Another Meal</a></li>
+          <li><a class="dropdown-item" href="<c:url value="/deleteSelectedMeal">
+                                        <c:param name="plan_id" value='${mealPlan.planId}'/>
+                                        </c:url>">Remove a Meal</a></li>
+          <li><a class="dropdown-item" href="<c:url value="/addScheduledMeal">
+                                        <c:param name="plan_id" value='${mealPlan.planId}'/>
+                                        </c:url>">Schedule Another Meal</a></li>
+          <li><a class="dropdown-item" href="<c:url value="/deleteScheduledMeal">
+                                        <c:param name="plan_id" value='${mealPlan.planId}'/>
+                                        </c:url>">Remove a Scheduled Meal</a></li>
+        </ul>
+      </div>
+    </div>
     <div class = "text-right" style = "margin-bottom: 5px; margin-top: 10px;">
 
       <c:set var="activeButton" value=""/>
@@ -38,13 +61,10 @@
       <%--                <input type="hidden" id="mealplan_id" name="mealplan_id" value="${ mealPlan.plan_id }">--%>
       <%--                <input type="submit" role="button" class = "btn btn-sm btn-success ${activeButton}" style = "margin-bottom: 5px;" aria-disabled="true" value="Edit Meal Plan">--%>
       <%--            </form>--%>
-      <a  class = "btn btn-success ${activeButton}" href="<c:url value='/modifyMealPlan'>
-            <c:param name="plan_id" value='${mealPlan.planId}'/>
-            </c:url>">Edit</a>
-
-      <a  class = "btn btn-success ${activeButton}" href="<c:url value='/groceryList'>
+      <a  class = "btn btn-success btn-sm ${activeButton}" href="<c:url value='/groceryList'>
              <c:param name="plan_id" value='${mealPlan.planId}'/>
             </c:url>">Create Grocery List</a>
+      <a href = "#" class = "btn btn-success btn-sm"onClick = "javascript:window.print();">Print</a>
 
     </div>
   </div>

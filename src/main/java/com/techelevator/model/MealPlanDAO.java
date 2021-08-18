@@ -27,7 +27,7 @@ public interface MealPlanDAO {
 
     public void removeMealFromPlan(long plan_id, long meal_id);
 
-    public void deleteMealEvent(long event_id);
+    public void deleteMealEvent(long plan_id, long meal_id);
 
     public void updateTitle(long plan_id,String title);
 

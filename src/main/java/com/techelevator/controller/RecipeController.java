@@ -118,8 +118,8 @@ public class RecipeController {
             return "redirect:/addNewIngredient";
         }
         ingredientDAO.addIngredientToDB(name);
-        flash.addFlashAttribute("ingredient", name);
-        return "redirect:/addIngredientConfirmation";
+        flash.addFlashAttribute("mealingredient", name);
+        return "redirect:/addNewIngredient";
     }
 
     @RequestMapping(path = "/addIngredientConfirmation", method = RequestMethod.GET)

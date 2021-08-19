@@ -78,16 +78,16 @@
 <%--                    </ul>--%>
 <%--                </div>--%>
 
-                <div class = "form-group form-control-sm">
+                <div class = "form-control-sm">
                     <select name = "filter" id = "filter" class="btn btn-light dropdown-toggle" style="display: inline-block" >
                         <option selected>Search By: </option>
                         <option name = "filter" value = "ingredient">Ingredient</option>
                         <option name = "filter" value = "category">Category</option>
                     </select>
                 </div>
-                <input class="form-control me-2" type="search" name = "string" id = "string" placeholder="Search" aria-label="Search">
-                <button class="btn btn-light" type="submit">Search</button>
-                <li class="account dropdown navbar-nav me-auto mb-2 mb-lg-0" style = "margin-left: 5px;">
+                <input class="form-control me-2" type="search" name = "string" id = "string" placeholder="Search" aria-label="Search" style="display: inline-block">
+                <button class="btn btn-light" type="submit" style="display: inline-block">Search</button>
+                <li class="account dropdown navbar-nav me-auto mb-2 mb-lg-0" style = "margin-left: 5px; display: inline-block">
                     <a class="nav-link dropdown-toggle active" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Account
                     </a>

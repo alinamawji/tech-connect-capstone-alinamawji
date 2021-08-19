@@ -53,7 +53,7 @@ public class RecipeController {
             // save to cookbook
             cookbookDAO.addRecipeToCookbook(recipe_id, user.getId());
         } catch (Exception e) {
-            return "errorPage";
+            return "redirect:/errorPage";
         }
         session.setAttribute("addedRecipe", recipeDAO.getRecipeByID(recipe_id));
         return "redirect:/cookbook";

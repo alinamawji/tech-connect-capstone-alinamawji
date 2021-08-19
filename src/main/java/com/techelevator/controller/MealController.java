@@ -65,12 +65,6 @@ public class MealController {
                     }
                     mealDAO.deleteMealFromMeal(meal_id);
                 }
-//                Recipe recipe = recipeDAO.getRecipeByTitle(title);
-//                mealDAO.deleteMealFromMealRecipe(meal_id, recipe.getRecipeId());
-
-                // call on recipe dao to get recipe ID by it's title (should be a simple query)
-                // delete all from meal recipe table first, and then delete the meal from the meal table outside of the loop
-                // move this for each loop into the if statement
             }
 
             return "redirect:/meals";
@@ -78,17 +72,6 @@ public class MealController {
         else {
             return "redirect:/private";
         }
-    }
-
-    @RequestMapping(path = "/deletedMeal", method = RequestMethod.GET)
-    public String displayDeletedMealConfirmation(ModelMap modelHolder) {
-        Meal meal = (Meal) modelHolder.get("deletedMeal");
-        return "deletedMeal";
-    }
-
-    @RequestMapping(path = "/addNewMealConfirmation", method = RequestMethod.GET)
-    public String addNewMealConfirmationPage() {
-        return "addNewMealConfirmation";
     }
 
     @RequestMapping(path="/addNewMeal", method = RequestMethod.GET)
@@ -101,8 +84,9 @@ public class MealController {
     }
 
     @RequestMapping(path="/addNewMeal", method = RequestMethod.POST)
-    public String processAddNewMealInput(@RequestParam List<String> recipesInMeal, @Valid @ModelAttribute Meal meal, BindingResult result, RedirectAttributes flash, HttpSession session, HttpServletRequest request) {
-//        flash.addFlashAttribute("meal", meal);
+    public String processAddNewMealInput(@RequestParam List<String> recipesInMeal, @Valid @ModelAttribute Meal meal,
+                                         BindingResult result, RedirectAttributes flash,
+                                         HttpSession session, HttpServletRequest request) {
         recipesInMeal = Arrays.asList(request.getParameterValues("recipesInMeal"));
         User user = (User) session.getAttribute("user");
         if (result.hasErrors() || recipesInMeal.size() == 0) {
@@ -113,10 +97,7 @@ public class MealController {
         for (String recipe: recipesInMeal) {
             mealDAO.updateMealRecipeTable(meal.getTitle(), recipe);
         }
-
         return "redirect:/meals";
     }
-
-
 
 }

@@ -243,7 +243,7 @@ public class MealPlanController {
 
         if (result.hasErrors()) {
             flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
-            return "redirect:/addNewMealPlan";
+            return "redirect:/errorPage";
         }
         mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
         for (Meal meal : mealPlan.getSelectedMeals()) {
@@ -256,7 +256,6 @@ public class MealPlanController {
     public String showAddMealsToPlan(HttpSession session, ModelMap modelHolder, RedirectAttributes flash) {
         MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
         modelHolder.put("mealEvent", new MealEvent());
-        // modelHolder.put("plannedMeals",) COME BACK TO AFTER MEAL PLAN DETAILS IS DONE
         modelHolder.put("plannedMeals", mealPlan.getPlannedMeals());
 
         return "addMealsToPlan";

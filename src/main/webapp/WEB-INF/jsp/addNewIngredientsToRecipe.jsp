@@ -32,6 +32,10 @@
     </ul>
     </div>
 
+    <p>Don't see an ingredient? Add it below! </p>
+    <a href="addNewIngredient" class="btn btn-success btn-sm">Add New Ingredient</a>
+    </div>
+
     <div class = "container">
     <input type = "hidden" id = "recipe_id" name = "recipe_id" value = "${recipe.recipeId}"/>
     <input type = "submit" class = "btn btn-success" value = "Submit">

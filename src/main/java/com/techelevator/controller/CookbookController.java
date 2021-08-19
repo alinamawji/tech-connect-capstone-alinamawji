@@ -47,14 +47,5 @@ public class CookbookController {
         else { return "redirect:/private";}
     }
 
-    @RequestMapping(path = "/deletedRecipeFromCookbook", method = RequestMethod.GET)
-    public String displayDeletedRecipeConfirmation(ModelMap modelMap) {
-        Recipe recipe = (Recipe) modelMap.get("deletedRecipe");
-        return "deletedRecipeFromCookbook";
-    }
-
-
-//    @RequestMapping (path = "/recipeDetails")
-
 
 }

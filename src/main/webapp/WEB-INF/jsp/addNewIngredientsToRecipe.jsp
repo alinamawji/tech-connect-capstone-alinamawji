@@ -33,7 +33,7 @@
     </div>
 
     <p>Don't see an ingredient? Add it below! </p>
-    <a href="addNewIngredient" class="btn btn-success btn-sm">Add New Ingredient</a>
+    <a href="addNewIngredient" class="btn btn-success btn-sm" style="margin-bottom: 5px;">Add New Ingredient</a>
     </div>
 
     <div class = "container">

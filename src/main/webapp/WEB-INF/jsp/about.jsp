@@ -27,6 +27,10 @@
         margin: 10px;
     }
 
+    .img-fluid {
+        height: 80% !important;
+    }
+
     h2 {
         margin-left: 30px;
     }
@@ -72,25 +76,25 @@
 <div class = "container">
     <div class = "row">
         <div class = "col-md-3">
-            <img src="https://image.shutterstock.com/image-vector/stick-figure-celebration-jump-260nw-331595438.jpg" alt="Aidan Fox headshot" class="img-fluid rounded-circle">
+            <a href = "https://www.linkedin.com/in/aidan-fox-253b9b1b0" target="_blank" rel="noopener noreferrer"><img src="https://cdn.shopify.com/s/files/1/1431/5776/products/boy-face-with-shaggy-hair-stamp.png?v=1507653886" alt="Aidan Fox headshot" class="img-fluid rounded-circle"></a>
             <p class = "text-center">Aidan Fox</p>
             <p class = "text-center font-italic">Backend Engineer</p>
         </div>
 
         <div class = "col-md-3">
-            <img src="https://us.123rf.com/450wm/zdeneksasek/zdeneksasek1803/zdeneksasek180300001/96877917-cartoon-stick-man-drawing-conceptual-illustration-of-businessman-pointing-right-.jpg?ver=6" alt="Alina Mawji headshot" class="img-fluid rounded-circle">
+            <a href = "https://www.linkedin.com/in/alina-mawji" target="_blank" rel="noopener noreferrer"><img src="https://cdn.shopify.com/s/files/1/1431/5776/products/girl-with-big-pigtails-and-bows-face-stamp_1024x1024.png?v=1507655056" alt="Alina Mawji headshot" class="img-fluid rounded-circle"></a>
             <p class = "text-center">Alina Mawji</p>
             <p class = "text-center font-italic">Backend Engineer</p>
         </div>
 
         <div class = "col-md-3">
-            <img src="https://toppng.com/uploads/preview/stick-figure-raising-hand-11549007130dp0lmhc9cx.png" alt="Erin Xu headshot" class="img-fluid rounded-circle">
+            <a href = "https://www.linkedin.com/in/erin-xu-57a787165" target="_blank" rel="noopener noreferrer"><img src="https://www.pinclipart.com/picdir/big/561-5615797_girl-with-short-hair-and-bow-face-stamp.png" alt="Erin Xu headshot" class="img-fluid rounded-circle"></a>
             <p class = "text-center">Erin Xu</p>
             <p class = "text-center font-italic">Frontend Engineer</p>
         </div>
 
         <div class = "col-md-3">
-            <img src="https://toppng.com/uploads/preview/stick-figure-raising-hands-happy-11549007131bfyrfg2jgy.png" alt="Diana Dang headshot" class="img-fluid rounded-circle">
+            <a href = "https://www.linkedin.com/in/dididang" target = "_blank" rel ="noopener noreferrer"><img src="https://www.pngkit.com/png/full/388-3887218_girl-face-with-short-hair-rubber-stamp-stick.png" alt="Diana Dang headshot" class="img-fluid rounded-circle border-success"></a>
             <p class = "text-center">Diana Dang</p>
             <p class = "text-center font-italic">Frontend Engineer</p>
         </div>

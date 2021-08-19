@@ -39,28 +39,6 @@
         <form:password class="form-control" path="confirmPassword" placeholder="confirm password"/>
         <form:errors path="passwordMatching" cssClass="bg-danger"/>
     </div>
-<%--    <fieldset>--%>
-<%--        <legend>Role</legend>--%>
-<%--        <form:errors path="role" cssClass="bg-danger"/>--%>
-<%--        <div class="radio">--%>
-<%--            <label>--%>
-<%--                <form:radiobutton path="role" value="user" checked="checked"/>--%>
-<%--                User--%>
-<%--            </label>--%>
-<%--        </div>--%>
-<%--        <div class="radio">--%>
-<%--            <label>--%>
-<%--                <form:radiobutton path="role" value="admin"/>--%>
-<%--                Administrator--%>
-<%--            </label>--%>
-<%--        </div>--%>
-<%--        <div class="radio">--%>
-<%--            <label>--%>
-<%--                <form:radiobutton path="role" value="editor"/>--%>
-<%--                Editor--%>
-<%--            </label>--%>
-<%--        </div>--%>
-<%--    </fieldset>--%>
     <button type="submit" class="btn btn-outline-dark" style = "margin-top: 10px;">Register</button>
 </form:form>
 

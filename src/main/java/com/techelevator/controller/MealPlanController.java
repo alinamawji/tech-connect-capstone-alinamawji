@@ -242,16 +242,13 @@ public class MealPlanController {
 
             session.setAttribute("mealPlan", mealPlan);
 
-            if (result.hasErrors()) {
-                flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
-                return "redirect:/addNewMealPlan";
-            }
-            mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
-            for (Meal meal : mealPlan.getSelectedMeals()) {
-                mealPlanDAO.addMealToPlan(mealPlan.getUserId(), mealPlan.getTitle(), meal.getMealId());
-            }
-        } catch(Exception e) {
-            "redirect:/"
+        if (result.hasErrors()) {
+            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
+            return "redirect:/errorPage";
+        }
+        mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
+        for (Meal meal : mealPlan.getSelectedMeals()) {
+            mealPlanDAO.addMealToPlan(mealPlan.getUserId(), mealPlan.getTitle(), meal.getMealId());
         }
 
         return "redirect:/addMealsToPlan";
@@ -261,7 +258,6 @@ public class MealPlanController {
     public String showAddMealsToPlan(HttpSession session, ModelMap modelHolder, RedirectAttributes flash) {
         MealPlan mealPlan = (MealPlan) session.getAttribute("mealPlan");
         modelHolder.put("mealEvent", new MealEvent());
-        // modelHolder.put("plannedMeals",) COME BACK TO AFTER MEAL PLAN DETAILS IS DONE
         modelHolder.put("plannedMeals", mealPlan.getPlannedMeals());
 
         return "addMealsToPlan";

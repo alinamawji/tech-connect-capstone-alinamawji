@@ -21,7 +21,7 @@
         display: inline-block;
     }
 
-    .dropdown{
+    .dropdown {
         display: inline;
     }
 </style>

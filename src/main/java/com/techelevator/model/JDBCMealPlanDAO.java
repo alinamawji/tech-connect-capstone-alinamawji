@@ -117,11 +117,6 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
 
     @Override
     public List <Meal> getMealsNotAlreadyInAPlan(long planId, long userId){
-//        String sqlMeal = "select * from meal\n" +
-//                "where meal_id NOT IN (select meal.meal_id\n" +
-//                "    from meal\n" +
-//                "    join meal_plan_meal mpm on meal.meal_id = mpm.meal_id\n" +
-//                "    where plan_id = ?);";
         String sqlMeal = "select *\n" +
                 "from meal\n" +
                 "join meal_plan m on meal.user_id = m.user_id\n" +

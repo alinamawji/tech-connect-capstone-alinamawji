@@ -53,18 +53,16 @@ public class RecipeController {
             // save to cookbook
             cookbookDAO.addRecipeToCookbook(recipe_id, user.getId());
         } catch (Exception e) {
-            return "redirect:/private";
+            return "errorPage";
         }
         session.setAttribute("addedRecipe", recipeDAO.getRecipeByID(recipe_id));
         return "redirect:/cookbook";
     }
 
-    @RequestMapping(path = "/addNewRecipeConfirmation", method = RequestMethod.GET)
-    public String addNewRecipeConfirmationPage(ModelMap modelMap) {
-        Recipe recipe = (Recipe) modelMap.get("addedRecipe");
-        return "addNewRecipeConfirmation";
+    @RequestMapping(path = "/errorPage", method = RequestMethod.GET)
+    public String showAlreadyInCookbookPage() {
+        return "errorPage";
     }
-
 
     @RequestMapping(path = "/addNewRecipe", method = RequestMethod.GET)
     public String displayAddNewRecipeForm(ModelMap modelHolder) {
@@ -174,7 +172,6 @@ public class RecipeController {
 
         if (newInstructions != null) {
             recipeDAO.modifyInstructions(oldRecipe.getRecipeId(), newInstructions);
-            // this has to be changed later
             return "redirect:/cookbook";
         }
 
@@ -204,7 +201,6 @@ public class RecipeController {
             for (String removeThisIngredient: removeTheseIngredients) {
                 recipeDAO.removeIngredientFromList(oldRecipe.getRecipeId(), removeThisIngredient);
             }
-            //change this confirmation page later
             return "redirect:/cookbook";
         }
     }
@@ -235,7 +231,6 @@ public class RecipeController {
             for (String addThisIngredient : newIngredients) {
                 recipeDAO.addIngredientToList(oldRecipe.getRecipeId(), addThisIngredient);
             }
-            //change this confirmation page later
             return "redirect:/cookbook";
         }
     }

@@ -21,7 +21,7 @@ To change this template use File | Settings | File Templates.
     }
 </style>
 
-<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">Meal Plans</h1>
+<h1 class = "display-6" style = "margin-top: 20px; margin-bottom: 10px;">${user.firstName}'s Meal Plans</h1>
 <hr>
 
 

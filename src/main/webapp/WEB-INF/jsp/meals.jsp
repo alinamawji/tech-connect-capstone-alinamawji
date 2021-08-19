@@ -14,7 +14,7 @@
     }
 </style>
 
-<h1 class="display-6" style="margin-top: 20px; margin-bottom: 10px;">My Meals</h1>
+<h1 class="display-6" style="margin-top: 20px; margin-bottom: 10px;">${user.firstName}'s Meals</h1>
 <hr>
 
 

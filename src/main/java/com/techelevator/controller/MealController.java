@@ -34,7 +34,7 @@ public class MealController {
     private JDBCRecipeDAO recipeDAO;
 
     @RequestMapping(path="/meals", method = RequestMethod.GET)
-    public String showAllMeals(ModelMap modelHolder, HttpSession session) {
+    public String showAllMeals(HttpSession session) {
         User user = (User) session.getAttribute("user");
 
         if (user != null) {

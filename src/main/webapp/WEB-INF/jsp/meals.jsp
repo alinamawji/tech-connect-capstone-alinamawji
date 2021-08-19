@@ -48,7 +48,7 @@
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
 
                         <c:forEach items="${meal.recipesInMeal}" var="recipe" varStatus="status">
-                            <a href="${detailUrl}">${recipe}</a>
+                            ${recipe}
                             <c:if test="${!status.last}">,</c:if>
                         </c:forEach>
                     </div>

@@ -24,6 +24,4 @@
         <input type="submit" class="btn btn-success" value="Submit">
     </div>
 </form:form>
-
-
 <%@ include file="common/footer.jspf" %>

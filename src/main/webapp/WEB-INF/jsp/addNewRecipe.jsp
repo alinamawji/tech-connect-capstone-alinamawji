@@ -85,9 +85,7 @@
                     <form:checkboxes path="ingredients" name="ingredients" items="${ingredients}"/>
                 </div>
             </div>
-            <p style = "margin-top: 10px;">Don't see an ingredient? Add an ingredient with the button below!</p>
-            <a href="addNewIngredient" class="btn btn-success btn-sm">Add New Ingredient</a>
-        </div>
+            <p style = "margin-top: 10px;">Don't see an ingredient? Continue uploading your recipe and edit it later to add the missing ingredients.</p>
 
         <div class="form-group">
             <label class="display-5 formlabel" for="instructions">Instructions: </label>

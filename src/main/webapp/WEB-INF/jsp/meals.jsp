@@ -34,9 +34,6 @@
 <div class="container" id="grid">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <for:forEach items="${meals}" var="meal">
-            <%--            <c:url var="detailUrl" value="/meals">--%>
-            <%--                <c:param name="meal_id" value="${meal.mealId}"/>--%>
-            <%--            </c:url>--%>
             <div class="col-md-4">
                 <div class="card border-success h-100" style="margin-top: 5px !important;">
                     <div class="card-body text-center">
@@ -51,19 +48,9 @@
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
 
                         <c:forEach items="${meal.recipesInMeal}" var="recipe" varStatus="status">
-<%--                            <c:url var="detailUrl" value="/recipeDetails">--%>
-<%--                                <c:param name="recipe_id" value="${recipe.recipeId}"/>--%>
-<%--                            </c:url>--%>
                             <a href="${detailUrl}">${recipe}</a>
                             <c:if test="${!status.last}">,</c:if>
-
-<%--                                    ${recipe}<c:if test="${!status.last}">,</c:if>--%>
                         </c:forEach>
-
-
-
-
-<%--                                    <c:out value="${meal.recipesInMeal}"/>--%>
                     </div>
                 </div>
             </div>

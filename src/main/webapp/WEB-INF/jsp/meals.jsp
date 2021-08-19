@@ -51,10 +51,7 @@
                         <h5 class="card-title"><c:out value="${meal.title}"/></h5>
 
                         <c:forEach items="${meal.recipesInMeal}" var="recipe" varStatus="status">
-<%--                            <c:url var="detailUrl" value="/recipeDetails">--%>
-<%--                                <c:param name="recipe_id" value="${recipe.recipeId}"/>--%>
-<%--                            </c:url>--%>
-                            <a href="${detailUrl}">${recipe}</a>
+                            ${recipe}
                             <c:if test="${!status.last}">,</c:if>
 
 <%--                                    ${recipe}<c:if test="${!status.last}">,</c:if>--%>

@@ -91,8 +91,8 @@
 
         <div class="form-group">
             <label class="display-5 formlabel" for="instructions">Instructions: </label>
-            <div class="row textarea" style="margin-left: 5px;">
-                <form:input type="textarea" path="instructions"/>
+            <div style="margin-left: 5px;">
+                <form:textarea cols="50" rows="5" path="instructions"/>
                 <form:errors path="instructions" cssClass="error"/>
             </div>
         </div>

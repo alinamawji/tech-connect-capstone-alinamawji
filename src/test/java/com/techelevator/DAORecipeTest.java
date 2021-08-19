@@ -1,50 +1,96 @@
 package com.techelevator;
 
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import com.techelevator.model.JDBCRecipeDAO;
+import com.techelevator.model.Recipe;
+import com.techelevator.model.RecipeDAO;
+import org.junit.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import static org.junit.Assert.*;
 
-public abstract class DAORecipeTest {
 
-    /* Using this particular implementation of DataSource so that
-     * every database interaction is part of the same database
-     * session and hence the same database transaction */
-    private static SingleConnectionDataSource dataSource;
+public class DAORecipeTest extends DAOIntegrationTest {
 
-    /* Before any tests are run, this method initializes the datasource for testing. */
-    @BeforeClass
-    public static void setupDataSource() {
-        dataSource = new SingleConnectionDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/capstone");
-        dataSource.setUsername("capstone_appuser");
-        dataSource.setPassword("capstone_appuser1");
-        /* The following line disables autocommit for connections
-         * returned by this DataSource. This allows us to rollback
-         * any changes after each test */
-        dataSource.setAutoCommit(false);
+    private JDBCRecipeDAO jdbcRecipeDAO;
+
+    @Before
+    public void setup() {
+        DataSource dataSource = this.getDataSource();
+        jdbcRecipeDAO = new JDBCRecipeDAO(dataSource);
     }
 
-    /* After all tests have finished running, this method will close the DataSource */
-    @AfterClass
-    public static void closeDataSource() throws SQLException {
-        dataSource.destroy();
+    @Test
+    public void getRecipeByID() {
+        Recipe recipe = jdbcRecipeDAO.getRecipeByID(3);
+        assertEquals("Input: 3 (Title = Pizza Bagel Bites)", "Pizza Bagel Bites", recipe.getTitle());
+        assertEquals("Input: 3 (Creator Username = alinaMawji", "alinaMawji", recipe.getCreatorUsername());
     }
 
-    /* After each test, we rollback any changes that were made to the database so that
-     * everything is clean for the next test */
-    @After
-    public void rollback() throws SQLException {
-        dataSource.getConnection().rollback();
+    // NOT SURE HOW TO TEST?
+//    @Test
+//    public void addRecipeToDB() {
+//        jdbcRecipeDAO.addRecipeToDB("title", "overview", 2, "instructions", Arrays.asList("1", "2"), Arrays.asList("1", "2"), "username", 3);
+//        List<Recipe> recipes = jdbcRecipeDAO.getAllRecipes();
+//        assertEquals("Testing that 1 recipe was added", 6, recipes.size());
+//    }
+
+    // NOT SURE HOW TO TEST?
+//    @Test
+//    public void deleteRecipeFromDB() {
+//        jdbcRecipeDAO.deleteRecipeFromDB(3);
+//        List<Recipe> recipes = jdbcRecipeDAO.getAllRecipes();
+//        assertEquals("Testing that 1 recipe was deleted", 4, recipes.size());
+//    }
+
+    @Test
+    public void getRecipeIngredients() {
+        assertEquals("Testing ingredients of Pizza Bagel Bites", Arrays.asList("pizza sauce", "mini-bagels", "shredded mozzarella", "toppings of choice", "fresh basil"), jdbcRecipeDAO.getRecipeIngredients(3));
     }
 
-    /* This method provides access to the DataSource for subclasses so that
-     * they can instantiate a DAO for testing */
-    protected DataSource getDataSource() {
-        return dataSource;
+    @Test
+    public void getRecipeCategories() {
+        assertEquals("Testing categories of Pizza Bagel Bites", Arrays.asList("Quick-prep", "Snacks"), jdbcRecipeDAO.getRecipeCategories(3));
     }
+
+    @Test
+    public void getRecipeByTitle() {
+        assertEquals("Getting recipe ID of Pizza Bagel Bites", 3, jdbcRecipeDAO.getRecipeByTitle("Pizza Bagel Bites").getRecipeId());
+    }
+
+    @Test
+    public void addIngredientToList() {
+        jdbcRecipeDAO.addIngredientToList(3, "bread crumbs");
+        assertEquals("Adding bread crumbs to Pizza Bagel Bites ingredients", Arrays.asList("pizza sauce", "mini-bagels", "shredded mozzarella", "toppings of choice", "fresh basil", "bread crumbs"), jdbcRecipeDAO.getRecipeIngredients(3));
+    }
+
+    @Test
+    public void removeIngredientFromList() {
+        jdbcRecipeDAO.removeIngredientFromList(3, "fresh basil");
+        assertEquals("Removing fresh basil from Pizza Bagel Bites ingredients", Arrays.asList("pizza sauce", "mini-bagels", "shredded mozzarella", "toppings of choice"), jdbcRecipeDAO.getRecipeIngredients(3));
+    }
+
+    @Test
+    public void modifyInstructions() {
+        jdbcRecipeDAO.modifyInstructions(3, "modified instructions");
+        assertEquals("Modifying instructions of Pizza Bagel Bites", "modified instructions", jdbcRecipeDAO.getRecipeByID(3).getInstructions());
+    }
+
+    @Test
+    public void getAllRecipes() {
+        List<Recipe> recipes = jdbcRecipeDAO.getAllRecipes();
+        assertEquals("Checking that there are 5 recipes total in DB", 5, recipes.size());
+    }
+
+    @Test
+    public void getRecipesFromUser() {
+        List<Recipe> recipes = jdbcRecipeDAO.getRecipesFromUser("alinaMawji");
+        assertEquals("Checking that 1 recipe was created by alinaMawji", 1, recipes.size());
+    }
+
 }

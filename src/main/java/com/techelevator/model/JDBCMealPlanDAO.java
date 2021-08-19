@@ -100,15 +100,12 @@ public class JDBCMealPlanDAO implements MealPlanDAO {
     }
 
     @Override
-<<<<<<< HEAD
-=======
     public long getMealPlanID(long user_id, String title, String description){
         String sql = "SELECT plan_id FROM meal_plan WHERE user_id = ? AND title = ? AND description = ?";
         long plan_id = jdbcTemplate.queryForObject(sql, Long.class, user_id, title, description);
         return plan_id;
     }
 
->>>>>>> cf8abb4d33c69c82b14178f01baf81ec35d7c01b
     public List <Meal> getMealsInAPlan(long plan_id) {
         String sqlMeal = "select *\n" +
                 "from meal\n" +

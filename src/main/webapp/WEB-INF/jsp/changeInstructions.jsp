@@ -19,7 +19,9 @@
      </div>
 
         <div class = "form-group">
-        <input style = "height: 150px; width: 200px;" type = "textarea" id = "newInstructions" name = "newInstructions" value = "${recipe.instructions}">
+            <div style="margin-left: 5px;">
+                <textarea cols="50" rows="5" id="newInstructions" name="newInstructions">${recipe.instructions}</textarea>
+            </div>
     </div>
 
         <div class = "form-group">

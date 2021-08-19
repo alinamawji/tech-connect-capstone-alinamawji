@@ -230,25 +230,30 @@ public class MealPlanController {
                                         HttpServletRequest request) {
         User user = (User) session.getAttribute("user");
 
-        List<String> mealIds = Arrays.asList(request.getParameterValues("meal_id"));
-        List<Meal> selectedMeals = new ArrayList<>();
-        for (String mealId : mealIds) {
-            Long longMealId = Long.parseLong(mealId);
-            selectedMeals.add(mealDAO.getMealByID(longMealId));
-        }
-        mealPlan.setSelectedMeals(selectedMeals);
-        mealPlan.setUserId(user.getId());
+        try {
+            List<String> mealIds = Arrays.asList(request.getParameterValues("meal_id"));
+            List<Meal> selectedMeals = new ArrayList<>();
+            for (String mealId : mealIds) {
+                Long longMealId = Long.parseLong(mealId);
+                selectedMeals.add(mealDAO.getMealByID(longMealId));
+            }
+            mealPlan.setSelectedMeals(selectedMeals);
+            mealPlan.setUserId(user.getId());
 
-        session.setAttribute("mealPlan", mealPlan);
+            session.setAttribute("mealPlan", mealPlan);
 
-        if (result.hasErrors()) {
-            flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
-            return "redirect:/addNewMealPlan";
+            if (result.hasErrors()) {
+                flash.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "mealPlan" + result);
+                return "redirect:/addNewMealPlan";
+            }
+            mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
+            for (Meal meal : mealPlan.getSelectedMeals()) {
+                mealPlanDAO.addMealToPlan(mealPlan.getUserId(), mealPlan.getTitle(), meal.getMealId());
+            }
+        } catch(Exception e) {
+            "redirect:/"
         }
-        mealPlanDAO.addMealPlanOnly(user.getId(), mealPlan.getTitle(), mealPlan.getDescription());
-        for (Meal meal : mealPlan.getSelectedMeals()) {
-            mealPlanDAO.addMealToPlan(mealPlan.getUserId(), mealPlan.getTitle(), meal.getMealId());
-        }
+
         return "redirect:/addMealsToPlan";
     }
 

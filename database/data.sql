@@ -7,29 +7,29 @@ BEGIN;
 
 -- INSERT statements for app_user table listed below (NOTE: password for all accounts is 123)
 
-INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
-VALUES ('Diana', 'Dang', 'dianaDang', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'a@e.com', 'admin',
-        'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
-        'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
-        'p9Sf4Deqkyb1g5AOITW5zhBE=');
-
-INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
-VALUES ('Erin', 'Xu', 'erinXu', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'b@e.com', 'admin',
-        'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
-        'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
-        'p9Sf4Deqkyb1g5AOITW5zhBE=');
-
-INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
-VALUES ('Alina', 'Mawji', 'alinaMawji', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'c@e.com', 'admin',
-        'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
-        'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
-        'p9Sf4Deqkyb1g5AOITW5zhBE=');
-
-INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
-VALUES ('Aidan', 'Fox', 'aidanFox', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'd@e.com', 'admin',
-        'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
-        'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
-        'p9Sf4Deqkyb1g5AOITW5zhBE=');
+-- INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
+-- VALUES ('Diana', 'Dang', 'dianaDang', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'a@e.com', 'admin',
+--         'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
+--         'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
+--         'p9Sf4Deqkyb1g5AOITW5zhBE=');
+--
+-- INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
+-- VALUES ('Erin', 'Xu', 'erinXu', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'b@e.com', 'admin',
+--         'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
+--         'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
+--         'p9Sf4Deqkyb1g5AOITW5zhBE=');
+--
+-- INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
+-- VALUES ('Alina', 'Mawji', 'alinaMawji', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'c@e.com', 'admin',
+--         'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
+--         'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
+--         'p9Sf4Deqkyb1g5AOITW5zhBE=');
+--
+-- INSERT INTO app_user (first_name, last_name, username, password, email, role, salt)
+-- VALUES ('Aidan', 'Fox', 'aidanFox', 'fCFtc2lfdJ2ydm1ojJjRIw==', 'd@e.com', 'admin',
+--         'yA/UvIAglq5O9hir6oZtOmdmypEhPaAvEHhw' ||
+--         'DyWuLrsfusRbPxiET7DCuF5stKIhRJoR0IYRdju0BLTtE2SD0sFtUAPbFlajm9NGaF2yPUVnufQ6qi5YqDqZVl02+akNJ8x+oviGW3tdsP8dmiO' ||
+--         'p9Sf4Deqkyb1g5AOITW5zhBE=');
 
 
 -- INSERT statements for ingredients table listed below:

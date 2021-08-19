@@ -21,7 +21,6 @@
         border-radius: 3px;
         overflow-y: scroll;
     }
-
     label {
         font-size: 22px; !important;
     }

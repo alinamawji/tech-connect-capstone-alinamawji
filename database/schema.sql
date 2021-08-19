@@ -4,27 +4,27 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS app_user,meal_plan,meal,recipe,ingredient,category,meal_plan_meal,
+DROP TABLE IF EXISTS meal_plan,meal,recipe,ingredient,category,meal_plan_meal,
     meal_recipe,recipe_ingredient,recipe_category,app_user_recipe,meal_event CASCADE;
 
 -- *************************************************************************************************
 -- CREATE statements for the Main Tables listed below
 -- *************************************************************************************************
 
-CREATE TABLE app_user
-(
-    user_id    SERIAL,
-    first_name varchar(50)  NOT NULL,
-    last_name  varchar(50)  NOT NULL,
-    username   varchar(32)  NOT NULL,
-    password   varchar(32)  NOT NULL,
-    email      varchar(50)  NOT NULL,
-    role       varchar(32)  DEFAULT 'registered', -- default from format
-    salt       varchar(255) NOT NULL,                      -- default from format
-    CONSTRAINT PK_user PRIMARY KEY (user_id),
-    CONSTRAINT UQ_user_username UNIQUE (username),
-    CONSTRAINT UQ_user_email UNIQUE (email)
-);
+-- CREATE TABLE app_user
+-- (
+--     user_id    SERIAL,
+--     first_name varchar(50)  NOT NULL,
+--     last_name  varchar(50)  NOT NULL,
+--     username   varchar(32)  NOT NULL,
+--     password   varchar(32)  NOT NULL,
+--     email      varchar(50)  NOT NULL,
+--     role       varchar(32)  DEFAULT 'registered', -- default from format
+--     salt       varchar(255) NOT NULL,                      -- default from format
+--     CONSTRAINT PK_user PRIMARY KEY (user_id),
+--     CONSTRAINT UQ_user_username UNIQUE (username),
+--     CONSTRAINT UQ_user_email UNIQUE (email)
+-- );
 
 CREATE TABLE meal_plan
 (
